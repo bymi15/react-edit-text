@@ -1,9 +1,26 @@
-/* add css module styles here (optional) */
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
 
-.test {
-  margin: 2em;
-  padding: 0.5em;
-  border: 2px solid #000;
-  font-size: 2em;
-  text-align: center;
+.label:hover {
+  cursor:pointer;
+  background: rgba(220, 220, 220, 0.4)/* Green background with 30% opacity */
+}
+
+.shared {
+  width: 100%;
+  padding: 5px;
+  display: block;
+  margin: 3px 0 3px 0;
+}
+
+.placeholder {
+  color: '#999';
+}
+
+.inline {
+  display: inline !important;
 }
