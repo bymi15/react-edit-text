@@ -1,5 +1,5 @@
 {
-  "name": "react-editable-text-example",
+  "name": "react-edit-text-example",
   "homepage": ".",
   "version": "0.0.0",
   "private": true,
@@ -12,8 +12,9 @@
   "dependencies": {
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
+    "react-edit-text": "file:..",
     "react-scripts": "file:../node_modules/react-scripts",
-    "react-editable-text": "file:.."
+    "react-syntax-highlighter": "^15.2.1"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
