@@ -1,13 +1,27 @@
-# react-editable-text
+<h1 align="center">React Edit Text</h1>
 
-> Editable text component for React with a modern and simple UI
+<p align="center">
+    <a href="https://david-dm.org/bymi15/react-edit-text" title="dependencies status">
+        <img src="https://david-dm.org/bymi15/react-edit-text/status.svg?style=flat-square"/>
+    </a>
+    <a href="https://travis-ci.com/github/bymi15/react-edit-text">
+        <img src="https://api.travis-ci.com/bymi15/react-edit-text.svg?branch=main" alt="travis" />
+    </a>
+    <a href="https://www.npmjs.com/package/react-edit-text">
+        <img src="https://img.shields.io/npm/v/react-edit-text?color=brightgreen&style=flat-squaret" alt="npm" />
+    </a>
+</p>
 
-[![NPM](https://img.shields.io/npm/v/react-editable-text.svg)](https://www.npmjs.com/package/react-editable-text) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-
+<p align="center">This is an <b>editable text component</b> for <a href="https://reactjs.org/">React</a>. Simply click on the text to edit!</p>
+<p align="center">Made with <span role="img" aria-label="love">❤️</span> by <a href="https://github.com/bymi15">Brian Min</a></p>
+            
+## Demo
+Feel free to check out the [live demo](https://bymi15.github.io/react-edit-text)
+            
 ## Install
 
 ```bash
-npm install --save react-editable-text
+npm install react-edit-text --save
 ```
 
 ## Usage
@@ -15,15 +29,28 @@ npm install --save react-editable-text
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'react-editable-text'
-import 'react-editable-text/dist/index.css'
+import EditText from 'react-edit-text'
+import 'react-edit-text/dist/index.css'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <EditText name="inputName"></EditText>
   }
 }
 ```
+
+## Props
+| Prop        | Type     | Required | Default | Note                                            |
+|-------------|----------|----------|---------|-------------------------------------------------|
+| id          | string   | No       |         | HTML id attribute                               |
+| type        | string   | No       | text    | HTML input type                                 |
+| name        | string   | No       | ''      | HTML name attribute                             |
+| className   | string   | No       |         | HTML class attribute                            |
+| value       | string   | No       | ''      | Value of the input and text content             |
+| placeholder | string   | No       | ''      | Placeholder value                               |
+| onSave      | function | No       |         | Callback function triggered when input is saved |
+| inline      | bool     | No       | false   | Sets inline display                             |
+| style       | object   | No       |         | Sets CSS style of input and text component      |
 
 ## License
 
