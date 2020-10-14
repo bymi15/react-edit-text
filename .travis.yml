@@ -2,3 +2,14 @@ language: node_js
 node_js:
   - 12
   - 10
+cache:
+  directories:
+    - node_modules
+install:
+  - npm install
+script:
+  - npm run test
+  - npm run build
+  - npm run semantic-release
+notifications:
+  email: false
