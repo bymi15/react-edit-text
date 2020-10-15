@@ -14,10 +14,10 @@
 
 <p align="center">This is an <b>editable text component</b> for <a href="https://reactjs.org/">React</a>. Simply click on the text to edit!</p>
 <p align="center">Made with <span role="img" aria-label="love">❤️</span> by <a href="https://github.com/bymi15">Brian Min</a></p>
-            
+
 ## Demo
 Feel free to check out the [live demo](https://bymi15.github.io/react-edit-text)
-            
+
 ## Install
 
 ```bash
@@ -52,6 +52,10 @@ class Example extends Component {
 | inline      | bool     | No       | false   | Sets inline display                             |
 | style       | object   | No       |         | Sets CSS style of input and text component      |
 
+## Contributing
+Contributions are very much appreciated and welcome.
+Please refer to the [contributing guidelines](https://github.com/bymi15/react-edit-text/blob/main/CONTRIBUTING.md) for more details.
+
 ## License
 
-MIT © [bymi15](https://github.com/bymi15)
+MIT © [Brian Min](https://github.com/bymi15)
