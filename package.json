@@ -32,10 +32,11 @@
   },
   "keywords": [
     "react",
-    "react-edit-text",
-    "component",
-    "editable",
+    "edit",
     "text",
+    "react-edit-text",
+    "editable",
+    "input",
     "textbox"
   ],
   "peerDependencies": {
