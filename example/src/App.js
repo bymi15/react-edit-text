@@ -73,9 +73,10 @@ const App = () => {
         <p className="lead">Here are some useful props that can be passed</p>
         <ul>
           <li><b>id</b> sets the id of the DOM element</li>
-          <li><b>name</b> sets the name of the component</li>
+          <li><b>name</b> sets the name of the input element</li>
           <li><b>inline</b> (default: false) displays the input box as an inline component</li>
-          <li><b>type</b> (default: 'text') can be set to an HTML input type</li>
+          <li><b>readonly</b> (default: false) displays only the view component and hides the input element</li>
+          <li><b>type</b> (default: 'text') can be set to a DOM input text type (e.g. 'email', 'tel', etc.)</li>
           <li><b>style</b> sets the style of the DOM element</li>
           <li><b>placeholder</b> sets the placeholder of the component</li>
           <li><b>value</b> sets the value of the component</li>
@@ -92,12 +93,16 @@ const App = () => {
             <div className="card">
               <div className="card-body">
                 <div style={{whiteSpace: 'nowrap'}}>
-                  <strong><label className="mr-2">Full Name: </label></strong>
-                  <EditText id="fullName" name="fullName" style={{width: '200px'}} value="James Smith" inline/>
+                  <strong><label className="mr-2">Full Name <small className="text-muted">(read-only)</small>: </label></strong>
+                  <EditText id="fullName" name="fullName" value="James Smith" inline readonly/>
                 </div>
                 <div style={{whiteSpace: 'nowrap'}}>
-                <strong><label className="mr-2">Age: </label></strong>
-                  <EditText name="age" type="number" style={{width: '200px'}} value="25" inline/>
+                  <strong><label className="mr-2">Email Address: </label></strong>
+                  <EditText name="age" type="email" style={{width: '200px'}} value="james.smith@domain.com" inline/>
+                </div>
+                <div style={{whiteSpace: 'nowrap'}}>
+                  <strong><label className="mr-2">Score: </label></strong>
+                  <EditText name="age" type="number" style={{width: '200px'}} value="25000" inline/>
                 </div>
               </div>
             </div>
