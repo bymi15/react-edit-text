@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/bymi15/react-edit-text/compare/v1.0.0...v1.0.1) (2020-10-28)
+
+
+### Bug Fixes
+
+* **styles:** fix invalid css color for placeholder ([1bf8159](https://github.com/bymi15/react-edit-text/commit/1bf81599181a6bdf4b7bb5275eb7e3284acb5719))
+
 # 1.0.0 (2020-10-14)
 
 
