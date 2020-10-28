@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/bymi15/react-edit-text/compare/v1.0.1...v1.1.0) (2020-10-28)
+
+
+### Features
+
+* add readonly prop ([47d5a38](https://github.com/bymi15/react-edit-text/commit/47d5a38e3b3bf5efe40bca35a94b4da738c47018))
+* **example:** add example for readonly prop ([34d7646](https://github.com/bymi15/react-edit-text/commit/34d7646bea482793e4ce77793ca7d38a8604487b))
+
 ## [1.0.1](https://github.com/bymi15/react-edit-text/compare/v1.0.0...v1.0.1) (2020-10-28)
 
 
