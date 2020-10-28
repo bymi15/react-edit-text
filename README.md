@@ -42,15 +42,16 @@ class Example extends Component {
 ## Props
 | Prop        | Type     | Required | Default | Note                                            |
 |-------------|----------|----------|---------|-------------------------------------------------|
-| id          | string   | No       |         | HTML id attribute                               |
-| type        | string   | No       | text    | HTML input type                                 |
-| name        | string   | No       | ''      | HTML name attribute                             |
+| id          | string   | No       |         | HTML DOM id attribute                           |
+| type        | string   | No       | 'text'  | HTML DOM input text type                        |
+| name        | string   | No       | ''      | HTML input name attribute                       |
 | className   | string   | No       |         | HTML class attribute                            |
 | value       | string   | No       | ''      | Value of the input and text content             |
 | placeholder | string   | No       | ''      | Placeholder value                               |
 | onSave      | function | No       |         | Callback function triggered when input is saved |
 | inline      | bool     | No       | false   | Sets inline display                             |
 | style       | object   | No       |         | Sets CSS style of input and text component      |
+| readonly    | bool     | No       | false   | Hides the input component when set to true      |
 
 ## Contributing
 Contributions are very much appreciated and welcome.
