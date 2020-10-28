@@ -124,4 +124,14 @@ describe('EditText', () => {
     input.simulate('keydown', { keyCode: 13 });
     expect(component.contains('mockValue')).toEqual(true);
   });
+  it('should not display input when readonly', () => {
+    const component = mount(<EditText readonly />);
+    component.simulate('click');
+    expect(component.exists('input')).toEqual(false);
+  });
+  it('should not display input when not readonly', () => {
+    const component = mount(<EditText readonly={false} />);
+    component.simulate('click');
+    expect(component.exists('input')).toEqual(true);
+  });
 });

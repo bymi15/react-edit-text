@@ -24,3 +24,11 @@
 .inline {
   display: inline !important;
 }
+
+.readonly {
+  cursor: auto !important;
+}
+
+.readonly:hover {
+  cursor: auto !important;
+}
