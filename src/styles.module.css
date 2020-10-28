@@ -7,7 +7,7 @@
 
 .label:hover {
   cursor:pointer;
-  background: rgba(220, 220, 220, 0.4)/* Green background with 30% opacity */
+  background: rgba(220, 220, 220, 0.4);
 }
 
 .shared {
@@ -18,7 +18,7 @@
 }
 
 .placeholder {
-  color: '#999';
+  color: #999;
 }
 
 .inline {
