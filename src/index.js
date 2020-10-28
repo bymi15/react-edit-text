@@ -14,6 +14,7 @@ export default class EditText extends React.Component {
   }
 
   handleClick = () => {
+    if (this.props.readonly) return;
     this.setState({
       editMode: true
     });
@@ -55,11 +56,12 @@ export default class EditText extends React.Component {
       type,
       placeholder,
       inline,
-      style
+      style,
+      readonly
     } = this.props;
     const { editMode, savedText } = this.state;
 
-    if (editMode) {
+    if (!readonly && editMode) {
       return (
         <input
           id={id}
@@ -89,7 +91,8 @@ export default class EditText extends React.Component {
             styles.label,
             {
               [styles.placeholder]: placeholder && !savedText,
-              [styles.inline]: inline
+              [styles.inline]: inline,
+              [styles.readonly]: readonly
             },
             className
           )}
@@ -112,7 +115,8 @@ EditText.defaultProps = {
   placeholder: '',
   onSave: () => {},
   inline: false,
-  style: {}
+  style: {},
+  readonly: false
 };
 
 EditText.propTypes = {
@@ -124,5 +128,6 @@ EditText.propTypes = {
   placeholder: PropTypes.string,
   onSave: PropTypes.func,
   inline: PropTypes.bool,
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  readonly: PropTypes.bool
 };
