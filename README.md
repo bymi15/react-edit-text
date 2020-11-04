@@ -24,8 +24,14 @@ Feel free to check out the [live demo](https://bymi15.github.io/react-edit-text)
 npm install react-edit-text --save
 ```
 
-## Usage
+## Type definitions for Typescript
 
+```bash
+npm install @types/react-edit-text --save-dev
+```
+
+## Usage
+Make sure to import the <b>CSS stylesheet</b> before using the component.
 ```jsx
 import React, { Component } from 'react'
 
@@ -34,7 +40,7 @@ import 'react-edit-text/dist/index.css'
 
 class Example extends Component {
   render() {
-    return <EditText name="inputName"></EditText>
+    return <EditText/>
   }
 }
 ```
