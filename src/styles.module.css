@@ -6,7 +6,17 @@
 }
 
 .label:hover {
-  cursor:pointer;
+  cursor: pointer;
+  background: rgba(220, 220, 220, 0.4);
+}
+
+.textareaView {
+  overflow: auto;
+  transition: background 0.2s ease;
+}
+
+.textareaView:hover {
+  cursor: pointer;
   background: rgba(220, 220, 220, 0.4);
 }
 
