@@ -16,6 +16,7 @@
 <p align="center">Made with <span role="img" aria-label="love">❤️</span> by <a href="https://github.com/bymi15">Brian Min</a></p>
 
 ## Demo
+
 Feel free to check out the [live demo](https://bymi15.github.io/react-edit-text)
 
 ## Install
@@ -24,42 +25,64 @@ Feel free to check out the [live demo](https://bymi15.github.io/react-edit-text)
 npm install react-edit-text --save
 ```
 
-## Type definitions for Typescript
+## Type definitions
 
 ```bash
 npm install @types/react-edit-text --save-dev
 ```
 
 ## Usage
-Make sure to import the <b>CSS stylesheet</b> before using the component.
-```jsx
-import React, { Component } from 'react'
 
-import EditText from 'react-edit-text'
-import 'react-edit-text/dist/index.css'
+Make sure to import the <b>CSS stylesheet</b> before using the component.
+
+```jsx
+import React, { Component } from 'react';
+
+import { EditText, EditTextarea } from 'react-edit-text';
+import 'react-edit-text/dist/index.css';
 
 class Example extends Component {
   render() {
-    return <EditText/>
+    return (
+      <div>
+        <EditText />
+        <EditTextarea />
+      </div>
+    );
   }
 }
 ```
 
 ## Props
-| Prop        | Type     | Required | Default | Note                                            |
-|-------------|----------|----------|---------|-------------------------------------------------|
-| id          | string   | No       |         | HTML DOM id attribute                           |
-| type        | string   | No       | 'text'  | HTML DOM input text type                        |
-| name        | string   | No       | ''      | HTML input name attribute                       |
-| className   | string   | No       |         | HTML class attribute                            |
-| value       | string   | No       | ''      | Value of the input and text content             |
-| placeholder | string   | No       | ''      | Placeholder value                               |
-| onSave      | function | No       |         | Callback function triggered when input is saved |
-| inline      | bool     | No       | false   | Sets inline display                             |
-| style       | object   | No       |         | Sets CSS style of input and text component      |
-| readonly    | bool     | No       | false   | Hides the input component when set to true      |
+
+### Shared props
+
+| Prop        | Type     | Required | Default | Description                                             |
+| ----------- | -------- | -------- | ------- | ------------------------------------------------------- |
+| id          | string   | No       |         | HTML DOM id attribute                                   |
+| name        | string   | No       | ''      | HTML input name attribute                               |
+| className   | string   | No       |         | HTML class attribute                                    |
+| value       | string   | No       | ''      | Value of the input and view content                     |
+| placeholder | string   | No       | ''      | Placeholder value                                       |
+| onSave      | function | No       |         | Callback function triggered when input is saved         |
+| style       | object   | No       |         | Sets CSS style of input and view component              |
+| readonly    | bool     | No       | false   | Disables the input and only displays the view component |
+
+### EditText props
+
+| Prop   | Type   | Required | Default | Description              |
+| ------ | ------ | -------- | ------- | ------------------------ |
+| type   | string | No       | 'text'  | HTML DOM input text type |
+| inline | bool   | No       | false   | Sets inline display      |
+
+### EditTextarea props
+
+| Prop | Type   | Required | Default | Description            |
+| ---- | ------ | -------- | ------- | ---------------------- |
+| rows | number | No       | 3       | Number of visible rows |
 
 ## Contributing
+
 Contributions are very much appreciated and welcome.
 Please refer to the [contributing guidelines](https://github.com/bymi15/react-edit-text/blob/main/CONTRIBUTING.md) for more details.
 
