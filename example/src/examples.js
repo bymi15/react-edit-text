@@ -16,7 +16,6 @@ const App = () => {
             <br />
             <EditTextarea
               placeholder='I am an editable textarea'
-              style={{ border: '1px solid #C2C2C2' }}
             />
         </React.Fragment>
     );

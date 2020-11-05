@@ -57,71 +57,7 @@ const App = () => {
                   name='textbox2'
                   placeholder='I am a placeholder text'
                 />
-                <br />
-                <EditTextarea
-                  placeholder='I am an editable textarea'
-                  style={{ border: '1px solid #C2C2C2' }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <hr />
-        <h3>Custom Styling</h3>
-        <div className='row mt-3'>
-          <div className='col-md-6'>
-            <h4>Example</h4>
-            <SyntaxHighlighter
-              language='javascript'
-              showLineNumbers={true}
-              style={okaidia}
-            >
-              {examples[1]}
-            </SyntaxHighlighter>
-          </div>
-          <div className='col-md-6'>
-            <h4>Output</h4>
-            <div className='card'>
-              <div className='card-body'>
-                <EditText
-                  name='textbox1'
-                  style={{ border: '1px solid #999' }}
-                  value='Click me to edit my text'
-                />
-                <br />
-                <EditText
-                  name='textbox2'
-                  style={{ padding: '10px', fontSize: '36px' }}
-                  value='Click me to edit my text'
-                />
-                <br />
-                <EditText
-                  name='textbox3'
-                  style={{
-                    padding: '15px',
-                    fontSize: '24px',
-                    backgroundColor: '#EEE'
-                  }}
-                  value='Click me to edit my text'
-                />
-                <br />
-                <EditText
-                  name='textbox4'
-                  style={{
-                    padding: '15px',
-                    fontSize: '24px',
-                    color: '#FFF',
-                    backgroundColor: '#000'
-                  }}
-                  value='Click me to edit my text'
-                />
-                <br />
-                <EditTextarea
-                  name='textarea1'
-                  rows={7}
-                  value='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non porta massa, a interdum turpis. In imperdiet tincidunt justo nec maximus. Aliquam tempus interdum orci eget rhoncus. Cras consectetur elit quam. Aliquam ante massa, pulvinar quis tortor non, rhoncus facilisis nisi. Nam at sapien porta, congue sapien porta, suscipit dolor. Maecenas vitae efficitur neque. Donec auctor tortor in ornare convallis. Etiam venenatis ex nisi, eu commodo risus dignissim ac. Suspendisse potenti. Integer hendrerit erat dapibus orci luctus, non malesuada est ullamcorper. Vivamus mattis magna ipsum, id lobortis justo aliquet at. '
-                  style={{ fontSize: '16px' }}
-                />
+                <EditTextarea placeholder='I am an editable textarea' />
               </div>
             </div>
           </div>
@@ -240,6 +176,66 @@ const App = () => {
           </div>
         </div>
         <hr />
+        <h3>Custom Styling</h3>
+        <div className='row mt-3'>
+          <div className='col-md-6'>
+            <h4>Example</h4>
+            <SyntaxHighlighter
+              language='javascript'
+              showLineNumbers={true}
+              style={okaidia}
+            >
+              {examples[1]}
+            </SyntaxHighlighter>
+          </div>
+          <div className='col-md-6'>
+            <h4>Output</h4>
+            <div className='card'>
+              <div className='card-body'>
+                <EditText
+                  name='textbox1'
+                  style={{ border: '1px solid #999' }}
+                  value='Click me to edit my text'
+                />
+                <br />
+                <EditText
+                  name='textbox2'
+                  style={{ padding: '10px', fontSize: '36px' }}
+                  value='Click me to edit my text'
+                />
+                <br />
+                <EditText
+                  name='textbox3'
+                  style={{
+                    padding: '15px',
+                    fontSize: '24px',
+                    backgroundColor: '#EEE'
+                  }}
+                  value='Click me to edit my text'
+                />
+                <br />
+                <EditText
+                  name='textbox4'
+                  style={{
+                    padding: '15px',
+                    fontSize: '24px',
+                    color: '#FFF',
+                    backgroundColor: '#000'
+                  }}
+                  value='Click me to edit my text'
+                />
+                <br />
+                <EditTextarea
+                  name='textarea1'
+                  rows={7}
+                  value='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non porta massa, a interdum turpis. In imperdiet tincidunt justo nec maximus. Aliquam tempus interdum orci eget rhoncus. Cras consectetur elit quam. Aliquam ante massa, pulvinar quis tortor non, rhoncus facilisis nisi. Nam at sapien porta, congue sapien porta, suscipit dolor. Maecenas vitae efficitur neque. Donec auctor tortor in ornare convallis. Etiam venenatis ex nisi, eu commodo risus dignissim ac. Suspendisse potenti. Integer hendrerit erat dapibus orci luctus, non malesuada est ullamcorper. Vivamus mattis magna ipsum, id lobortis justo aliquet at. '
+                  style={{ fontSize: '16px' }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
         <h3>Callback Usage</h3>
         <p className='lead'>
           <b>onSave</b> callback function triggers when the text input value is
@@ -284,6 +280,20 @@ const App = () => {
             </div>
           </div>
         </div>
+      </div>
+      <hr />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          padding: '20px',
+          paddingTop: '15px'
+        }}
+      >
+        <h6 style={{ fontWeight: 300 }}>
+          Please contact <a href='https://brianmin.tech#contact'>Brian Min</a>{' '}
+          for more information
+        </h6>
       </div>
     </React.Fragment>
   );
