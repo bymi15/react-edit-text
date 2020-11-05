@@ -1,3 +1,17 @@
+# [2.0.0](https://github.com/bymi15/react-edit-text/compare/v1.1.0...v2.0.0) (2020-11-05)
+
+
+### Features
+
+* **EditTextarea:** add textarea component ([9b88363](https://github.com/bymi15/react-edit-text/commit/9b88363ae17320511c720a5b8ecfdfc80e1cf394))
+* **example:** update documentation page ([16da811](https://github.com/bymi15/react-edit-text/commit/16da811a1ed3f8214d7af4c26e1bac8d6762ab46))
+* add EditTextarea component ([bc4eb9a](https://github.com/bymi15/react-edit-text/commit/bc4eb9af793ca6d99d08cd19d15e2ac7ec0ebbe6))
+
+
+### BREAKING CHANGES
+
+* split up default export into EditText and EditTextarea exports
+
 # [1.1.0](https://github.com/bymi15/react-edit-text/compare/v1.0.1...v1.1.0) (2020-10-28)
 
 
