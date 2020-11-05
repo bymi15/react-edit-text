@@ -62,6 +62,7 @@ const App = () => {
             </div>
           </div>
         </div>
+        <span id='props' />
         <hr />
         <h3>Props</h3>
         <p className='lead'>Shared props</p>
@@ -235,6 +236,7 @@ const App = () => {
             </div>
           </div>
         </div>
+        <span id='callbacks' />
         <hr />
         <h3>Callback Usage</h3>
         <p className='lead'>
