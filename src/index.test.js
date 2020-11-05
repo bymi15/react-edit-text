@@ -1,5 +1,5 @@
 import React from 'react';
-import EditText from '.';
+import { EditText, EditTextarea } from '.';
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
@@ -133,5 +133,126 @@ describe('EditText', () => {
     const component = mount(<EditText readonly={false} />);
     component.simulate('click');
     expect(component.exists('input')).toEqual(true);
+  });
+});
+
+describe('EditTextarea', () => {
+  it('clicking on the component should activate edit mode', () => {
+    const component = mount(<EditTextarea />);
+    expect(component.state().editMode).toEqual(false);
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+  });
+  it('pressing ESC key should disable edit mode but should not trigger onSave', () => {
+    const handleSave = jest.fn();
+    const component = mount(
+      <EditTextarea name='mockName' onSave={handleSave} />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    const textarea = component.find('textarea');
+    textarea.instance().value = 'mockValue';
+    textarea.simulate('keydown', { keyCode: 27 });
+    expect(component.state().editMode).toEqual(false);
+    expect(handleSave).not.toHaveBeenCalled();
+  });
+  it('pressing ESC key should not trigger onSave if value is not changed', () => {
+    const handleSave = jest.fn();
+    const component = mount(
+      <EditTextarea name='mockName' onSave={handleSave} />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    const textarea = component.find('textarea');
+    textarea.simulate('keydown', { keyCode: 27 });
+    expect(component.state().editMode).toEqual(false);
+    expect(handleSave).not.toHaveBeenCalled();
+  });
+  it('blur event should disable edit mode and trigger onSave', () => {
+    const handleSave = jest.fn();
+    const component = mount(
+      <EditTextarea name='mockName' onSave={handleSave} />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    const textarea = component.find('textarea');
+    textarea.instance().value = 'mockValue';
+    textarea.simulate('blur');
+    expect(component.state().editMode).toEqual(false);
+    expect(handleSave).toHaveBeenCalled();
+  });
+  it('blur event should not trigger onSave if value is not changed', () => {
+    const handleSave = jest.fn();
+    const component = mount(
+      <EditTextarea name='mockName' onSave={handleSave} />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    const textarea = component.find('textarea');
+    textarea.simulate('blur');
+    expect(component.state().editMode).toEqual(false);
+    expect(handleSave).not.toHaveBeenCalled();
+  });
+  it('onSave should return correct {name, value} object', () => {
+    let resName, resValue;
+    const handleSave = ({ name, value }) => {
+      resName = name;
+      resValue = value;
+    };
+    const component = mount(
+      <EditTextarea name='mockName' onSave={handleSave} />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    const textarea = component.find('textarea');
+    textarea.instance().value = 'mockValue';
+    textarea.simulate('blur');
+    expect(component.state().editMode).toEqual(false);
+    expect(resName).toEqual('mockName');
+    expect(resValue).toEqual('mockValue');
+  });
+  it('should display placeholder if value is empty string', () => {
+    const component = mount(
+      <EditTextarea placeholder='mockPlaceholder' value='' />
+    );
+    expect(component.contains('mockPlaceholder')).toEqual(true);
+  });
+  it('should display value instead of placeholder if value is not empty', () => {
+    const component = mount(
+      <EditTextarea placeholder='mockPlaceholder' value='mockValue' />
+    );
+    expect(component.contains('mockValue')).toEqual(true);
+  });
+  it('should display placeholder if value is changed to empty string', () => {
+    const component = mount(
+      <EditTextarea placeholder='mockPlaceholder' value='mockValue' />
+    );
+    expect(component.contains('mockValue')).toEqual(true);
+    component.simulate('click');
+    const textarea = component.find('textarea');
+    textarea.instance().value = '';
+    textarea.simulate('blur');
+    expect(component.contains('mockPlaceholder')).toEqual(true);
+  });
+  it('should display value instead of placeholder if value is changed to non-empty string', () => {
+    const component = mount(
+      <EditTextarea placeholder='mockPlaceholder' value='' />
+    );
+    expect(component.contains('mockPlaceholder')).toEqual(true);
+    component.simulate('click');
+    const textarea = component.find('textarea');
+    textarea.instance().value = 'mockValue';
+    textarea.simulate('blur');
+    expect(component.contains('mockValue')).toEqual(true);
+  });
+  it('should not display textarea when readonly', () => {
+    const component = mount(<EditTextarea readonly />);
+    component.simulate('click');
+    expect(component.exists('textarea')).toEqual(false);
+  });
+  it('should not display textarea when not readonly', () => {
+    const component = mount(<EditTextarea readonly={false} />);
+    component.simulate('click');
+    expect(component.exists('textarea')).toEqual(true);
   });
 });
