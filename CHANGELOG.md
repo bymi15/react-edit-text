@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/bymi15/react-edit-text/compare/v2.0.0...v2.1.0) (2020-11-16)
+
+
+### Features
+
+* add scrollbar thin UI for EditTextarea ([82ccfd8](https://github.com/bymi15/react-edit-text/commit/82ccfd8bba5018900a77a7210e985a56e1a47319))
+
 # [2.0.0](https://github.com/bymi15/react-edit-text/compare/v1.1.0...v2.0.0) (2020-11-05)
 
 
