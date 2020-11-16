@@ -15,8 +15,25 @@
   transition: background 0.2s ease;
 }
 
+/* Width */
 .textareaView::-webkit-scrollbar {
-  width: 12px;
+  width: 8;
+}
+/* Track */
+.textareaView::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+/* Handle */
+.textareaView::-webkit-scrollbar-thumb {
+  background: #ccc;
+}
+/* Handle on hover */
+.textareaView::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+/* Handle on drag */
+.textareaView::-webkit-scrollbar-thumb:active {
+  background: #666;
 }
 
 .textareaView:hover {
@@ -32,8 +49,25 @@
   scrollbar-width: thin;
 }
 
+/* Width */
 .shared::-webkit-scrollbar {
-  width: 12px;
+  width: 8;
+}
+/* Track */
+.shared::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+/* Handle */
+.shared::-webkit-scrollbar-thumb {
+  background: #ccc;
+}
+/* Handle on hover */
+.shared::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+/* Handle on drag */
+.shared::-webkit-scrollbar-thumb:active {
+  background: #666;
 }
 
 .placeholder {
