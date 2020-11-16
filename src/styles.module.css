@@ -17,7 +17,7 @@
 
 /* Width */
 .textareaView::-webkit-scrollbar {
-  width: 8;
+  width: 8px;
 }
 /* Track */
 .textareaView::-webkit-scrollbar-track {
@@ -51,7 +51,7 @@
 
 /* Width */
 .shared::-webkit-scrollbar {
-  width: 8;
+  width: 8px;
 }
 /* Track */
 .shared::-webkit-scrollbar-track {
