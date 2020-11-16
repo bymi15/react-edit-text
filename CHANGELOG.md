@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/bymi15/react-edit-text/compare/v2.1.0...v2.1.1) (2020-11-16)
+
+
+### Bug Fixes
+
+* fix browser compatibility issue with thin scrollbar ([822ec70](https://github.com/bymi15/react-edit-text/commit/822ec709872da0ff671549caf8b9d8d3a15f908a))
+
 # [2.1.0](https://github.com/bymi15/react-edit-text/compare/v2.0.0...v2.1.0) (2020-11-16)
 
 
