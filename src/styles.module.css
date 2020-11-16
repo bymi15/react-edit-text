@@ -11,8 +11,12 @@
 }
 
 .textareaView {
-  overflow: auto;
+  overflow-y: auto;
   transition: background 0.2s ease;
+}
+
+.textareaView::-webkit-scrollbar {
+  width: 12px;
 }
 
 .textareaView:hover {
@@ -25,6 +29,11 @@
   padding: 5px;
   display: block;
   margin: 3px 0 3px 0;
+  scrollbar-width: thin;
+}
+
+.shared::-webkit-scrollbar {
+  width: 12px;
 }
 
 .placeholder {
