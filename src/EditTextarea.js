@@ -8,7 +8,7 @@ export default class EditTextarea extends React.Component {
     super(props);
     this.state = {
       savedText: props.value,
-      savedTextLines: props.value ? props.value.split('/\r?\n/') : [],
+      savedTextLines: props.value ? props.value.split(/\r?\n/) : [],
       editMode: false
     };
     this.inputRef = React.createRef();
