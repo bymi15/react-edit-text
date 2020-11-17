@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/bymi15/react-edit-text/compare/v2.1.1...v2.1.2) (2020-11-16)
+
+
+### Bug Fixes
+
+* fix css bug ([ddab856](https://github.com/bymi15/react-edit-text/commit/ddab8564ab2b3ae3c42c9d7a381126ccca32e4f6))
+
 ## [2.1.1](https://github.com/bymi15/react-edit-text/compare/v2.1.0...v2.1.1) (2020-11-16)
 
 
