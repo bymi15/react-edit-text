@@ -7,10 +7,19 @@ export default class EditText extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      savedText: props.value,
+      savedText: props.defaultValue || '',
       editMode: false
     };
     this.inputRef = React.createRef();
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.value !== state.savedText && props.value !== null) {
+      return {
+        savedText: props.value
+      };
+    }
+    return null;
   }
 
   handleClick = () => {
@@ -57,31 +66,59 @@ export default class EditText extends React.Component {
       placeholder,
       inline,
       style,
-      readonly
+      readonly,
+      value,
+      onChange
     } = this.props;
     const { editMode, savedText } = this.state;
 
     if (!readonly && editMode) {
-      return (
-        <input
-          id={id}
-          className={classnames(
-            styles.shared,
-            {
-              [styles.inline]: inline
-            },
-            className
-          )}
-          style={style}
-          ref={this.inputRef}
-          type={type}
-          name={name}
-          onBlur={this.handleBlur}
-          onKeyDown={this.handleKeydown}
-          defaultValue={savedText}
-          autoFocus
-        />
-      );
+      if (value !== null) {
+        return (
+          <input
+            id={id}
+            className={classnames(
+              styles.shared,
+              {
+                [styles.inline]: inline
+              },
+              className
+            )}
+            style={style}
+            ref={this.inputRef}
+            type={type}
+            name={name}
+            onBlur={this.handleBlur}
+            onKeyDown={this.handleKeydown}
+            value={value}
+            onChange={(e) => {
+              onChange(e.target.value);
+            }}
+            autoFocus
+          />
+        );
+      } else {
+        return (
+          <input
+            id={id}
+            className={classnames(
+              styles.shared,
+              {
+                [styles.inline]: inline
+              },
+              className
+            )}
+            style={style}
+            ref={this.inputRef}
+            type={type}
+            name={name}
+            onBlur={this.handleBlur}
+            onKeyDown={this.handleKeydown}
+            defaultValue={savedText}
+            autoFocus
+          />
+        );
+      }
     } else {
       return (
         <div
@@ -111,9 +148,11 @@ EditText.defaultProps = {
   name: null,
   className: null,
   type: 'text',
-  value: '',
+  value: null,
+  defaultValue: null,
   placeholder: '',
   onSave: () => {},
+  onChange: () => {},
   inline: false,
   style: {},
   readonly: false
@@ -125,8 +164,10 @@ EditText.propTypes = {
   className: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.string,
+  defaultValue: PropTypes.string,
   placeholder: PropTypes.string,
   onSave: PropTypes.func,
+  onChange: PropTypes.func,
   inline: PropTypes.bool,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   readonly: PropTypes.bool

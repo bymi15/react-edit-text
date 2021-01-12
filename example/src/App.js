@@ -11,6 +11,7 @@ import { okaidia } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { examples } from './examples';
 
 const App = () => {
+  const [text, setText] = React.useState('test');
   const handleTextChange = ({ name, value }) => {
     alert(name + ' saved as: ' + value);
   };
@@ -52,7 +53,10 @@ const App = () => {
             <h4>Output</h4>
             <div className='card'>
               <div className='card-body'>
-                <EditText name='textbox1' value='Click me to edit my text' />
+                <EditText
+                  name='textbox1'
+                  defaultValue='Click me to edit my text'
+                />
                 <EditText
                   name='textbox2'
                   placeholder='I am a placeholder text'

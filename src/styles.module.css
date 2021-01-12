@@ -3,6 +3,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: background 0.2s ease;
+  min-height: 28px;
 }
 
 .label:hover {
