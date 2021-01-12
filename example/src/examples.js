@@ -7,7 +7,7 @@ const App = () => {
         <React.Fragment>
             <EditText
             name="textbox1"
-            value="Click me to edit my text"
+            defaultValue="Click me to edit my text"
             />
             <EditText
             name="textbox2"
@@ -29,25 +29,25 @@ const App = () => {
             <EditText
             name="textbox1"
             style={{border: '1px solid #999'}}
-            value="Click me to edit my text"
+            defaultValue="Click me to edit my text"
             />
             <br/>
             <EditText
             name="textbox2"
             style={{padding: '10px', fontSize: '36px'}}
-            value="Click me to edit my text"
+            defaultValue="Click me to edit my text"
             />
             <br/>
             <EditText
             name="textbox3"
             style={{padding: '15px', fontSize: '24px', backgroundColor: "#EEE"}}
-            value="Click me to edit my text"
+            defaultValue="Click me to edit my text"
             />
             <br/>
             <EditText
             name="textbox4"
             style={{padding: '15px', fontSize: '24px', color: "#FFF", backgroundColor: "#000"}}
-            value="Click me to edit my text"
+            defaultValue="Click me to edit my text"
             />
             <br />
             <EditTextarea
@@ -67,15 +67,15 @@ const App = () => {
         <React.Fragment>
           <div style={{whiteSpace: 'nowrap'}}>
             <strong><label className="mr-2">Full Name <small>(read-only)</small>: </label></strong>
-            <EditText id="fullName" name="fullName" value="James Smith" inline readonly/>
+            <EditText id="fullName" name="fullName" defaultValue="James Smith" inline readonly/>
           </div>
           <div style={{whiteSpace: 'nowrap'}}>
             <strong><label className="mr-2">Email Address: </label></strong>
-            <EditText name="age" type="email" style={{width: '200px'}} value="james.smith@domain.com" inline/>
+            <EditText name="age" type="email" style={{width: '200px'}} defaultValue="james.smith@domain.com" inline/>
           </div>
           <div style={{whiteSpace: 'nowrap'}}>
             <strong><label className="mr-2">Score: </label></strong>
-            <EditText name="age" type="number" style={{width: '200px'}} value="25000" inline/>
+            <EditText name="age" type="number" style={{width: '200px'}} defaultValue="25000" inline/>
           </div>
           <div style={{ display: 'flex' }}>
             <strong>

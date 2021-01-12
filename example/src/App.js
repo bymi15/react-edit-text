@@ -134,7 +134,7 @@ const App = () => {
                   <EditText
                     id='fullName'
                     name='fullName'
-                    value='James Smith'
+                    defaultValue='James Smith'
                     inline
                     readonly
                   />
@@ -147,7 +147,7 @@ const App = () => {
                     name='age'
                     type='email'
                     style={{ width: '200px' }}
-                    value='james.smith@domain.com'
+                    defaultValue='james.smith@domain.com'
                     inline
                   />
                 </div>
@@ -159,7 +159,7 @@ const App = () => {
                     name='age'
                     type='number'
                     style={{ width: '200px' }}
-                    value='25000'
+                    defaultValue='25000'
                     inline
                   />
                 </div>
@@ -200,13 +200,13 @@ const App = () => {
                 <EditText
                   name='textbox1'
                   style={{ border: '1px solid #999' }}
-                  value='Click me to edit my text'
+                  defaultValue='Click me to edit my text'
                 />
                 <br />
                 <EditText
                   name='textbox2'
                   style={{ padding: '10px', fontSize: '36px' }}
-                  value='Click me to edit my text'
+                  defaultValue='Click me to edit my text'
                 />
                 <br />
                 <EditText
@@ -216,7 +216,7 @@ const App = () => {
                     fontSize: '24px',
                     backgroundColor: '#EEE'
                   }}
-                  value='Click me to edit my text'
+                  defaultValue='Click me to edit my text'
                 />
                 <br />
                 <EditText
@@ -227,13 +227,13 @@ const App = () => {
                     color: '#FFF',
                     backgroundColor: '#000'
                   }}
-                  value='Click me to edit my text'
+                  defaultValue='Click me to edit my text'
                 />
                 <br />
                 <EditTextarea
                   name='textarea1'
                   rows={7}
-                  value='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non porta massa, a interdum turpis. In imperdiet tincidunt justo nec maximus. Aliquam tempus interdum orci eget rhoncus. Cras consectetur elit quam. Aliquam ante massa, pulvinar quis tortor non, rhoncus facilisis nisi. Nam at sapien porta, congue sapien porta, suscipit dolor. Maecenas vitae efficitur neque. Donec auctor tortor in ornare convallis. Etiam venenatis ex nisi, eu commodo risus dignissim ac. Suspendisse potenti. Integer hendrerit erat dapibus orci luctus, non malesuada est ullamcorper. Vivamus mattis magna ipsum, id lobortis justo aliquet at. '
+                  defaultValue='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non porta massa, a interdum turpis. In imperdiet tincidunt justo nec maximus. Aliquam tempus interdum orci eget rhoncus. Cras consectetur elit quam. Aliquam ante massa, pulvinar quis tortor non, rhoncus facilisis nisi. Nam at sapien porta, congue sapien porta, suscipit dolor. Maecenas vitae efficitur neque. Donec auctor tortor in ornare convallis. Etiam venenatis ex nisi, eu commodo risus dignissim ac. Suspendisse potenti. Integer hendrerit erat dapibus orci luctus, non malesuada est ullamcorper. Vivamus mattis magna ipsum, id lobortis justo aliquet at. '
                   style={{ fontSize: '16px' }}
                 />
               </div>
