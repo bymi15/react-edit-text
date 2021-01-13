@@ -1,3 +1,16 @@
+# [3.0.0](https://github.com/bymi15/react-edit-text/compare/v2.1.3...v3.0.0) (2021-01-13)
+
+
+### Features
+
+* add controllable component for both EditText and EditTextarea ([5d34a65](https://github.com/bymi15/react-edit-text/commit/5d34a65d9892451c7846a49e8f96a3629f43b821))
+* add controlled values (defaultValue, value, onChange) ([516dd3c](https://github.com/bymi15/react-edit-text/commit/516dd3cb5a3120495db06f732a802d67a2969ca4))
+
+
+### BREAKING CHANGES
+
+* add defaultValue and onChange props to allow controllable components
+
 ## [2.1.3](https://github.com/bymi15/react-edit-text/compare/v2.1.2...v2.1.3) (2020-11-17)
 
 
