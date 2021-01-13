@@ -60,10 +60,10 @@ class Example extends Component {
 | Prop         | Type     | Required | Default | Description                                             |
 | ------------ | -------- | -------- | ------- | ------------------------------------------------------- |
 | id           | string   | No       |         | HTML DOM id attribute                                   |
-| name         | string   | No       | ''      | HTML input name attribute                               |
+| name         | string   | No       |         | HTML input name attribute                               |
 | className    | string   | No       |         | HTML class attribute                                    |
-| value        | string   | No       | ''      | Value of the component                                  |
-| defaultValue | string   | No       | ''      | Default value of the component                          |
+| value        | string   | No       |         | Value of the component                                  |
+| defaultValue | string   | No       |         | Default value of the component                          |
 | placeholder  | string   | No       | ''      | Placeholder value                                       |
 | onSave       | function | No       |         | Callback function triggered when input is saved         |
 | onChange     | function | No       |         | Callback function triggered when input is changed       |
