@@ -104,7 +104,7 @@ describe('EditText', () => {
   });
   it('should display placeholder if value is changed to empty string', () => {
     const component = mount(
-      <EditText placeholder='mockPlaceholder' value='mockValue' />
+      <EditText placeholder='mockPlaceholder' defaultValue='mockValue' />
     );
     expect(component.contains('mockValue')).toEqual(true);
     component.simulate('click');
@@ -115,7 +115,7 @@ describe('EditText', () => {
   });
   it('should display value instead of placeholder if value is changed to non-empty string', () => {
     const component = mount(
-      <EditText placeholder='mockPlaceholder' value='' />
+      <EditText placeholder='mockPlaceholder' defaultValue='' />
     );
     expect(component.contains('mockPlaceholder')).toEqual(true);
     component.simulate('click');
@@ -184,7 +184,7 @@ describe('EditTextarea', () => {
   it('blur event should not trigger onSave if value is not changed', () => {
     const handleSave = jest.fn();
     const component = mount(
-      <EditTextarea name='mockName' onSave={handleSave} />
+      <EditTextarea name='mockName' defaultValue='' onSave={handleSave} />
     );
     component.simulate('click');
     expect(component.state().editMode).toEqual(true);
@@ -225,7 +225,7 @@ describe('EditTextarea', () => {
   });
   it('should display placeholder if value is changed to empty string', () => {
     const component = mount(
-      <EditTextarea placeholder='mockPlaceholder' value='mockValue' />
+      <EditTextarea placeholder='mockPlaceholder' defaultValue='mockValue' />
     );
     expect(component.contains('mockValue')).toEqual(true);
     component.simulate('click');
@@ -236,7 +236,7 @@ describe('EditTextarea', () => {
   });
   it('should display value instead of placeholder if value is changed to non-empty string', () => {
     const component = mount(
-      <EditTextarea placeholder='mockPlaceholder' value='' />
+      <EditTextarea placeholder='mockPlaceholder' defaultValue='' />
     );
     expect(component.contains('mockPlaceholder')).toEqual(true);
     component.simulate('click');
