@@ -32,7 +32,10 @@ export default class EditText extends React.Component {
   handleBlur = (save = true) => {
     if (this.inputRef.current) {
       const { name, value } = this.inputRef.current;
-      if (!!save && this.state.savedText !== value) {
+      if (
+        (!!save && this.state.savedText !== value) ||
+        this.props.value !== null
+      ) {
         this.setState({
           savedText: value
         });

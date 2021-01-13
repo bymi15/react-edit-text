@@ -36,7 +36,10 @@ export default class EditTextarea extends React.Component {
   handleBlur = (save = true) => {
     if (this.inputRef.current) {
       const { name, value } = this.inputRef.current;
-      if (!!save && this.state.savedText !== value) {
+      if (
+        (!!save && this.state.savedText !== value) ||
+        this.props.value !== null
+      ) {
         const lines = value === '' ? [] : value.split(/\r?\n/);
         this.setState({
           savedText: value,

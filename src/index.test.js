@@ -74,6 +74,26 @@ describe('EditText', () => {
     expect(component.state().editMode).toEqual(false);
     expect(handleSave).not.toHaveBeenCalled();
   });
+  it('onSave and onChange callbacks should be triggered', () => {
+    const handleSave = jest.fn();
+    const handleChange = jest.fn();
+    const component = mount(
+      <EditText
+        name='mockName'
+        value='mockValue'
+        onSave={handleSave}
+        onChange={handleChange}
+      />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    const input = component.find('input');
+    input.simulate('change', { target: { value: '' } });
+    input.simulate('blur');
+    expect(component.state().editMode).toEqual(false);
+    expect(handleSave).toHaveBeenCalled();
+    expect(handleChange).toHaveBeenCalled();
+  });
   it('onSave should return correct {name, value} object', () => {
     let resName, resValue;
     const handleSave = ({ name, value }) => {
@@ -192,6 +212,26 @@ describe('EditTextarea', () => {
     textarea.simulate('blur');
     expect(component.state().editMode).toEqual(false);
     expect(handleSave).not.toHaveBeenCalled();
+  });
+  it('onSave and onChange callbacks should be triggered', () => {
+    const handleSave = jest.fn();
+    const handleChange = jest.fn();
+    const component = mount(
+      <EditTextarea
+        name='mockName'
+        value='mockValue'
+        onSave={handleSave}
+        onChange={handleChange}
+      />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    const textarea = component.find('textarea');
+    textarea.simulate('change', { target: { value: '' } });
+    textarea.simulate('blur');
+    expect(component.state().editMode).toEqual(false);
+    expect(handleSave).toHaveBeenCalled();
+    expect(handleChange).toHaveBeenCalled();
   });
   it('onSave should return correct {name, value} object', () => {
     let resName, resValue;
