@@ -57,16 +57,18 @@ class Example extends Component {
 
 ### Shared props
 
-| Prop        | Type     | Required | Default | Description                                             |
-| ----------- | -------- | -------- | ------- | ------------------------------------------------------- |
-| id          | string   | No       |         | HTML DOM id attribute                                   |
-| name        | string   | No       | ''      | HTML input name attribute                               |
-| className   | string   | No       |         | HTML class attribute                                    |
-| value       | string   | No       | ''      | Value of the input and view content                     |
-| placeholder | string   | No       | ''      | Placeholder value                                       |
-| onSave      | function | No       |         | Callback function triggered when input is saved         |
-| style       | object   | No       |         | Sets CSS style of input and view component              |
-| readonly    | bool     | No       | false   | Disables the input and only displays the view component |
+| Prop         | Type     | Required | Default | Description                                             |
+| ------------ | -------- | -------- | ------- | ------------------------------------------------------- |
+| id           | string   | No       |         | HTML DOM id attribute                                   |
+| name         | string   | No       | ''      | HTML input name attribute                               |
+| className    | string   | No       |         | HTML class attribute                                    |
+| value        | string   | No       | ''      | Value of the component                                  |
+| defaultValue | string   | No       | ''      | Default value of the component                          |
+| placeholder  | string   | No       | ''      | Placeholder value                                       |
+| onSave       | function | No       |         | Callback function triggered when input is saved         |
+| onChange     | function | No       |         | Callback function triggered when input is changed       |
+| style        | object   | No       |         | Sets CSS style of input and view component              |
+| readonly     | bool     | No       | false   | Disables the input and only displays the view component |
 
 ### EditText props
 

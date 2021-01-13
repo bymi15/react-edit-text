@@ -11,8 +11,11 @@ import { okaidia } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { examples } from './examples';
 
 const App = () => {
-  const [text, setText] = React.useState('test');
-  const handleTextChange = ({ name, value }) => {
+  const [text, setText] = React.useState('This is a controlled component');
+  const [textarea, setTextarea] = React.useState(
+    'This is a controlled text area component'
+  );
+  const handleSave = ({ name, value }) => {
     alert(name + ' saved as: ' + value);
   };
   return (
@@ -30,11 +33,19 @@ const App = () => {
             Click on the component to switch into <b>edit mode</b>
           </li>
           <li className='lead'>
-            Click outside the component to trigger the <b>onSave</b> callback
+            Create an <b>uncontrolled</b> component and receive saved input
+            values by passing the <b>onSave</b> callback function
+          </li>
+          <li className='lead'>
+            Clicking outside the component triggers the <b>onSave</b> callback
           </li>
           <li className='lead'>
             Hitting the <b>ESC</b> key will exit edit mode without triggering
-            the <b>onSave</b> callback
+            the <b>onSave</b> callback function
+          </li>
+          <li className='lead'>
+            Create a <b>controlled</b> component by setting the <b>value</b>{' '}
+            prop and <b>onChange</b> callback function
           </li>
         </ul>
         <hr />
@@ -88,7 +99,18 @@ const App = () => {
             <b>placeholder</b> sets the placeholder of the component
           </li>
           <li>
+            <b>defaultValue</b> sets the default value of the component
+          </li>
+          <li>
             <b>value</b> sets the value of the component
+          </li>
+          <li>
+            <b>onSave</b> callback function returns a {'{'}name, value{'}'}{' '}
+            object when the input is loses focus
+          </li>
+          <li>
+            <b>onChange</b> callback function returns the new value of the input
+            when it changes
           </li>
         </ul>
         <p className='lead'>EditText props</p>
@@ -244,9 +266,21 @@ const App = () => {
         <hr />
         <h3>Callback Usage</h3>
         <p className='lead'>
-          <b>onSave</b> callback function triggers when the text input value is
-          changed
+          Components can use either <b>onSave</b> callback (for uncontrolled
+          components) or <b>onChange</b> callback (for controlled components)
+          with <b>value</b> prop.
         </p>
+        <div>
+          <h5>Uncontrolled component:</h5>
+          <b>onSave</b> callback function triggers when the input field is
+          blurred or loses focus
+        </div>
+        <br />
+        <div>
+          <h5>Controlled component:</h5>
+          <b>onChange</b> callback function triggers when the text input value
+          is changed
+        </div>
         <div className='row mt-3'>
           <div className='col-md-6'>
             <h4>Example</h4>
@@ -264,23 +298,40 @@ const App = () => {
               <div className='card-body'>
                 <EditText
                   name='textbox1'
-                  style={{ fontSize: '16px' }}
-                  onSave={handleTextChange}
-                  placeholder='Click to edit textbox1'
+                  style={{ fontSize: '16px', border: '1px solid #ccc' }}
+                  value={text}
+                  onChange={setText}
                 />
+                <p style={{ paddingLeft: '5px', marginBottom: '5px' }}>
+                  <b>Value:</b> {text}
+                </p>
+                <button onClick={() => setText('')}>Clear Input</button>
                 <br />
-                <EditText
-                  name='textbox2'
-                  style={{ fontSize: '16px' }}
-                  onSave={handleTextChange}
-                  placeholder='Click to edit textbox2'
-                />
                 <br />
                 <EditTextarea
                   name='textarea1'
-                  style={{ fontSize: '16px' }}
-                  onSave={handleTextChange}
-                  placeholder='Click to edit textarea1'
+                  style={{ fontSize: '16px', border: '1px solid #ccc' }}
+                  value={textarea}
+                  onChange={setTextarea}
+                />
+                <p style={{ paddingLeft: '5px', marginBottom: '5px' }}>
+                  <b>Value:</b> {textarea}
+                </p>
+                <button onClick={() => setTextarea('')}>Clear Input</button>
+                <br />
+                <br />
+                <EditText
+                  name='textbox'
+                  style={{ fontSize: '16px', border: '1px solid #ccc' }}
+                  onSave={handleSave}
+                  placeholder='This is a uncontrolled component'
+                />
+                <br />
+                <EditTextarea
+                  name='textarea'
+                  style={{ fontSize: '16px', border: '1px solid #ccc' }}
+                  onSave={handleSave}
+                  placeholder='This is a uncontrolled text area component'
                 />
               </div>
             </div>

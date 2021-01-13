@@ -95,30 +95,53 @@ const App = () => {
 import { EditText, EditTextarea } from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
 const App = () => {
-    const handleTextChange = ({name, value}) => {
+    const [text, setText] = React.useState(
+      'This is a controlled component'
+    );
+    const [textarea, setTextarea] = React.useState(
+      'This is a controlled text area component'
+    );
+    const handleSave = ({name, value}) => {
         alert(name + ' saved as: ' + value);
     }
     return (
         <React.Fragment>
           <EditText
             name='textbox1'
-            style={{ fontSize: '16px' }}
-            onSave={handleTextChange}
-            placeholder='Click to edit textbox1'
+            style={{ fontSize: '16px', border: '1px solid #ccc' }}
+            value={text}
+            onChange={setText}
           />
+          <p style={{ paddingLeft: '5px', marginBottom: '5px' }}>
+            <b>Value:</b> {text}
+          </p>
+          <button onClick={() => setText('')}>Clear Input</button>
           <br />
-          <EditText
-            name='textbox2'
-            style={{ fontSize: '16px' }}
-            onSave={handleTextChange}
-            placeholder='Click to edit textbox2'
-          />
           <br />
           <EditTextarea
             name='textarea1'
-            style={{ fontSize: '16px' }}
-            onSave={handleTextChange}
-            placeholder='Click to edit textarea1'
+            style={{ fontSize: '16px', border: '1px solid #ccc' }}
+            value={textarea}
+            onChange={setTextarea}
+          />
+          <p style={{ paddingLeft: '5px', marginBottom: '5px' }}>
+            <b>Value:</b> {textarea}
+          </p>
+          <button onClick={() => setTextarea('')}>Clear Input</button>
+          <br />
+          <br />
+          <EditText
+            name='textbox'
+            style={{ fontSize: '16px', border: '1px solid #ccc' }}
+            onSave={handleSave}
+            placeholder='This is a uncontrolled component'
+          />
+          <br />
+          <EditTextarea
+            name='textarea'
+            style={{ fontSize: '16px', border: '1px solid #ccc' }}
+            onSave={handleSave}
+            placeholder='This is a uncontrolled text area component'
           />
         </React.Fragment>
     );

@@ -7,11 +7,23 @@ export default class EditTextarea extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      savedText: props.value,
-      savedTextLines: props.value ? props.value.split(/\r?\n/) : [],
+      savedText: props.defaultValue,
+      savedTextLines: props.defaultValue
+        ? props.defaultValue.split(/\r?\n/)
+        : [],
       editMode: false
     };
     this.inputRef = React.createRef();
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.value !== state.savedText && props.value !== null) {
+      return {
+        savedText: props.value,
+        savedTextLines: props.value ? props.value.split(/\r?\n/) : []
+      };
+    }
+    return null;
   }
 
   handleClick = () => {
@@ -56,7 +68,9 @@ export default class EditTextarea extends React.Component {
       rows,
       placeholder,
       style,
-      readonly
+      readonly,
+      onChange,
+      value
     } = this.props;
     const { editMode, savedText, savedTextLines } = this.state;
 
@@ -66,20 +80,40 @@ export default class EditTextarea extends React.Component {
     };
 
     if (!readonly && editMode) {
-      return (
-        <textarea
-          id={id}
-          className={classnames(styles.shared, className)}
-          style={style}
-          ref={this.inputRef}
-          rows={rows}
-          name={name}
-          onBlur={this.handleBlur}
-          onKeyDown={this.handleKeydown}
-          defaultValue={savedText}
-          autoFocus
-        />
-      );
+      if (value !== null) {
+        return (
+          <textarea
+            id={id}
+            className={classnames(styles.shared, className)}
+            style={style}
+            ref={this.inputRef}
+            rows={rows}
+            name={name}
+            onBlur={this.handleBlur}
+            onKeyDown={this.handleKeydown}
+            value={value}
+            onChange={(e) => {
+              onChange(e.target.value);
+            }}
+            autoFocus
+          />
+        );
+      } else {
+        return (
+          <textarea
+            id={id}
+            className={classnames(styles.shared, className)}
+            style={style}
+            ref={this.inputRef}
+            rows={rows}
+            name={name}
+            onBlur={this.handleBlur}
+            onKeyDown={this.handleKeydown}
+            defaultValue={savedText}
+            autoFocus
+          />
+        );
+      }
     } else {
       return (
         <div
@@ -117,9 +151,11 @@ EditTextarea.defaultProps = {
   name: null,
   className: null,
   rows: 3,
-  value: '',
+  value: null,
+  defaultValue: null,
   placeholder: '',
   onSave: () => {},
+  onChange: () => {},
   style: {},
   readonly: false
 };
@@ -130,8 +166,10 @@ EditTextarea.propTypes = {
   className: PropTypes.string,
   rows: PropTypes.number,
   value: PropTypes.string,
+  defaultValue: PropTypes.string,
   placeholder: PropTypes.string,
   onSave: PropTypes.func,
+  onChange: PropTypes.func,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   readonly: PropTypes.bool
 };
