@@ -1,3 +1,10 @@
+## [2.1.3](https://github.com/bymi15/react-edit-text/compare/v2.1.2...v2.1.3) (2020-11-17)
+
+
+### Bug Fixes
+
+* **EditTextarea:** fix newline not showing in view mode bug ([6a21fa4](https://github.com/bymi15/react-edit-text/commit/6a21fa4dd4b78c5ccb02e87ebc3d049d16170733))
+
 ## [2.1.2](https://github.com/bymi15/react-edit-text/compare/v2.1.1...v2.1.2) (2020-11-16)
 
 
