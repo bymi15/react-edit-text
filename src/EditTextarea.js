@@ -7,7 +7,8 @@ export default class EditTextarea extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      savedText: props.defaultValue,
+      previousValue: props.defaultValue || '',
+      savedText: props.defaultValue || '',
       savedTextLines: props.defaultValue
         ? props.defaultValue.split(/\r?\n/)
         : [],
@@ -18,10 +19,18 @@ export default class EditTextarea extends React.Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.value !== state.savedText && props.value !== null) {
-      return {
-        savedText: props.value,
-        savedTextLines: props.value ? props.value.split(/\r?\n/) : []
-      };
+      if (state.editMode) {
+        return {
+          savedText: props.value,
+          savedTextLines: props.value ? props.value.split(/\r?\n/) : []
+        };
+      } else {
+        return {
+          previousValue: props.value,
+          savedText: props.value,
+          savedTextLines: props.value ? props.value.split(/\r?\n/) : []
+        };
+      }
     }
     return null;
   }
@@ -36,19 +45,22 @@ export default class EditTextarea extends React.Component {
   handleBlur = (save = true) => {
     if (this.inputRef.current) {
       const { name, value } = this.inputRef.current;
-      if (
-        (!!save && this.state.savedText !== value) ||
-        this.props.value !== null
-      ) {
+      if (save && this.state.previousValue !== value) {
         const lines = value === '' ? [] : value.split(/\r?\n/);
+        this.props.onSave({
+          name,
+          value,
+          previousValue: this.state.previousValue
+        });
         this.setState({
+          previousValue: value,
           savedText: value,
           savedTextLines: lines
         });
-        this.props.onSave({
-          name,
-          value
-        });
+      } else if (!save) {
+        if (this.props.onChange) {
+          this.props.onChange(this.state.previousValue);
+        }
       }
       this.setState({
         editMode: false

@@ -7,6 +7,7 @@ export default class EditText extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      previousValue: props.defaultValue || '',
       savedText: props.defaultValue || '',
       editMode: false
     };
@@ -15,9 +16,16 @@ export default class EditText extends React.Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.value !== state.savedText && props.value !== null) {
-      return {
-        savedText: props.value
-      };
+      if (state.editMode) {
+        return {
+          savedText: props.value
+        };
+      } else {
+        return {
+          previousValue: props.value,
+          savedText: props.value
+        };
+      }
     }
     return null;
   }
@@ -32,17 +40,20 @@ export default class EditText extends React.Component {
   handleBlur = (save = true) => {
     if (this.inputRef.current) {
       const { name, value } = this.inputRef.current;
-      if (
-        (!!save && this.state.savedText !== value) ||
-        this.props.value !== null
-      ) {
-        this.setState({
-          savedText: value
-        });
+      if (save && this.state.previousValue !== value) {
         this.props.onSave({
           name,
-          value
+          value,
+          previousValue: this.state.previousValue
         });
+        this.setState({
+          savedText: value,
+          previousValue: value
+        });
+      } else if (!save) {
+        if (this.props.onChange) {
+          this.props.onChange(this.state.previousValue);
+        }
       }
       this.setState({
         editMode: false
