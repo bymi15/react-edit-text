@@ -109,6 +109,12 @@ export default class EditText extends React.Component {
               onChange(e.target.value);
             }}
             autoFocus
+            onFocus={(e) =>
+              e.currentTarget.setSelectionRange(
+                e.currentTarget.value.length,
+                e.currentTarget.value.length
+              )
+            }
           />
         );
       } else {
@@ -130,6 +136,12 @@ export default class EditText extends React.Component {
             onKeyDown={this.handleKeydown}
             defaultValue={savedText}
             autoFocus
+            onFocus={(e) =>
+              e.currentTarget.setSelectionRange(
+                e.currentTarget.value.length,
+                e.currentTarget.value.length
+              )
+            }
           />
         );
       }
