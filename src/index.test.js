@@ -74,7 +74,26 @@ describe('EditText', () => {
     expect(component.state().editMode).toEqual(false);
     expect(handleSave).not.toHaveBeenCalled();
   });
-  it('onSave and onChange callbacks should be triggered', () => {
+  it('onSave callback should be triggered', () => {
+    const handleSave = jest.fn();
+    const handleChange = jest.fn();
+    const component = mount(
+      <EditText
+        name='mockName'
+        value='mockValue'
+        onSave={handleSave}
+        onChange={handleChange}
+      />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    const input = component.find('input');
+    input.instance().value = '';
+    input.simulate('blur');
+    expect(component.state().editMode).toEqual(false);
+    expect(handleSave).toHaveBeenCalled();
+  });
+  it('onChange callback should be triggered', () => {
     const handleSave = jest.fn();
     const handleChange = jest.fn();
     const component = mount(
@@ -91,16 +110,22 @@ describe('EditText', () => {
     input.simulate('change', { target: { value: '' } });
     input.simulate('blur');
     expect(component.state().editMode).toEqual(false);
-    expect(handleSave).toHaveBeenCalled();
     expect(handleChange).toHaveBeenCalled();
   });
-  it('onSave should return correct {name, value} object', () => {
-    let resName, resValue;
-    const handleSave = ({ name, value }) => {
+  it('onSave should return correct {name, value, previousValue} object with defaultValue prop set', () => {
+    let resName, resValue, resPreviousValue;
+    const handleSave = ({ name, value, previousValue }) => {
       resName = name;
       resValue = value;
+      resPreviousValue = previousValue;
     };
-    const component = mount(<EditText name='mockName' onSave={handleSave} />);
+    const component = mount(
+      <EditText
+        name='mockName'
+        defaultValue='mockValueBefore'
+        onSave={handleSave}
+      />
+    );
     component.simulate('click');
     expect(component.state().editMode).toEqual(true);
     const input = component.find('input');
@@ -109,6 +134,46 @@ describe('EditText', () => {
     expect(component.state().editMode).toEqual(false);
     expect(resName).toEqual('mockName');
     expect(resValue).toEqual('mockValue');
+    expect(resPreviousValue).toEqual('mockValueBefore');
+  });
+  it('onSave should return correct {name, value, previousValue} object with value and onChange props set', () => {
+    let resName, resValue, resPreviousValue;
+    const handleSave = ({ name, value, previousValue }) => {
+      resName = name;
+      resValue = value;
+      resPreviousValue = previousValue;
+    };
+    const component = mount(
+      <EditText
+        name='mockName'
+        onChange={() => {}}
+        value='mockValueBefore'
+        onSave={handleSave}
+      />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    const input = component.find('input');
+    input.instance().value = 'mockValue';
+    input.simulate('keydown', { keyCode: 13 });
+    expect(component.state().editMode).toEqual(false);
+    expect(resName).toEqual('mockName');
+    expect(resValue).toEqual('mockValue');
+    expect(resPreviousValue).toEqual('mockValueBefore');
+  });
+  it('previousValue should not change if value is changed while in edit mode', () => {
+    const component = mount(
+      <EditText
+        name='mockName'
+        onChange={() => {}}
+        value='mockValue'
+        onSave={() => {}}
+      />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    component.state().value = 'newMockValue';
+    expect(component.state().previousValue).toEqual('mockValue');
   });
   it('should display placeholder if value is empty string', () => {
     const component = mount(
@@ -176,18 +241,6 @@ describe('EditTextarea', () => {
     expect(component.state().editMode).toEqual(false);
     expect(handleSave).not.toHaveBeenCalled();
   });
-  it('pressing ESC key should not trigger onSave if value is not changed', () => {
-    const handleSave = jest.fn();
-    const component = mount(
-      <EditTextarea name='mockName' onSave={handleSave} />
-    );
-    component.simulate('click');
-    expect(component.state().editMode).toEqual(true);
-    const textarea = component.find('textarea');
-    textarea.simulate('keydown', { keyCode: 27 });
-    expect(component.state().editMode).toEqual(false);
-    expect(handleSave).not.toHaveBeenCalled();
-  });
   it('blur event should disable edit mode and trigger onSave', () => {
     const handleSave = jest.fn();
     const component = mount(
@@ -213,7 +266,26 @@ describe('EditTextarea', () => {
     expect(component.state().editMode).toEqual(false);
     expect(handleSave).not.toHaveBeenCalled();
   });
-  it('onSave and onChange callbacks should be triggered', () => {
+  it('onSave callback should be triggered', () => {
+    const handleSave = jest.fn();
+    const handleChange = jest.fn();
+    const component = mount(
+      <EditTextarea
+        name='mockName'
+        value='mockValue'
+        onSave={handleSave}
+        onChange={handleChange}
+      />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    const textarea = component.find('textarea');
+    textarea.instance().value = '';
+    textarea.simulate('blur');
+    expect(component.state().editMode).toEqual(false);
+    expect(handleSave).toHaveBeenCalled();
+  });
+  it('onChange callback should be triggered', () => {
     const handleSave = jest.fn();
     const handleChange = jest.fn();
     const component = mount(
@@ -230,17 +302,21 @@ describe('EditTextarea', () => {
     textarea.simulate('change', { target: { value: '' } });
     textarea.simulate('blur');
     expect(component.state().editMode).toEqual(false);
-    expect(handleSave).toHaveBeenCalled();
     expect(handleChange).toHaveBeenCalled();
   });
-  it('onSave should return correct {name, value} object', () => {
-    let resName, resValue;
-    const handleSave = ({ name, value }) => {
+  it('onSave should return correct {name, value, previousValue} object with defaultValue prop set', () => {
+    let resName, resValue, resPreviousValue;
+    const handleSave = ({ name, value, previousValue }) => {
       resName = name;
       resValue = value;
+      resPreviousValue = previousValue;
     };
     const component = mount(
-      <EditTextarea name='mockName' onSave={handleSave} />
+      <EditTextarea
+        name='mockName'
+        defaultValue='mockValueBefore'
+        onSave={handleSave}
+      />
     );
     component.simulate('click');
     expect(component.state().editMode).toEqual(true);
@@ -250,6 +326,46 @@ describe('EditTextarea', () => {
     expect(component.state().editMode).toEqual(false);
     expect(resName).toEqual('mockName');
     expect(resValue).toEqual('mockValue');
+    expect(resPreviousValue).toEqual('mockValueBefore');
+  });
+  it('onSave should return correct {name, value, previousValue} object with value and onChange props set', () => {
+    let resName, resValue, resPreviousValue;
+    const handleSave = ({ name, value, previousValue }) => {
+      resName = name;
+      resValue = value;
+      resPreviousValue = previousValue;
+    };
+    const component = mount(
+      <EditTextarea
+        name='mockName'
+        onChange={() => {}}
+        value='mockValueBefore'
+        onSave={handleSave}
+      />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    const textarea = component.find('textarea');
+    textarea.instance().value = 'mockValue';
+    textarea.simulate('blur');
+    expect(component.state().editMode).toEqual(false);
+    expect(resName).toEqual('mockName');
+    expect(resValue).toEqual('mockValue');
+    expect(resPreviousValue).toEqual('mockValueBefore');
+  });
+  it('previousValue should not change if value is changed while in edit mode', () => {
+    const component = mount(
+      <EditTextarea
+        name='mockName'
+        onChange={() => {}}
+        value='mockValue'
+        onSave={() => {}}
+      />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    component.state().value = 'newMockValue';
+    expect(component.state().previousValue).toEqual('mockValue');
   });
   it('should display placeholder if value is empty string', () => {
     const component = mount(
