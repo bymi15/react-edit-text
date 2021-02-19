@@ -1,3 +1,16 @@
+# [4.0.0](https://github.com/bymi15/react-edit-text/compare/v3.0.1...v4.0.0) (2021-02-19)
+
+
+### Features
+
+* add previousValue field to onSave callback response ([3057b92](https://github.com/bymi15/react-edit-text/commit/3057b92078bc95e4cb3a6ddb654c0611df2e3f67))
+* move cursor to end of text on focus ([3fde4bd](https://github.com/bymi15/react-edit-text/commit/3fde4bde2ab8dc1f6065bc7900d5bddfbf090a24))
+
+
+### BREAKING CHANGES
+
+* fix handleBlur to correctly revert changes when escape key is pressed
+
 ## [3.0.1](https://github.com/bymi15/react-edit-text/compare/v3.0.0...v3.0.1) (2021-01-13)
 
 
