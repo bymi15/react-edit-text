@@ -15,8 +15,8 @@ const App = () => {
   const [textarea, setTextarea] = React.useState(
     'This is a controlled text area component'
   );
-  const handleSave = ({ name, value }) => {
-    alert(name + ' saved as: ' + value);
+  const handleSave = ({ name, value, previousValue }) => {
+    alert(name + ' saved as: ' + value + ' (prev: ' + previousValue + ')');
   };
   return (
     <React.Fragment>
@@ -102,8 +102,9 @@ const App = () => {
             <b>value</b> sets the value of the component
           </li>
           <li>
-            <b>onSave</b> callback function returns a {'{'}name, value{'}'}{' '}
-            object when the input is loses focus
+            <b>onSave</b> callback function returns a {'{'}name, value,
+            previousValue{'}'} object when the input is loses focus (
+            <em>except when the escape key is pressed</em>)
           </li>
           <li>
             <b>onChange</b> callback function returns the new value of the input
@@ -263,13 +264,11 @@ const App = () => {
         <hr />
         <h3>Callback Usage</h3>
         <div>
-          <h6>Uncontrolled component:</h6>
           <b>onSave</b> callback function triggers when the input field is
-          blurred or loses focus
+          blurred or loses focus (<em>except when the escape key is pressed</em>
+          )
         </div>
-        <br />
         <div>
-          <h6>Controlled component:</h6>
           <b>onChange</b> callback function triggers when the text input value
           is changed
         </div>

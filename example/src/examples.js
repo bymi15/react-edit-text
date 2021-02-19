@@ -101,9 +101,9 @@ const App = () => {
     const [textarea, setTextarea] = React.useState(
       'This is a controlled text area component'
     );
-    const handleSave = ({name, value}) => {
-        alert(name + ' saved as: ' + value);
-    }
+    const handleSave = ({ name, value, previousValue }) => {
+      alert(name + ' saved as: ' + value + ' (prev: ' + previousValue + ')');
+    };
     return (
         <React.Fragment>
           <EditText
