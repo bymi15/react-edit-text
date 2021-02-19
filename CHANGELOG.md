@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/bymi15/react-edit-text/compare/v3.0.0...v3.0.1) (2021-01-13)
+
+
+### Bug Fixes
+
+* allow onSave callback to be triggered when used with onChange ([6508ea4](https://github.com/bymi15/react-edit-text/commit/6508ea47411a422ce1ab63d2224534a6b665124a))
+
 # [3.0.0](https://github.com/bymi15/react-edit-text/compare/v2.1.3...v3.0.0) (2021-01-13)
 
 
