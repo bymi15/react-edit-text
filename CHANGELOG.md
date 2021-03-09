@@ -1,3 +1,10 @@
+## [4.0.1](https://github.com/bymi15/react-edit-text/compare/v4.0.0...v4.0.1) (2021-03-09)
+
+
+### Bug Fixes
+
+* upgrade package to fix security issue ([96b5914](https://github.com/bymi15/react-edit-text/commit/96b59148c78203db085983fe04db65491d3f780b))
+
 # [4.0.0](https://github.com/bymi15/react-edit-text/compare/v3.0.1...v4.0.0) (2021-02-19)
 
 
