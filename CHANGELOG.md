@@ -1,3 +1,10 @@
+## [4.0.3](https://github.com/bymi15/react-edit-text/compare/v4.0.2...v4.0.3) (2021-04-03)
+
+
+### Bug Fixes
+
+* force minor version update to update readme in npmjs ([d079ab9](https://github.com/bymi15/react-edit-text/commit/d079ab94acaf2cfdbe96a178f786e01edb6a092a))
+
 ## [4.0.2](https://github.com/bymi15/react-edit-text/compare/v4.0.1...v4.0.2) (2021-04-03)
 
 
