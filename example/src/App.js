@@ -154,7 +154,7 @@ const App = () => {
                   <EditText
                     id='fullName'
                     name='fullName'
-                    defaultValue='James Smith'
+                    defaultValue='Full Name'
                     inline
                     readonly
                   />
@@ -164,22 +164,22 @@ const App = () => {
                     <label className='mr-2'>Email Address: </label>
                   </strong>
                   <EditText
-                    name='age'
+                    name='email'
                     type='email'
                     style={{ width: '200px' }}
-                    defaultValue='james.smith@domain.com'
+                    defaultValue='email@domain.com'
                     inline
                   />
                 </div>
                 <div style={{ whiteSpace: 'nowrap' }}>
                   <strong>
-                    <label className='mr-2'>Score: </label>
+                    <label className='mr-2'>Age: </label>
                   </strong>
                   <EditText
                     name='age'
                     type='number'
                     style={{ width: '200px' }}
-                    defaultValue='25000'
+                    defaultValue='34'
                     inline
                   />
                 </div>

@@ -71,6 +71,15 @@ export default class EditText extends React.Component {
     }
   };
 
+  handleFocus = (e) => {
+    if (this.props.type === 'text') {
+      e.currentTarget.setSelectionRange(
+        e.currentTarget.value.length,
+        e.currentTarget.value.length
+      );
+    }
+  };
+
   render() {
     const {
       id,
@@ -109,12 +118,7 @@ export default class EditText extends React.Component {
               onChange(e.target.value);
             }}
             autoFocus
-            onFocus={(e) =>
-              e.currentTarget.setSelectionRange(
-                e.currentTarget.value.length,
-                e.currentTarget.value.length
-              )
-            }
+            onFocus={this.handleFocus}
           />
         );
       } else {
@@ -136,12 +140,7 @@ export default class EditText extends React.Component {
             onKeyDown={this.handleKeydown}
             defaultValue={savedText}
             autoFocus
-            onFocus={(e) =>
-              e.currentTarget.setSelectionRange(
-                e.currentTarget.value.length,
-                e.currentTarget.value.length
-              )
-            }
+            onFocus={this.handleFocus}
           />
         );
       }

@@ -67,15 +67,15 @@ const App = () => {
         <React.Fragment>
           <div style={{whiteSpace: 'nowrap'}}>
             <strong><label className="mr-2">Full Name <small>(read-only)</small>: </label></strong>
-            <EditText id="fullName" name="fullName" defaultValue="James Smith" inline readonly/>
+            <EditText id="fullName" name="fullName" defaultValue="Full Name" inline readonly/>
           </div>
           <div style={{whiteSpace: 'nowrap'}}>
             <strong><label className="mr-2">Email Address: </label></strong>
-            <EditText name="age" type="email" style={{width: '200px'}} defaultValue="james.smith@domain.com" inline/>
+            <EditText name="email" type="email" style={{width: '200px'}} defaultValue="email@domain.com" inline/>
           </div>
           <div style={{whiteSpace: 'nowrap'}}>
             <strong><label className="mr-2">Score: </label></strong>
-            <EditText name="age" type="number" style={{width: '200px'}} defaultValue="25000" inline/>
+            <EditText name="age" type="number" style={{width: '200px'}} defaultValue="34" inline/>
           </div>
           <div style={{ display: 'flex' }}>
             <strong>
