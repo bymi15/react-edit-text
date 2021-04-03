@@ -12,7 +12,7 @@
     </a>
 </p>
 
-<p align="center">This is an <b>editable text component</b> for <a href="https://reactjs.org/">React</a>. Simply click on the text to edit!</p>
+<p align="center">This is an easy-to-use <b>editable text component</b> for <a href="https://reactjs.org/">React</a>. Simply click on the textbox to edit!</p>
 
 <p align="center">Made with <span role="img" aria-label="love">❤️</span> by <a href="https://github.com/bymi15">Brian Min</a></p>
 
