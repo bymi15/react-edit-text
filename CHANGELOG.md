@@ -1,3 +1,10 @@
+## [4.0.2](https://github.com/bymi15/react-edit-text/compare/v4.0.1...v4.0.2) (2021-04-03)
+
+
+### Bug Fixes
+
+* setSelectionRange causing bugs for input types that are not text ([777fba9](https://github.com/bymi15/react-edit-text/commit/777fba9f5d401d4374b653e6ae4f7f39b2c2adca))
+
 ## [4.0.1](https://github.com/bymi15/react-edit-text/compare/v4.0.0...v4.0.1) (2021-03-09)
 
 
