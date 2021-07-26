@@ -40,6 +40,7 @@ export default class EditTextarea extends React.Component {
     this.setState({
       editMode: true
     });
+    this.props.onEditMode();
   };
 
   handleBlur = (save = true) => {
@@ -183,6 +184,7 @@ EditTextarea.defaultProps = {
   placeholder: '',
   onSave: () => {},
   onChange: () => {},
+  onEditMode: () => {},
   style: {},
   readonly: false
 };
@@ -197,6 +199,7 @@ EditTextarea.propTypes = {
   placeholder: PropTypes.string,
   onSave: PropTypes.func,
   onChange: PropTypes.func,
+  onEditMode: PropTypes.func,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   readonly: PropTypes.bool
 };

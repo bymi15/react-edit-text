@@ -264,13 +264,17 @@ const App = () => {
         <hr />
         <h3>Callback Usage</h3>
         <div>
-          <b>onSave</b> callback function triggers when the input field is
+          <b>onSave</b> callback function is triggered when the input field is
           blurred or loses focus (<em>except when the escape key is pressed</em>
           )
         </div>
         <div>
-          <b>onChange</b> callback function triggers when the text input value
-          is changed
+          <b>onChange</b> callback function is triggered when the text input
+          value is changed
+        </div>
+        <div>
+          <b>onEditMode</b> callback function is triggered when the component is
+          clicked and input field is displayed
         </div>
         <div className='row mt-3'>
           <div className='col-md-6'>
