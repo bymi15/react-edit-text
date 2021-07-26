@@ -112,6 +112,25 @@ describe('EditText', () => {
     expect(component.state().editMode).toEqual(false);
     expect(handleChange).toHaveBeenCalled();
   });
+  it('onEditMode callback should be triggered', () => {
+    const handleEditMode = jest.fn();
+    const component = mount(
+      <EditText name='mockName' value='mockValue' onEditMode={handleEditMode} />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    expect(handleEditMode).toHaveBeenCalledTimes(1);
+  });
+  it('onEditMode callback should not be triggered if already in edit mode', () => {
+    const handleEditMode = jest.fn();
+    const component = mount(
+      <EditText name='mockName' value='mockValue' onEditMode={handleEditMode} />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    component.simulate('click');
+    expect(handleEditMode).toHaveBeenCalledTimes(1);
+  });
   it('onSave should return correct {name, value, previousValue} object with defaultValue prop set', () => {
     let resName, resValue, resPreviousValue;
     const handleSave = ({ name, value, previousValue }) => {
@@ -303,6 +322,33 @@ describe('EditTextarea', () => {
     textarea.simulate('blur');
     expect(component.state().editMode).toEqual(false);
     expect(handleChange).toHaveBeenCalled();
+  });
+  it('onEditMode callback should be triggered', () => {
+    const handleEditMode = jest.fn();
+    const component = mount(
+      <EditTextarea
+        name='mockName'
+        value='mockValue'
+        onEditMode={handleEditMode}
+      />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    expect(handleEditMode).toHaveBeenCalledTimes(1);
+  });
+  it('onEditMode callback should not be triggered if already in edit mode', () => {
+    const handleEditMode = jest.fn();
+    const component = mount(
+      <EditTextarea
+        name='mockName'
+        value='mockValue'
+        onEditMode={handleEditMode}
+      />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    component.simulate('click');
+    expect(handleEditMode).toHaveBeenCalledTimes(1);
   });
   it('onSave should return correct {name, value, previousValue} object with defaultValue prop set', () => {
     let resName, resValue, resPreviousValue;
