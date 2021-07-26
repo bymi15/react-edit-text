@@ -72,6 +72,7 @@ class Example extends Component {
 | placeholder  | string   | No       | ''      | Placeholder value                                       |
 | onSave       | function | No       |         | Callback function triggered when input is saved         |
 | onChange     | function | No       |         | Callback function triggered when input is changed       |
+| onEditMode   | function | No       |         | Callback function triggered when component is clicked   |
 | style        | object   | No       |         | Sets CSS style of input and view component              |
 | readonly     | bool     | No       | false   | Disables the input and only displays the view component |
 
