@@ -1,3 +1,10 @@
+# [4.1.0](https://github.com/bymi15/react-edit-text/compare/v4.0.3...v4.1.0) (2021-07-26)
+
+
+### Features
+
+* add onEditMode callback prop ([836e58d](https://github.com/bymi15/react-edit-text/commit/836e58d23da12923ae8849952e23a3f78281d58b))
+
 ## [4.0.3](https://github.com/bymi15/react-edit-text/compare/v4.0.2...v4.0.3) (2021-04-03)
 
 
