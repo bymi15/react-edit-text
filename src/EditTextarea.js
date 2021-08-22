@@ -66,6 +66,7 @@ export default class EditTextarea extends React.Component {
       this.setState({
         editMode: false
       });
+      this.props.onBlur();
     }
   };
 
@@ -185,6 +186,7 @@ EditTextarea.defaultProps = {
   onSave: () => {},
   onChange: () => {},
   onEditMode: () => {},
+  onBlur: () => {},
   style: {},
   readonly: false
 };
@@ -200,6 +202,7 @@ EditTextarea.propTypes = {
   onSave: PropTypes.func,
   onChange: PropTypes.func,
   onEditMode: PropTypes.func,
+  onBlur: PropTypes.func,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   readonly: PropTypes.bool
 };

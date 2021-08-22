@@ -59,6 +59,7 @@ export default class EditText extends React.Component {
       this.setState({
         editMode: false
       });
+      this.props.onBlur();
     }
   };
 
@@ -180,6 +181,7 @@ EditText.defaultProps = {
   onSave: () => {},
   onChange: () => {},
   onEditMode: () => {},
+  onBlur: () => {},
   inline: false,
   style: {},
   readonly: false
@@ -196,6 +198,7 @@ EditText.propTypes = {
   onSave: PropTypes.func,
   onChange: PropTypes.func,
   onEditMode: PropTypes.func,
+  onBlur: PropTypes.func,
   inline: PropTypes.bool,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   readonly: PropTypes.bool

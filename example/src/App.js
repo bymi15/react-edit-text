@@ -276,6 +276,11 @@ const App = () => {
           <b>onEditMode</b> callback function is triggered when the component is
           clicked and input field is displayed
         </div>
+        <div>
+          <b>onBlur</b> callback function is triggered when the input field is
+          blurred. This occurs either when an input value is saved or when the
+          escape key is pressed.
+        </div>
         <div className='row mt-3'>
           <div className='col-md-6'>
             <h4>Example</h4>
