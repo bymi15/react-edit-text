@@ -1,7 +1,7 @@
 import React from 'react';
 import { EditText, EditTextarea } from '.';
 import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 configure({ adapter: new Adapter() });
 
 describe('EditText', () => {
@@ -130,6 +130,28 @@ describe('EditText', () => {
     expect(component.state().editMode).toEqual(true);
     component.simulate('click');
     expect(handleEditMode).toHaveBeenCalledTimes(1);
+  });
+  it('onBlur callback should be triggered on enter key press (in edit mode)', () => {
+    const handleBlur = jest.fn();
+    const component = mount(
+      <EditText name='mockName' value='mockValue' onBlur={handleBlur} />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    const input = component.find('input');
+    input.simulate('keydown', { keyCode: 13 }); // Enter key
+    expect(handleBlur).toHaveBeenCalledTimes(1);
+  });
+  it('onBlur callback should be triggered on escape key press (in edit mode)', () => {
+    const handleBlur = jest.fn();
+    const component = mount(
+      <EditText name='mockName' value='mockValue' onBlur={handleBlur} />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    const input = component.find('input');
+    input.simulate('keydown', { keyCode: 27 }); // Escape key
+    expect(handleBlur).toHaveBeenCalledTimes(1);
   });
   it('onSave should return correct {name, value, previousValue} object with defaultValue prop set', () => {
     let resName, resValue, resPreviousValue;
@@ -349,6 +371,17 @@ describe('EditTextarea', () => {
     expect(component.state().editMode).toEqual(true);
     component.simulate('click');
     expect(handleEditMode).toHaveBeenCalledTimes(1);
+  });
+  it('onBlur callback should be triggered on escape key press (in edit mode)', () => {
+    const handleBlur = jest.fn();
+    const component = mount(
+      <EditTextarea name='mockName' value='mockValue' onBlur={handleBlur} />
+    );
+    component.simulate('click');
+    expect(component.state().editMode).toEqual(true);
+    const textarea = component.find('textarea');
+    textarea.simulate('keydown', { keyCode: 27 }); // Escape key
+    expect(handleBlur).toHaveBeenCalledTimes(1);
   });
   it('onSave should return correct {name, value, previousValue} object with defaultValue prop set', () => {
     let resName, resValue, resPreviousValue;
