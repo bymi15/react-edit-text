@@ -73,6 +73,7 @@ class Example extends Component {
 | onSave       | function | No       |         | Callback function triggered when input is saved         |
 | onChange     | function | No       |         | Callback function triggered when input is changed       |
 | onEditMode   | function | No       |         | Callback function triggered when component is clicked   |
+| onBlur       | function | No       |         | Callback function triggered when input is blurred       |
 | style        | object   | No       |         | Sets CSS style of input and view component              |
 | readonly     | bool     | No       | false   | Disables the input and only displays the view component |
 
