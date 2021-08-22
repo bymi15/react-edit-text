@@ -1,3 +1,10 @@
+# [4.2.0](https://github.com/bymi15/react-edit-text/compare/v4.1.0...v4.2.0) (2021-08-22)
+
+
+### Features
+
+* add onBlur callback ([850adce](https://github.com/bymi15/react-edit-text/commit/850adce60b529c0ccab9c4ecebe20d3ef1d7f189))
+
 # [4.1.0](https://github.com/bymi15/react-edit-text/compare/v4.0.3...v4.1.0) (2021-07-26)
 
 
