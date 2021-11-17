@@ -1,6 +1,9 @@
 <h1 align="center">React Edit Text</h1>
 
 <p align="center">
+    <a href="https://sonarcloud.io/dashboard?id=bymi15_react-edit-text">
+        <img src="https://sonarcloud.io/api/project_badges/measure?project=bymi15_react-edit-text&metric=alert_status" alt="Quality Gate Status" />
+    </a>
     <a href="https://travis-ci.com/github/bymi15/react-edit-text">
         <img src="https://api.travis-ci.com/bymi15/react-edit-text.svg?branch=main" alt="travis" />
     </a>
