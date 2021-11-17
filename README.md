@@ -1,9 +1,6 @@
 <h1 align="center">React Edit Text</h1>
 
 <p align="center">
-    <a href="https://david-dm.org/bymi15/react-edit-text" title="dependencies status">
-        <img src="https://david-dm.org/bymi15/react-edit-text/status.svg?style=flat-square"/>
-    </a>
     <a href="https://travis-ci.com/github/bymi15/react-edit-text">
         <img src="https://api.travis-ci.com/bymi15/react-edit-text.svg?branch=main" alt="travis" />
     </a>
