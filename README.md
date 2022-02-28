@@ -10,6 +10,9 @@
     <a href="https://www.npmjs.com/package/react-edit-text">
         <img src="https://img.shields.io/npm/v/react-edit-text?color=brightgreen&style=flat-squaret" alt="npm" />
     </a>
+    <a href="https://www.npmjs.com/package/react-edit-text">
+        <img src="https://img.shields.io/npm/dt/react-edit-text.svg?color=brightgreen&style=flat-squaret" alt="npm" />
+    </a>
 </p>
 
 <p align="center">This is an easy-to-use <b>editable text component</b> for <a href="https://reactjs.org/">React</a>. Simply click on the textbox to edit!</p>
