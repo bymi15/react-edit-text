@@ -1,3 +1,15 @@
+# [4.3.0](https://github.com/bymi15/react-edit-text/compare/v4.2.0...v4.3.0) (2022-03-01)
+
+
+### Bug Fixes
+
+* update dependencies ([7fa781a](https://github.com/bymi15/react-edit-text/commit/7fa781a31653a3058dbcb301b407f02e88f36739))
+
+
+### Features
+
+* add formatDisplayText prop for providing callback function to format display text ([cac7fda](https://github.com/bymi15/react-edit-text/commit/cac7fda1c8cdfb22f993452862d7c5bc26fb7553))
+
 # [4.2.0](https://github.com/bymi15/react-edit-text/compare/v4.1.0...v4.2.0) (2021-08-22)
 
 ### Features
