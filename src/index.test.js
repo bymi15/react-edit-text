@@ -1,7 +1,7 @@
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import { configure, mount } from 'enzyme';
 import React from 'react';
 import { EditText, EditTextarea } from '.';
-import { configure, mount } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 configure({ adapter: new Adapter() });
 
 describe('EditText', () => {
@@ -260,6 +260,36 @@ describe('EditText', () => {
     component.simulate('click');
     expect(component.exists('input')).toEqual(true);
   });
+  it('formatDisplayText should display value correctly based on passed in function', () => {
+    const formatDisplayText = jest.fn((value) => '$' + Math.round(value));
+    const component = mount(
+      <EditText
+        id='test'
+        name='mockName'
+        type='number'
+        value={1000.9}
+        formatDisplayText={formatDisplayText}
+      />
+    );
+    const displayText = component.find('#test');
+    expect(formatDisplayText).toHaveBeenCalled();
+    expect(displayText.first().text().trim().includes('$1001')).toEqual(true);
+  });
+  it('formatDisplayText should display defaultValue correctly based on passed in function', () => {
+    const formatDisplayText = jest.fn((value) => '$' + Math.round(value));
+    const component = mount(
+      <EditText
+        id='test'
+        name='mockName'
+        type='number'
+        defaultValue={1000.9}
+        formatDisplayText={formatDisplayText}
+      />
+    );
+    const displayText = component.find('#test');
+    expect(formatDisplayText).toHaveBeenCalled();
+    expect(displayText.first().text().trim().includes('$1001')).toEqual(true);
+  });
 });
 
 describe('EditTextarea', () => {
@@ -489,5 +519,37 @@ describe('EditTextarea', () => {
     const component = mount(<EditTextarea readonly={false} />);
     component.simulate('click');
     expect(component.exists('textarea')).toEqual(true);
+  });
+  it('formatDisplayText should display value correctly based on passed in function', () => {
+    const formatDisplayText = jest.fn(() => 'formatTest\nformatTest');
+    const component = mount(
+      <EditTextarea
+        id='test'
+        name='mockName'
+        value={'test\ntest\ntest'}
+        formatDisplayText={formatDisplayText}
+      />
+    );
+    const displayText = component.find('#test');
+    expect(formatDisplayText).toHaveBeenCalled();
+    expect(displayText.first().text().trim().includes('formatTest')).toEqual(
+      true
+    );
+  });
+  it('formatDisplayText should display defaultValue correctly based on passed in function', () => {
+    const formatDisplayText = jest.fn(() => 'formatTest\nformatTest');
+    const component = mount(
+      <EditTextarea
+        id='test'
+        name='mockName'
+        defaultValue={'test\ntest\ntest'}
+        formatDisplayText={formatDisplayText}
+      />
+    );
+    const displayText = component.find('#test');
+    expect(formatDisplayText).toHaveBeenCalled();
+    expect(displayText.first().text().trim().includes('formatTest')).toEqual(
+      true
+    );
   });
 });
