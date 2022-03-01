@@ -98,14 +98,28 @@ const App = () => {
     const [text, setText] = React.useState(
       'This is a controlled component'
     );
+    const [price, setPrice] = React.useState(125000.49);
     const [textarea, setTextarea] = React.useState(
       'This is a controlled text area component'
     );
+    const formatPrice = (val) => '$' + Math.round(val);
     const handleSave = ({ name, value, previousValue }) => {
       alert(name + ' saved as: ' + value + ' (prev: ' + previousValue + ')');
     };
     return (
         <React.Fragment>
+          <EditText
+            name='priceInput'
+            type='number'
+            style={{
+              fontSize: '16px',
+              border: '1px solid #ccc',
+              marginBottom: '10px'
+            }}
+            value={price}
+            onChange={setPrice}
+            formatDisplayText={formatPrice}
+          />
           <EditText
             name='textbox'
             style={{ fontSize: '16px', border: '1px solid #ccc' }}

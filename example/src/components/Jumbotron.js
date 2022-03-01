@@ -5,13 +5,10 @@ const Jumbotron = () => (
     <div className='container mt-4'>
       <h1 className='display-3'>React Edit Text</h1>
       <p className='right-spacing'>
-        <a
-          href='https://david-dm.org/bymi15/react-edit-text'
-          title='dependencies status'
-        >
+        <a href='https://sonarcloud.io/dashboard?id=bymi15_react-edit-text'>
           <img
-            src='https://david-dm.org/bymi15/react-edit-text/status.svg?style=flat-square'
-            alt='david dm'
+            src='https://sonarcloud.io/api/project_badges/measure?project=bymi15_react-edit-text&metric=alert_status'
+            alt='Quality Gate Status'
           />
         </a>
         <a href='https://travis-ci.com/github/bymi15/react-edit-text'>
@@ -23,6 +20,12 @@ const Jumbotron = () => (
         <a href='https://www.npmjs.com/package/react-edit-text'>
           <img
             src='https://img.shields.io/npm/v/react-edit-text?color=brightgreen&style=flat-squaret'
+            alt='npm'
+          />
+        </a>
+        <a href='https://www.npmjs.com/package/react-edit-text'>
+          <img
+            src='https://img.shields.io/npm/dt/react-edit-text.svg?color=brightgreen&style=flat-squaret'
             alt='npm'
           />
         </a>
