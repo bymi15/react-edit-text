@@ -286,7 +286,7 @@ describe('EditText', () => {
         id='test'
         name='mockName'
         type='number'
-        value='1000.9'
+        defaultValue='1000.9'
         formatDisplayText={formatDisplayText}
       />
     );
