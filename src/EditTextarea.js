@@ -1,7 +1,9 @@
-import React from 'react';
-import styles from './styles.module.css';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import React from 'react';
+import { EditTextareaDefaultProps, EditTextareaPropTypes } from './propTypes';
+import styles from './styles.module.css';
+
+const splitLines = (val) => (val ? val.split(/\r?\n/) : []);
 
 export default class EditTextarea extends React.Component {
   constructor(props) {
@@ -9,26 +11,21 @@ export default class EditTextarea extends React.Component {
     this.state = {
       previousValue: props.defaultValue || '',
       savedText: props.defaultValue || '',
-      savedTextLines: props.defaultValue
-        ? props.defaultValue.split(/\r?\n/)
-        : [],
       editMode: false
     };
     this.inputRef = React.createRef();
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.value !== state.savedText && props.value !== null) {
+    if (props.value !== state.savedText && props.value !== undefined) {
       if (state.editMode) {
         return {
-          savedText: props.value,
-          savedTextLines: props.value ? props.value.split(/\r?\n/) : []
+          savedText: props.value
         };
       } else {
         return {
           previousValue: props.value,
-          savedText: props.value,
-          savedTextLines: props.value ? props.value.split(/\r?\n/) : []
+          savedText: props.value
         };
       }
     }
@@ -47,7 +44,6 @@ export default class EditTextarea extends React.Component {
     if (this.inputRef.current) {
       const { name, value } = this.inputRef.current;
       if (save && this.state.previousValue !== value) {
-        const lines = value === '' ? [] : value.split(/\r?\n/);
         this.props.onSave({
           name,
           value,
@@ -55,8 +51,7 @@ export default class EditTextarea extends React.Component {
         });
         this.setState({
           previousValue: value,
-          savedText: value,
-          savedTextLines: lines
+          savedText: value
         });
       } else if (!save) {
         if (this.props.onChange) {
@@ -72,7 +67,6 @@ export default class EditTextarea extends React.Component {
 
   handleKeydown = (e) => {
     if (e.keyCode === 27 || e.charCode === 27) {
-      // esc key
       this.handleBlur(false);
     }
   };
@@ -87,9 +81,10 @@ export default class EditTextarea extends React.Component {
       style,
       readonly,
       onChange,
-      value
+      value,
+      formatDisplayText
     } = this.props;
-    const { editMode, savedText, savedTextLines } = this.state;
+    const { editMode, savedText } = this.state;
 
     const viewStyle = {
       ...style,
@@ -97,7 +92,7 @@ export default class EditTextarea extends React.Component {
     };
 
     if (!readonly && editMode) {
-      if (value !== null) {
+      if (value !== undefined) {
         return (
           <textarea
             id={id}
@@ -144,6 +139,7 @@ export default class EditTextarea extends React.Component {
         );
       }
     } else {
+      const textLines = splitLines(formatDisplayText(savedText));
       return (
         <div
           id={id}
@@ -159,8 +155,8 @@ export default class EditTextarea extends React.Component {
           onClick={this.handleClick}
           style={viewStyle}
         >
-          {savedTextLines && savedTextLines.length > 0 ? (
-            savedTextLines.map((text, index) => (
+          {textLines.length > 0 ? (
+            textLines.map((text, index) => (
               <React.Fragment key={index}>
                 <span>{text}</span>
                 <br />
@@ -175,34 +171,5 @@ export default class EditTextarea extends React.Component {
   }
 }
 
-EditTextarea.defaultProps = {
-  id: null,
-  name: null,
-  className: null,
-  rows: 3,
-  value: null,
-  defaultValue: null,
-  placeholder: '',
-  onSave: () => {},
-  onChange: () => {},
-  onEditMode: () => {},
-  onBlur: () => {},
-  style: {},
-  readonly: false
-};
-
-EditTextarea.propTypes = {
-  id: PropTypes.string,
-  name: PropTypes.string,
-  className: PropTypes.string,
-  rows: PropTypes.number,
-  value: PropTypes.string,
-  defaultValue: PropTypes.string,
-  placeholder: PropTypes.string,
-  onSave: PropTypes.func,
-  onChange: PropTypes.func,
-  onEditMode: PropTypes.func,
-  onBlur: PropTypes.func,
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  readonly: PropTypes.bool
-};
+EditTextarea.defaultProps = EditTextareaDefaultProps;
+EditTextarea.propTypes = EditTextareaPropTypes;

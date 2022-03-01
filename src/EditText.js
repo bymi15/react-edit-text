@@ -1,7 +1,7 @@
-import React from 'react';
-import styles from './styles.module.css';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import React from 'react';
+import { EditTextDefaultProps, EditTextPropTypes } from './propTypes';
+import styles from './styles.module.css';
 
 export default class EditText extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ export default class EditText extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.value !== state.savedText && props.value !== null) {
+    if (props.value !== state.savedText && props.value !== undefined) {
       if (state.editMode) {
         return {
           savedText: props.value
@@ -65,10 +65,8 @@ export default class EditText extends React.Component {
 
   handleKeydown = (e) => {
     if (e.keyCode === 13 || e.charCode === 13) {
-      // enter key
       this.handleBlur();
     } else if (e.keyCode === 27 || e.charCode === 27) {
-      // esc key
       this.handleBlur(false);
     }
   };
@@ -93,12 +91,13 @@ export default class EditText extends React.Component {
       style,
       readonly,
       value,
+      formatDisplayText,
       onChange
     } = this.props;
     const { editMode, savedText } = this.state;
 
     if (!readonly && editMode) {
-      if (value !== null) {
+      if (value !== undefined) {
         return (
           <input
             id={id}
@@ -163,43 +162,12 @@ export default class EditText extends React.Component {
           onClick={this.handleClick}
           style={style}
         >
-          {savedText || placeholder}
+          {formatDisplayText(savedText) || placeholder}
         </div>
       );
     }
   }
 }
 
-EditText.defaultProps = {
-  id: null,
-  name: null,
-  className: null,
-  type: 'text',
-  value: null,
-  defaultValue: null,
-  placeholder: '',
-  onSave: () => {},
-  onChange: () => {},
-  onEditMode: () => {},
-  onBlur: () => {},
-  inline: false,
-  style: {},
-  readonly: false
-};
-
-EditText.propTypes = {
-  id: PropTypes.string,
-  name: PropTypes.string,
-  className: PropTypes.string,
-  type: PropTypes.string,
-  value: PropTypes.string,
-  defaultValue: PropTypes.string,
-  placeholder: PropTypes.string,
-  onSave: PropTypes.func,
-  onChange: PropTypes.func,
-  onEditMode: PropTypes.func,
-  onBlur: PropTypes.func,
-  inline: PropTypes.bool,
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  readonly: PropTypes.bool
-};
+EditText.defaultProps = EditTextDefaultProps;
+EditText.propTypes = EditTextPropTypes;

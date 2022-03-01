@@ -12,3 +12,5 @@ script:
   - npm run semantic-release
 notifications:
   email: false
+git:
+  autocrlf: input

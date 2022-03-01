@@ -1,20 +1,19 @@
 import React from 'react';
-
 import { EditText, EditTextarea } from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
-
-import Navbar from './components/Navbar';
-import Jumbotron from './components/Jumbotron';
-
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { okaidia } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import Jumbotron from './components/Jumbotron';
+import Navbar from './components/Navbar';
 import { examples } from './examples';
 
 const App = () => {
   const [text, setText] = React.useState('This is a controlled component');
+  const [price, setPrice] = React.useState('125000.49');
   const [textarea, setTextarea] = React.useState(
     'This is a controlled text area component'
   );
+  const formatPrice = (val) => '$' + Math.round(parseFloat(val));
   const handleSave = ({ name, value, previousValue }) => {
     alert(name + ' saved as: ' + value + ' (prev: ' + previousValue + ')');
   };
@@ -100,6 +99,10 @@ const App = () => {
           </li>
           <li>
             <b>value</b> sets the value of the component
+          </li>
+          <li>
+            <b>formatDisplayValue</b> callback function gets called on the input
+            value and displays the output
           </li>
           <li>
             <b>onSave</b> callback function returns a {'{'}name, value,
@@ -245,7 +248,7 @@ const App = () => {
                     padding: '15px',
                     fontSize: '24px',
                     color: '#FFF',
-                    backgroundColor: '#000'
+                    backgroundColor: '#2196f3'
                   }}
                   defaultValue='Click me to edit my text'
                 />
@@ -263,6 +266,10 @@ const App = () => {
         <span id='callbacks' />
         <hr />
         <h3>Callback Usage</h3>
+        <div>
+          <b>formatDisplayValue</b> callback function takes in a value and
+          outputs a value. This can be used to format the displayed value.
+        </div>
         <div>
           <b>onSave</b> callback function is triggered when the input field is
           blurred or loses focus (<em>except when the escape key is pressed</em>
@@ -296,6 +303,18 @@ const App = () => {
             <h4>Output</h4>
             <div className='card'>
               <div className='card-body'>
+                <EditText
+                  name='priceInput'
+                  type='number'
+                  style={{
+                    fontSize: '16px',
+                    border: '1px solid #ccc',
+                    marginBottom: '10px'
+                  }}
+                  value={price}
+                  onChange={setPrice}
+                  formatDisplayText={formatPrice}
+                />
                 <EditText
                   name='textbox'
                   style={{ fontSize: '16px', border: '1px solid #ccc' }}
