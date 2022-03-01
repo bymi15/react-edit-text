@@ -9,11 +9,11 @@ import { examples } from './examples';
 
 const App = () => {
   const [text, setText] = React.useState('This is a controlled component');
-  const [price, setPrice] = React.useState(125000.49);
+  const [price, setPrice] = React.useState('125000.49');
   const [textarea, setTextarea] = React.useState(
     'This is a controlled text area component'
   );
-  const formatPrice = (val) => '$' + Math.round(val);
+  const formatPrice = (val) => '$' + Math.round(parseFloat(val));
   const handleSave = ({ name, value, previousValue }) => {
     alert(name + ' saved as: ' + value + ' (prev: ' + previousValue + ')');
   };
@@ -268,8 +268,7 @@ const App = () => {
         <h3>Callback Usage</h3>
         <div>
           <b>formatDisplayValue</b> callback function takes in a value and
-          outputs a formatted value of the same type. This can be used to format
-          the displayed value.
+          outputs a value. This can be used to format the displayed value.
         </div>
         <div>
           <b>onSave</b> callback function is triggered when the input field is

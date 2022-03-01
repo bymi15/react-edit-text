@@ -65,21 +65,21 @@ class Example extends Component {
 
 ### Shared props
 
-| Prop              | Type             | Required | Default  | Description                                                           |
-| ----------------- | ---------------- | -------- | -------- | --------------------------------------------------------------------- |
-| id                | string           | No       |          | HTML DOM id attribute                                                 |
-| name              | string           | No       |          | HTML input name attribute                                             |
-| className         | string           | No       |          | HTML class attribute                                                  |
-| value             | string or number | No       |          | Value of the component                                                |
-| defaultValue      | string or number | No       |          | Default value of the component                                        |
-| placeholder       | string           | No       | ''       | Placeholder value                                                     |
-| formatDisplayText | function         | No       | (x) => x | Callback function applied on the value to display the formatted value |
-| onSave            | function         | No       |          | Callback function triggered when input is saved                       |
-| onChange          | function         | No       |          | Callback function triggered when input is changed                     |
-| onEditMode        | function         | No       |          | Callback function triggered when component is clicked                 |
-| onBlur            | function         | No       |          | Callback function triggered when input is blurred                     |
-| style             | object           | No       |          | Sets CSS style of input and view component                            |
-| readonly          | bool             | No       | false    | Disables the input and only displays the view component               |
+| Prop              | Type     | Required | Default  | Description                                                           |
+| ----------------- | -------- | -------- | -------- | --------------------------------------------------------------------- |
+| id                | string   | No       |          | HTML DOM id attribute                                                 |
+| name              | string   | No       |          | HTML input name attribute                                             |
+| className         | string   | No       |          | HTML class attribute                                                  |
+| value             | string   | No       |          | Value of the component                                                |
+| defaultValue      | string   | No       |          | Default value of the component                                        |
+| placeholder       | string   | No       | ''       | Placeholder value                                                     |
+| formatDisplayText | function | No       | (x) => x | Callback function applied on the value to display the formatted value |
+| onSave            | function | No       |          | Callback function triggered when input is saved                       |
+| onChange          | function | No       |          | Callback function triggered when input is changed                     |
+| onEditMode        | function | No       |          | Callback function triggered when component is clicked                 |
+| onBlur            | function | No       |          | Callback function triggered when input is blurred                     |
+| style             | object   | No       |          | Sets CSS style of input and view component                            |
+| readonly          | bool     | No       | false    | Disables the input and only displays the view component               |
 
 ### EditText props
 

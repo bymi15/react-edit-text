@@ -261,13 +261,15 @@ describe('EditText', () => {
     expect(component.exists('input')).toEqual(true);
   });
   it('formatDisplayText should display value correctly based on passed in function', () => {
-    const formatDisplayText = jest.fn((value) => '$' + Math.round(value));
+    const formatDisplayText = jest.fn(
+      (value) => '$' + Math.round(parseFloat(value))
+    );
     const component = mount(
       <EditText
         id='test'
         name='mockName'
         type='number'
-        value={1000.9}
+        value='1000.9'
         formatDisplayText={formatDisplayText}
       />
     );
@@ -276,13 +278,15 @@ describe('EditText', () => {
     expect(displayText.first().text().trim().includes('$1001')).toEqual(true);
   });
   it('formatDisplayText should display defaultValue correctly based on passed in function', () => {
-    const formatDisplayText = jest.fn((value) => '$' + Math.round(value));
+    const formatDisplayText = jest.fn(
+      (value) => '$' + Math.round(parseFloat(value))
+    );
     const component = mount(
       <EditText
         id='test'
         name='mockName'
         type='number'
-        defaultValue={1000.9}
+        value='1000.9'
         formatDisplayText={formatDisplayText}
       />
     );

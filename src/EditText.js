@@ -15,7 +15,7 @@ export default class EditText extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.value !== state.savedText && props.value !== null) {
+    if (props.value !== state.savedText && props.value !== undefined) {
       if (state.editMode) {
         return {
           savedText: props.value
@@ -65,10 +65,8 @@ export default class EditText extends React.Component {
 
   handleKeydown = (e) => {
     if (e.keyCode === 13 || e.charCode === 13) {
-      // enter key
       this.handleBlur();
     } else if (e.keyCode === 27 || e.charCode === 27) {
-      // esc key
       this.handleBlur(false);
     }
   };
@@ -99,7 +97,7 @@ export default class EditText extends React.Component {
     const { editMode, savedText } = this.state;
 
     if (!readonly && editMode) {
-      if (value !== null) {
+      if (value !== undefined) {
         return (
           <input
             id={id}

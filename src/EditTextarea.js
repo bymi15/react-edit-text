@@ -17,7 +17,7 @@ export default class EditTextarea extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.value !== state.savedText && props.value !== null) {
+    if (props.value !== state.savedText && props.value !== undefined) {
       if (state.editMode) {
         return {
           savedText: props.value
@@ -92,7 +92,7 @@ export default class EditTextarea extends React.Component {
     };
 
     if (!readonly && editMode) {
-      if (value !== null) {
+      if (value !== undefined) {
         return (
           <textarea
             id={id}
