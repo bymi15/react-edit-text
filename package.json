@@ -74,5 +74,12 @@
   ],
   "dependencies": {
     "classnames": "^2.2.6"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "lines": 90
+      }
+    }
   }
 }
