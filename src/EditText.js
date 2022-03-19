@@ -80,91 +80,107 @@ export default class EditText extends React.Component {
     }
   };
 
-  render() {
+  renderDisplayMode = () => {
+    const { savedText } = this.state;
+    const {
+      id,
+      className,
+      placeholder,
+      inline,
+      style,
+      readonly,
+      formatDisplayText
+    } = this.props;
+    return (
+      <div
+        id={id}
+        className={classnames(
+          styles.shared,
+          styles.label,
+          {
+            [styles.placeholder]: placeholder && !savedText,
+            [styles.inline]: inline,
+            [styles.readonly]: readonly
+          },
+          className
+        )}
+        onClick={this.handleClick}
+        style={style}
+      >
+        {formatDisplayText(savedText) || placeholder}
+      </div>
+    );
+  };
+
+  renderEditMode = (controlled) => {
     const {
       id,
       className,
       name,
       type,
-      placeholder,
       inline,
       style,
-      readonly,
       value,
-      formatDisplayText,
       onChange
     } = this.props;
-    const { editMode, savedText } = this.state;
-
-    if (!readonly && editMode) {
-      if (value !== undefined) {
-        return (
-          <input
-            id={id}
-            className={classnames(
-              styles.shared,
-              {
-                [styles.inline]: inline
-              },
-              className
-            )}
-            style={style}
-            ref={this.inputRef}
-            type={type}
-            name={name}
-            onBlur={this.handleBlur}
-            onKeyDown={this.handleKeydown}
-            value={value}
-            onChange={(e) => {
-              onChange(e.target.value);
-            }}
-            autoFocus
-            onFocus={this.handleFocus}
-          />
-        );
-      } else {
-        return (
-          <input
-            id={id}
-            className={classnames(
-              styles.shared,
-              {
-                [styles.inline]: inline
-              },
-              className
-            )}
-            style={style}
-            ref={this.inputRef}
-            type={type}
-            name={name}
-            onBlur={this.handleBlur}
-            onKeyDown={this.handleKeydown}
-            defaultValue={savedText}
-            autoFocus
-            onFocus={this.handleFocus}
-          />
-        );
-      }
-    } else {
+    const { savedText } = this.state;
+    if (controlled) {
       return (
-        <div
+        <input
           id={id}
           className={classnames(
             styles.shared,
-            styles.label,
             {
-              [styles.placeholder]: placeholder && !savedText,
-              [styles.inline]: inline,
-              [styles.readonly]: readonly
+              [styles.inline]: inline
             },
             className
           )}
-          onClick={this.handleClick}
           style={style}
-        >
-          {formatDisplayText(savedText) || placeholder}
-        </div>
+          ref={this.inputRef}
+          type={type}
+          name={name}
+          onBlur={this.handleBlur}
+          onKeyDown={this.handleKeydown}
+          value={value}
+          onChange={(e) => {
+            onChange(e.target.value);
+          }}
+          autoFocus
+          onFocus={this.handleFocus}
+        />
       );
+    }
+    return (
+      <input
+        id={id}
+        className={classnames(
+          styles.shared,
+          {
+            [styles.inline]: inline
+          },
+          className
+        )}
+        style={style}
+        ref={this.inputRef}
+        type={type}
+        name={name}
+        onBlur={this.handleBlur}
+        onKeyDown={this.handleKeydown}
+        defaultValue={savedText}
+        autoFocus
+        onFocus={this.handleFocus}
+      />
+    );
+  };
+
+  render() {
+    const { readonly, value } = this.props;
+    const { editMode } = this.state;
+
+    if (!readonly && editMode) {
+      return this.renderEditMode(value !== undefined);
+    } else {
+      return this.renderDisplayMode();
     }
   }
 }
