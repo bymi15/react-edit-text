@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import React from 'react';
+import Input from './components/Input';
 import { EditTextDefaultProps, EditTextPropTypes } from './propTypes';
 import styles from './styles.module.css';
 
@@ -30,8 +31,15 @@ export default class EditText extends React.Component {
     return null;
   }
 
-  handleClick = () => {
-    if (this.props.readonly) return;
+  handleClickDisplay = () => {
+    if (this.props.readonly || this.props.showEditButton) return;
+    this.setState({
+      editMode: true
+    });
+    this.props.onEditMode();
+  };
+
+  handleClickEditButton = () => {
     this.setState({
       editMode: true
     });
@@ -89,86 +97,70 @@ export default class EditText extends React.Component {
       inline,
       style,
       readonly,
-      formatDisplayText
+      formatDisplayText,
+      showEditButton,
+      editButtonContent,
+      editButtonProps
     } = this.props;
     return (
-      <div
-        id={id}
-        className={classnames(
-          styles.shared,
-          styles.label,
-          {
-            [styles.placeholder]: placeholder && !savedText,
-            [styles.inline]: inline,
-            [styles.readonly]: readonly
-          },
-          className
+      <div className={styles.displayContainer}>
+        <div
+          id={id}
+          className={classnames(
+            styles.shared,
+            styles.label,
+            {
+              [styles.placeholder]: placeholder && !savedText,
+              [styles.inline]: inline,
+              [styles.readonly]: readonly || showEditButton
+            },
+            className
+          )}
+          onClick={this.handleClickDisplay}
+          style={style}
+        >
+          {formatDisplayText(savedText) || placeholder}
+        </div>
+        {showEditButton && !readonly && (
+          <button
+            type='button'
+            className={styles.editButton}
+            {...editButtonProps}
+            onClick={this.handleClickEditButton}
+          >
+            {editButtonContent}
+          </button>
         )}
-        onClick={this.handleClick}
-        style={style}
-      >
-        {formatDisplayText(savedText) || placeholder}
       </div>
     );
   };
 
   renderEditMode = (controlled) => {
-    const {
-      id,
-      className,
-      name,
-      type,
-      inline,
-      style,
-      value,
-      onChange
-    } = this.props;
+    const { value, onChange } = this.props;
     const { savedText } = this.state;
     if (controlled) {
       return (
-        <input
-          id={id}
-          className={classnames(
-            styles.shared,
-            {
-              [styles.inline]: inline
-            },
-            className
-          )}
-          style={style}
-          ref={this.inputRef}
-          type={type}
-          name={name}
-          onBlur={this.handleBlur}
-          onKeyDown={this.handleKeydown}
+        <Input
+          inputRef={this.inputRef}
+          handleBlur={this.handleBlur}
+          handleKeydown={this.handleKeydown}
+          handleFocus={this.handleFocus}
+          props={this.props}
           value={value}
           onChange={(e) => {
             onChange(e.target.value);
           }}
-          autoFocus
-          onFocus={this.handleFocus}
         />
       );
     }
     return (
-      <input
-        id={id}
-        className={classnames(
-          styles.shared,
-          {
-            [styles.inline]: inline
-          },
-          className
-        )}
-        style={style}
-        ref={this.inputRef}
-        type={type}
-        name={name}
-        onBlur={this.handleBlur}
-        onKeyDown={this.handleKeydown}
+      <Input
+        inputRef={this.inputRef}
+        handleBlur={this.handleBlur}
+        handleKeydown={this.handleKeydown}
+        handleFocus={this.handleFocus}
+        props={this.props}
         defaultValue={savedText}
-        autoFocus
-        onFocus={this.handleFocus}
       />
     );
   };

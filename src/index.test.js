@@ -255,7 +255,7 @@ describe('EditText', () => {
     component.simulate('click');
     expect(component.exists('input')).toEqual(false);
   });
-  it('should not display input when not readonly', () => {
+  it('should display input when not readonly', () => {
     const component = mount(<EditText readonly={false} />);
     component.simulate('click');
     expect(component.exists('input')).toEqual(true);
@@ -519,7 +519,7 @@ describe('EditTextarea', () => {
     component.simulate('click');
     expect(component.exists('textarea')).toEqual(false);
   });
-  it('should not display textarea when not readonly', () => {
+  it('should display textarea when not readonly', () => {
     const component = mount(<EditTextarea readonly={false} />);
     component.simulate('click');
     expect(component.exists('textarea')).toEqual(true);

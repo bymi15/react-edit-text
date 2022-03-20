@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import React from 'react';
+import Textarea from './components/Textarea';
 import { EditTextareaDefaultProps, EditTextareaPropTypes } from './propTypes';
 import styles from './styles.module.css';
 
@@ -117,51 +118,29 @@ export default class EditTextarea extends React.Component {
   };
 
   renderEditMode = (controlled) => {
-    const { id, className, name, style, value, onChange, rows } = this.props;
+    const { value, onChange } = this.props;
     const { savedText } = this.state;
     if (controlled) {
       return (
-        <textarea
-          id={id}
-          className={classnames(styles.shared, className)}
-          style={style}
-          ref={this.inputRef}
-          rows={rows}
-          name={name}
-          onBlur={this.handleBlur}
-          onKeyDown={this.handleKeydown}
+        <Textarea
+          inputRef={this.inputRef}
+          handleBlur={this.handleBlur}
+          handleKeydown={this.handleKeydown}
+          props={this.props}
           value={value}
           onChange={(e) => {
             onChange(e.target.value);
           }}
-          autoFocus
-          onFocus={(e) =>
-            e.currentTarget.setSelectionRange(
-              e.currentTarget.value.length,
-              e.currentTarget.value.length
-            )
-          }
         />
       );
     }
     return (
-      <textarea
-        id={id}
-        className={classnames(styles.shared, className)}
-        style={style}
-        ref={this.inputRef}
-        rows={rows}
-        name={name}
-        onBlur={this.handleBlur}
-        onKeyDown={this.handleKeydown}
+      <Textarea
+        inputRef={this.inputRef}
+        handleBlur={this.handleBlur}
+        handleKeydown={this.handleKeydown}
+        props={this.props}
         defaultValue={savedText}
-        autoFocus
-        onFocus={(e) =>
-          e.currentTarget.setSelectionRange(
-            e.currentTarget.value.length,
-            e.currentTarget.value.length
-          )
-        }
       />
     );
   };

@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import React from 'react';
+import EditIcon from './components/EditIcon';
 
 const sharedDefaultProps = {
   id: undefined,
@@ -35,13 +37,19 @@ const sharedPropTypes = {
 export const EditTextPropTypes = {
   ...sharedPropTypes,
   type: PropTypes.string,
-  inline: PropTypes.bool
+  inline: PropTypes.bool,
+  showEditButton: PropTypes.bool,
+  editButtonContent: PropTypes.any,
+  editButtonProps: PropTypes.object
 };
 
 export const EditTextDefaultProps = {
   ...sharedDefaultProps,
   type: 'text',
-  inline: false
+  inline: false,
+  showEditButton: false,
+  editButtonContent: <EditIcon />,
+  editButtonProps: {}
 };
 
 export const EditTextareaPropTypes = {

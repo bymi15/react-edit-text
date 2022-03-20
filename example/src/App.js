@@ -68,6 +68,12 @@ const App = () => {
                   name='textbox2'
                   placeholder='I am a placeholder text'
                 />
+                <EditText
+                  name='textbox3'
+                  defaultValue='I am an editable text with an edit button'
+                  editButtonProps={{ style: { marginLeft: '5px' } }}
+                  showEditButton
+                />
                 <EditTextarea placeholder='I am an editable textarea' />
               </div>
             </div>

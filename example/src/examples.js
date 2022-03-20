@@ -6,14 +6,19 @@ const App = () => {
     return (
         <React.Fragment>
             <EditText
-            name="textbox1"
-            defaultValue="Click me to edit my text"
+              name="textbox1"
+              defaultValue="Click me to edit my text"
             />
             <EditText
-            name="textbox2"
-            placeholder="I am a placeholder text"
+              name="textbox2"
+              placeholder="I am a placeholder text"
             />
-            <br />
+            <EditText
+              name='textbox3'
+              defaultValue='I am an editable text with an edit button'
+              editButtonProps={{ style: { marginLeft: '5px' } }}
+              showEditButton
+            />
             <EditTextarea
               placeholder='I am an editable textarea'
             />
@@ -27,27 +32,27 @@ const App = () => {
     return (
         <React.Fragment>
             <EditText
-            name="textbox1"
-            style={{border: '1px solid #999'}}
-            defaultValue="Click me to edit my text"
+              name="textbox1"
+              style={{border: '1px solid #999'}}
+              defaultValue="Click me to edit my text"
             />
             <br/>
             <EditText
-            name="textbox2"
-            style={{padding: '10px', fontSize: '36px'}}
-            defaultValue="Click me to edit my text"
+              name="textbox2"
+              style={{padding: '10px', fontSize: '36px'}}
+              defaultValue="Click me to edit my text"
             />
             <br/>
             <EditText
-            name="textbox3"
-            style={{padding: '15px', fontSize: '24px', backgroundColor: "#EEE"}}
-            defaultValue="Click me to edit my text"
+              name="textbox3"
+              style={{padding: '15px', fontSize: '24px', backgroundColor: "#EEE"}}
+              defaultValue="Click me to edit my text"
             />
             <br/>
             <EditText
-            name="textbox4"
-            style={{padding: '15px', fontSize: '24px', color: "#FFF", backgroundColor: "#000"}}
-            defaultValue="Click me to edit my text"
+              name="textbox4"
+              style={{padding: '15px', fontSize: '24px', color: "#FFF", backgroundColor: "#000"}}
+              defaultValue="Click me to edit my text"
             />
             <br />
             <EditTextarea
