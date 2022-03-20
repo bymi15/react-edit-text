@@ -4,83 +4,87 @@ import Input from './components/Input';
 import { EditTextDefaultProps, EditTextPropTypes } from './propTypes';
 import styles from './styles.module.css';
 
-export default class EditText extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      previousValue: props.defaultValue || '',
-      savedText: props.defaultValue || '',
-      editMode: false
-    };
-    this.inputRef = React.createRef();
-  }
+export default function EditText({
+  id,
+  name,
+  className,
+  placeholder,
+  inline,
+  style,
+  readonly,
+  type,
+  value,
+  defaultValue,
+  formatDisplayText,
+  onEditMode,
+  onChange,
+  onSave,
+  onBlur,
+  showEditButton,
+  editButtonContent,
+  editButtonProps
+}) {
+  const inputRef = React.useRef(null);
+  const [previousValue, setPreviousValue] = React.useState('');
+  const [savedText, setSavedText] = React.useState('');
+  const [editMode, setEditMode] = React.useState(false);
 
-  static getDerivedStateFromProps(props, state) {
-    if (props.value !== state.savedText && props.value !== undefined) {
-      if (state.editMode) {
-        return {
-          savedText: props.value
-        };
-      } else {
-        return {
-          previousValue: props.value,
-          savedText: props.value
-        };
+  React.useEffect(() => {
+    if (defaultValue !== undefined) {
+      setPreviousValue(defaultValue);
+      setSavedText(defaultValue);
+    }
+  }, [defaultValue]);
+
+  React.useEffect(() => {
+    if (value !== undefined) {
+      setSavedText(value);
+      if (!editMode) {
+        setPreviousValue(value);
       }
     }
-    return null;
-  }
+  }, [value, editMode]);
 
-  handleClickDisplay = () => {
-    if (this.props.readonly || this.props.showEditButton) return;
-    this.setState({
-      editMode: true
-    });
-    this.props.onEditMode();
+  const handleClickDisplay = () => {
+    if (readonly || showEditButton) return;
+    setEditMode(true);
+    onEditMode();
   };
 
-  handleClickEditButton = () => {
-    this.setState({
-      editMode: true
-    });
-    this.props.onEditMode();
+  const handleClickEditButton = () => {
+    setEditMode(true);
+    onEditMode();
   };
 
-  handleBlur = (save = true) => {
-    if (this.inputRef.current) {
-      const { name, value } = this.inputRef.current;
-      if (save && this.state.previousValue !== value) {
-        this.props.onSave({
+  const handleBlur = (save = true) => {
+    if (inputRef.current) {
+      const { name, value } = inputRef.current;
+      if (save && previousValue !== value) {
+        onSave({
           name,
           value,
-          previousValue: this.state.previousValue
+          previousValue: previousValue
         });
-        this.setState({
-          savedText: value,
-          previousValue: value
-        });
+        setSavedText(value);
+        setPreviousValue(value);
       } else if (!save) {
-        if (this.props.onChange) {
-          this.props.onChange(this.state.previousValue);
-        }
+        onChange(previousValue);
       }
-      this.setState({
-        editMode: false
-      });
-      this.props.onBlur();
+      setEditMode(false);
+      onBlur();
     }
   };
 
-  handleKeydown = (e) => {
+  const handleKeydown = (e) => {
     if (e.keyCode === 13 || e.charCode === 13) {
-      this.handleBlur();
+      handleBlur();
     } else if (e.keyCode === 27 || e.charCode === 27) {
-      this.handleBlur(false);
+      handleBlur(false);
     }
   };
 
-  handleFocus = (e) => {
-    if (this.props.type === 'text') {
+  const handleFocus = (e) => {
+    if (type === 'text') {
       e.currentTarget.setSelectionRange(
         e.currentTarget.value.length,
         e.currentTarget.value.length
@@ -88,27 +92,18 @@ export default class EditText extends React.Component {
     }
   };
 
-  renderDisplayMode = () => {
-    const { savedText } = this.state;
-    const {
-      id,
-      className,
-      placeholder,
-      inline,
-      style,
-      readonly,
-      formatDisplayText,
-      showEditButton,
-      editButtonContent,
-      editButtonProps
-    } = this.props;
+  const renderDisplayMode = () => {
     return (
-      <div className={styles.displayContainer}>
+      <div
+        className={classnames(styles.displayContainer, {
+          [styles.inline]: inline
+        })}
+      >
         <div
           id={id}
           className={classnames(
-            styles.shared,
             styles.label,
+            styles.shared,
             {
               [styles.placeholder]: placeholder && !savedText,
               [styles.inline]: inline,
@@ -116,7 +111,7 @@ export default class EditText extends React.Component {
             },
             className
           )}
-          onClick={this.handleClickDisplay}
+          onClick={handleClickDisplay}
           style={style}
         >
           {formatDisplayText(savedText) || placeholder}
@@ -126,7 +121,7 @@ export default class EditText extends React.Component {
             type='button'
             className={styles.editButton}
             {...editButtonProps}
-            onClick={this.handleClickEditButton}
+            onClick={handleClickEditButton}
           >
             {editButtonContent}
           </button>
@@ -135,17 +130,15 @@ export default class EditText extends React.Component {
     );
   };
 
-  renderEditMode = (controlled) => {
-    const { value, onChange } = this.props;
-    const { savedText } = this.state;
+  const renderEditMode = (controlled) => {
     if (controlled) {
       return (
         <Input
-          inputRef={this.inputRef}
-          handleBlur={this.handleBlur}
-          handleKeydown={this.handleKeydown}
-          handleFocus={this.handleFocus}
-          props={this.props}
+          inputRef={inputRef}
+          handleBlur={handleBlur}
+          handleKeydown={handleKeydown}
+          handleFocus={handleFocus}
+          props={{ id, inline, className, style, type, name }}
           value={value}
           onChange={(e) => {
             onChange(e.target.value);
@@ -155,26 +148,19 @@ export default class EditText extends React.Component {
     }
     return (
       <Input
-        inputRef={this.inputRef}
-        handleBlur={this.handleBlur}
-        handleKeydown={this.handleKeydown}
-        handleFocus={this.handleFocus}
-        props={this.props}
+        inputRef={inputRef}
+        handleBlur={handleBlur}
+        handleKeydown={handleKeydown}
+        handleFocus={handleFocus}
+        props={{ id, inline, className, style, type, name }}
         defaultValue={savedText}
       />
     );
   };
 
-  render() {
-    const { readonly, value } = this.props;
-    const { editMode } = this.state;
-
-    if (!readonly && editMode) {
-      return this.renderEditMode(value !== undefined);
-    } else {
-      return this.renderDisplayMode();
-    }
-  }
+  return !readonly && editMode
+    ? renderEditMode(value !== undefined)
+    : renderDisplayMode();
 }
 
 EditText.defaultProps = EditTextDefaultProps;

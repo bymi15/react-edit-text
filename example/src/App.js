@@ -32,6 +32,11 @@ const App = () => {
             Click on the component to switch into <b>edit mode</b>
           </li>
           <li className='lead'>
+            With the <b>showEditButton</b>
+            <sup className='new-badge'>NEW</sup> prop enabled, click on the edit
+            button to switch into <b>edit mode</b>
+          </li>
+          <li className='lead'>
             Clicking outside the component or blurring focus triggers the{' '}
             <b>onSave</b> callback
           </li>
