@@ -44,20 +44,18 @@ npm install @types/react-edit-text --save-dev
 Make sure to import the <b>CSS stylesheet</b> before using the component.
 
 ```jsx
-import React, { Component } from 'react';
+import React from 'react';
 
 import { EditText, EditTextarea } from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
 
-class Example extends Component {
-  render() {
-    return (
-      <div>
-        <EditText />
-        <EditTextarea />
-      </div>
-    );
-  }
+export default function Example() {
+  return (
+    <div>
+      <EditText showEditButton />
+      <EditTextarea />
+    </div>
+  );
 }
 ```
 
