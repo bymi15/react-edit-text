@@ -1,174 +1,136 @@
 import classnames from 'classnames';
 import React from 'react';
+import Textarea from './components/Textarea';
 import { EditTextareaDefaultProps, EditTextareaPropTypes } from './propTypes';
 import styles from './styles.module.css';
 
 const splitLines = (val) => (val ? val.split(/\r?\n/) : []);
 
-export default class EditTextarea extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      previousValue: props.defaultValue || '',
-      savedText: props.defaultValue || '',
-      editMode: false
-    };
-    this.inputRef = React.createRef();
-  }
+export default function EditTextarea({
+  id,
+  rows,
+  name,
+  className,
+  placeholder,
+  style,
+  readonly,
+  value,
+  defaultValue,
+  formatDisplayText,
+  onEditMode,
+  onChange,
+  onSave,
+  onBlur
+}) {
+  const inputRef = React.useRef(null);
+  const [previousValue, setPreviousValue] = React.useState('');
+  const [savedText, setSavedText] = React.useState('');
+  const [editMode, setEditMode] = React.useState(false);
 
-  static getDerivedStateFromProps(props, state) {
-    if (props.value !== state.savedText && props.value !== undefined) {
-      if (state.editMode) {
-        return {
-          savedText: props.value
-        };
-      } else {
-        return {
-          previousValue: props.value,
-          savedText: props.value
-        };
+  React.useEffect(() => {
+    if (defaultValue !== undefined) {
+      setPreviousValue(defaultValue);
+      setSavedText(defaultValue);
+    }
+  }, [defaultValue]);
+
+  React.useEffect(() => {
+    if (value !== undefined) {
+      setSavedText(value);
+      if (!editMode) {
+        setPreviousValue(value);
       }
     }
-    return null;
-  }
+  }, [value, editMode]);
 
-  handleClick = () => {
-    if (this.props.readonly) return;
-    this.setState({
-      editMode: true
-    });
-    this.props.onEditMode();
+  const handleClick = () => {
+    if (readonly) return;
+    setEditMode(true);
+    onEditMode();
   };
 
-  handleBlur = (save = true) => {
-    if (this.inputRef.current) {
-      const { name, value } = this.inputRef.current;
-      if (save && this.state.previousValue !== value) {
-        this.props.onSave({
-          name,
-          value,
-          previousValue: this.state.previousValue
+  const handleBlur = (save = true) => {
+    if (inputRef.current) {
+      const { name: inputName, value: inputValue } = inputRef.current;
+      if (save && previousValue !== inputValue) {
+        onSave({
+          name: inputName,
+          value: inputValue,
+          previousValue: previousValue
         });
-        this.setState({
-          previousValue: value,
-          savedText: value
-        });
+        setSavedText(inputValue);
+        setPreviousValue(inputValue);
       } else if (!save) {
-        if (this.props.onChange) {
-          this.props.onChange(this.state.previousValue);
-        }
+        onChange(previousValue);
       }
-      this.setState({
-        editMode: false
-      });
-      this.props.onBlur();
+      setEditMode(false);
+      onBlur();
     }
   };
 
-  handleKeydown = (e) => {
+  const handleKeydown = (e) => {
     if (e.keyCode === 27 || e.charCode === 27) {
-      this.handleBlur(false);
+      handleBlur(false);
     }
   };
 
-  render() {
-    const {
-      id,
-      className,
-      name,
-      rows,
-      placeholder,
-      style,
-      readonly,
-      onChange,
-      value,
-      formatDisplayText
-    } = this.props;
-    const { editMode, savedText } = this.state;
+  const renderDisplayMode = () => {
+    const textLines = splitLines(formatDisplayText(savedText));
+    return (
+      <div
+        id={id}
+        className={classnames(
+          styles.shared,
+          styles.textareaView,
+          {
+            [styles.placeholder]: placeholder && !savedText,
+            [styles.readonly]: readonly
+          },
+          className
+        )}
+        onClick={handleClick}
+        style={{
+          ...style,
+          height: `${rows * 24 + 16}px`
+        }}
+      >
+        {textLines.length > 0 ? (
+          textLines.map((text, index) => (
+            <React.Fragment key={index}>
+              <span>{text}</span>
+              <br />
+            </React.Fragment>
+          ))
+        ) : (
+          <span>{placeholder}</span>
+        )}
+      </div>
+    );
+  };
 
-    const viewStyle = {
-      ...style,
-      height: `${rows * 24 + 16}px`
+  const renderEditMode = (controlled) => {
+    const sharedProps = {
+      inputRef: inputRef,
+      handleBlur: handleBlur,
+      handleKeydown: handleKeydown,
+      props: { id, rows, className, style, name }
     };
+    return controlled ? (
+      <Textarea
+        {...sharedProps}
+        value={value}
+        onChange={(e) => {
+          onChange(e.target.value);
+        }}
+      />
+    ) : (
+      <Textarea {...sharedProps} defaultValue={savedText} />
+    );
+  };
 
-    if (!readonly && editMode) {
-      if (value !== undefined) {
-        return (
-          <textarea
-            id={id}
-            className={classnames(styles.shared, className)}
-            style={style}
-            ref={this.inputRef}
-            rows={rows}
-            name={name}
-            onBlur={this.handleBlur}
-            onKeyDown={this.handleKeydown}
-            value={value}
-            onChange={(e) => {
-              onChange(e.target.value);
-            }}
-            autoFocus
-            onFocus={(e) =>
-              e.currentTarget.setSelectionRange(
-                e.currentTarget.value.length,
-                e.currentTarget.value.length
-              )
-            }
-          />
-        );
-      } else {
-        return (
-          <textarea
-            id={id}
-            className={classnames(styles.shared, className)}
-            style={style}
-            ref={this.inputRef}
-            rows={rows}
-            name={name}
-            onBlur={this.handleBlur}
-            onKeyDown={this.handleKeydown}
-            defaultValue={savedText}
-            autoFocus
-            onFocus={(e) =>
-              e.currentTarget.setSelectionRange(
-                e.currentTarget.value.length,
-                e.currentTarget.value.length
-              )
-            }
-          />
-        );
-      }
-    } else {
-      const textLines = splitLines(formatDisplayText(savedText));
-      return (
-        <div
-          id={id}
-          className={classnames(
-            styles.shared,
-            styles.textareaView,
-            {
-              [styles.placeholder]: placeholder && !savedText,
-              [styles.readonly]: readonly
-            },
-            className
-          )}
-          onClick={this.handleClick}
-          style={viewStyle}
-        >
-          {textLines.length > 0 ? (
-            textLines.map((text, index) => (
-              <React.Fragment key={index}>
-                <span>{text}</span>
-                <br />
-              </React.Fragment>
-            ))
-          ) : (
-            <span>{placeholder}</span>
-          )}
-        </div>
-      );
-    }
-  }
+  return !readonly && editMode
+    ? renderEditMode(value !== undefined)
+    : renderDisplayMode();
 }
 
 EditTextarea.defaultProps = EditTextareaDefaultProps;

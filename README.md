@@ -44,20 +44,18 @@ npm install @types/react-edit-text --save-dev
 Make sure to import the <b>CSS stylesheet</b> before using the component.
 
 ```jsx
-import React, { Component } from 'react';
+import React from 'react';
 
 import { EditText, EditTextarea } from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
 
-class Example extends Component {
-  render() {
-    return (
-      <div>
-        <EditText />
-        <EditTextarea />
-      </div>
-    );
-  }
+export default function Example() {
+  return (
+    <div>
+      <EditText showEditButton />
+      <EditTextarea />
+    </div>
+  );
 }
 ```
 
@@ -83,10 +81,13 @@ class Example extends Component {
 
 ### EditText props
 
-| Prop   | Type   | Required | Default | Description              |
-| ------ | ------ | -------- | ------- | ------------------------ |
-| type   | string | No       | 'text'  | HTML DOM input text type |
-| inline | bool   | No       | false   | Sets inline display      |
+| Prop              | Type   | Required | Default                                                              | Description                                                                   |
+| ----------------- | ------ | -------- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| type              | string | No       | 'text'                                                               | HTML DOM input text type                                                      |
+| inline            | bool   | No       | false                                                                | Sets inline display                                                           |
+| showEditButton    | bool   | No       | false                                                                | Displays an edit button that can be pressed to enable edit mode               |
+| editButtonContent | node   | No       | <img src="./assets/images/editIcon.png" alt="editIcon" width="15" /> | Sets the content for the edit button. This can be any valid element           |
+| editButtonProps   | object | No       | {}                                                                   | Sets the props passed to the edit button. This can be any valid DOM attribute |
 
 ### EditTextarea props
 

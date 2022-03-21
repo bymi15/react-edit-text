@@ -32,6 +32,11 @@ const App = () => {
             Click on the component to switch into <b>edit mode</b>
           </li>
           <li className='lead'>
+            With the <b>showEditButton</b>
+            <sup className='new-badge'>NEW</sup> prop enabled, click on the edit
+            button to switch into <b>edit mode</b>
+          </li>
+          <li className='lead'>
             Clicking outside the component or blurring focus triggers the{' '}
             <b>onSave</b> callback
           </li>
@@ -68,6 +73,12 @@ const App = () => {
                   name='textbox2'
                   placeholder='I am a placeholder text'
                 />
+                <EditText
+                  name='textbox3'
+                  defaultValue='I am an editable text with an edit button'
+                  editButtonProps={{ style: { marginLeft: '5px' } }}
+                  showEditButton
+                />
                 <EditTextarea placeholder='I am an editable textarea' />
               </div>
             </div>
@@ -76,7 +87,7 @@ const App = () => {
         <span id='props' />
         <hr />
         <h3>Props</h3>
-        <p className='lead'>Shared props</p>
+        <p className='lead mb-0'>Shared props</p>
         <ul>
           <li>
             <b>id</b> sets the id of the DOM element
@@ -113,8 +124,17 @@ const App = () => {
             <b>onChange</b> callback function returns the new value of the input
             when it changes
           </li>
+          <li>
+            <b>onEditMode</b> callback function is triggered when the component
+            is clicked and input field is displayed
+          </li>
+          <li>
+            <b>onBlur</b> callback function is triggered when the input field is
+            blurred. This occurs either when an input value is saved or when the
+            escape key is pressed.
+          </li>
         </ul>
-        <p className='lead'>EditText props</p>
+        <p className='lead mb-0'>EditText props</p>
         <ul>
           <li>
             <b>type</b> (default: 'text') can be set to a DOM input text type
@@ -124,8 +144,24 @@ const App = () => {
             <b>inline</b> (default: false) displays the input box as an inline
             component
           </li>
+          <li>
+            <b>showEditButton</b> <sup className='new-badge'>NEW</sup> (default:
+            false) displays an edit button that can be pressed to enable edit
+            mode, instead of the default behaviour of clicking on the text to
+            toggle edit mode.
+          </li>
+          <li>
+            <b>editButtonContent</b> <sup className='new-badge'>NEW</sup>{' '}
+            (default: &lt;EditIcon /&gt;) is the content that is displayed as
+            the edit button. This can be any valid element.
+          </li>
+          <li>
+            <b>editButtonProps</b> <sup className='new-badge'>NEW</sup>{' '}
+            (default: false) are props that are passed to the edit button
+            element. This can include any valid DOM attribute.
+          </li>
         </ul>
-        <p className='lead'>EditTextarea props</p>
+        <p className='lead mb-0'>EditTextarea props</p>
         <ul>
           <li>
             <b>rows</b> (default: 3) sets the number of visible rows

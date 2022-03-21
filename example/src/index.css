@@ -26,3 +26,20 @@ input[type='number']:focus,
   box-shadow: none !important;
   border: 1px solid #2196f3 !important;
 }
+
+.new-badge {
+  display: inline-block;
+  padding: 0.35em 0.5em;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  color: #fff;
+  background-color: #28a745;
+  margin-left: 0;
+}
