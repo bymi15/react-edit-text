@@ -53,7 +53,7 @@ export default function Example() {
   return (
     <div>
       <EditText showEditButton />
-      <EditTextarea rows={5} />
+      <EditTextarea />
     </div>
   );
 }
