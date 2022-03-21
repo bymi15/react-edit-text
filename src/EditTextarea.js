@@ -6,83 +6,75 @@ import styles from './styles.module.css';
 
 const splitLines = (val) => (val ? val.split(/\r?\n/) : []);
 
-export default class EditTextarea extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      previousValue: props.defaultValue || '',
-      savedText: props.defaultValue || '',
-      editMode: false
-    };
-    this.inputRef = React.createRef();
-  }
+export default function EditTextarea({
+  id,
+  rows,
+  name,
+  className,
+  placeholder,
+  style,
+  readonly,
+  value,
+  defaultValue,
+  formatDisplayText,
+  onEditMode,
+  onChange,
+  onSave,
+  onBlur
+}) {
+  const inputRef = React.useRef(null);
+  const [previousValue, setPreviousValue] = React.useState('');
+  const [savedText, setSavedText] = React.useState('');
+  const [editMode, setEditMode] = React.useState(false);
 
-  static getDerivedStateFromProps(props, state) {
-    if (props.value !== state.savedText && props.value !== undefined) {
-      if (state.editMode) {
-        return {
-          savedText: props.value
-        };
-      } else {
-        return {
-          previousValue: props.value,
-          savedText: props.value
-        };
+  React.useEffect(() => {
+    if (defaultValue !== undefined) {
+      setPreviousValue(defaultValue);
+      setSavedText(defaultValue);
+    }
+  }, [defaultValue]);
+
+  React.useEffect(() => {
+    if (value !== undefined) {
+      setSavedText(value);
+      if (!editMode) {
+        setPreviousValue(value);
       }
     }
-    return null;
-  }
+  }, [value, editMode]);
 
-  handleClick = () => {
-    if (this.props.readonly) return;
-    this.setState({
-      editMode: true
-    });
-    this.props.onEditMode();
+  const handleClick = () => {
+    if (readonly) return;
+    setEditMode(true);
+    onEditMode();
   };
 
-  handleBlur = (save = true) => {
-    if (this.inputRef.current) {
-      const { name, value } = this.inputRef.current;
-      if (save && this.state.previousValue !== value) {
-        this.props.onSave({
+  const handleBlur = (save = true) => {
+    if (inputRef.current) {
+      const { name, value } = inputRef.current;
+      if (save && previousValue !== value) {
+        onSave({
           name,
           value,
-          previousValue: this.state.previousValue
+          previousValue: previousValue
         });
-        this.setState({
-          previousValue: value,
-          savedText: value
-        });
+        setSavedText(value);
+        setPreviousValue(value);
       } else if (!save) {
-        if (this.props.onChange) {
-          this.props.onChange(this.state.previousValue);
-        }
+        onChange(previousValue);
       }
-      this.setState({
-        editMode: false
-      });
-      this.props.onBlur();
+      setEditMode(false);
+      onBlur();
     }
   };
 
-  handleKeydown = (e) => {
+  const handleKeydown = (e) => {
     if (e.keyCode === 27 || e.charCode === 27) {
-      this.handleBlur(false);
+      handleBlur(false);
     }
   };
 
-  renderDisplayMode = () => {
-    const { savedText } = this.state;
-    const {
-      id,
-      className,
-      placeholder,
-      style,
-      readonly,
-      rows,
-      formatDisplayText
-    } = this.props;
+  const renderDisplayMode = () => {
     const viewStyle = {
       ...style,
       height: `${rows * 24 + 16}px`
@@ -100,7 +92,7 @@ export default class EditTextarea extends React.Component {
           },
           className
         )}
-        onClick={this.handleClick}
+        onClick={handleClick}
         style={viewStyle}
       >
         {textLines.length > 0 ? (
@@ -117,16 +109,14 @@ export default class EditTextarea extends React.Component {
     );
   };
 
-  renderEditMode = (controlled) => {
-    const { value, onChange } = this.props;
-    const { savedText } = this.state;
+  const renderEditMode = (controlled) => {
     if (controlled) {
       return (
         <Textarea
-          inputRef={this.inputRef}
-          handleBlur={this.handleBlur}
-          handleKeydown={this.handleKeydown}
-          props={this.props}
+          inputRef={inputRef}
+          handleBlur={handleBlur}
+          handleKeydown={handleKeydown}
+          props={{ id, rows, className, style, name }}
           value={value}
           onChange={(e) => {
             onChange(e.target.value);
@@ -136,25 +126,18 @@ export default class EditTextarea extends React.Component {
     }
     return (
       <Textarea
-        inputRef={this.inputRef}
-        handleBlur={this.handleBlur}
-        handleKeydown={this.handleKeydown}
-        props={this.props}
+        inputRef={inputRef}
+        handleBlur={handleBlur}
+        handleKeydown={handleKeydown}
+        props={{ id, rows, className, style, name }}
         defaultValue={savedText}
       />
     );
   };
 
-  render() {
-    const { readonly, value } = this.props;
-    const { editMode } = this.state;
-
-    if (!readonly && editMode) {
-      return this.renderEditMode(value !== undefined);
-    } else {
-      return this.renderDisplayMode();
-    }
-  }
+  return !readonly && editMode
+    ? renderEditMode(value !== undefined)
+    : renderDisplayMode();
 }
 
 EditTextarea.defaultProps = EditTextareaDefaultProps;
