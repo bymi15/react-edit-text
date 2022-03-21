@@ -1,3 +1,10 @@
+# [4.4.0](https://github.com/bymi15/react-edit-text/compare/v4.3.0...v4.4.0) (2022-03-21)
+
+
+### Features
+
+* **11:** add props for displaying edit button and refactor project with react hooks ([#23](https://github.com/bymi15/react-edit-text/issues/23)) ([78de49d](https://github.com/bymi15/react-edit-text/commit/78de49d1d343c979ed912d9538badc791caf971e))
+
 # [4.3.0](https://github.com/bymi15/react-edit-text/compare/v4.2.0...v4.3.0) (2022-03-01)
 
 
