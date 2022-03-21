@@ -58,15 +58,15 @@ export default function EditText({
 
   const handleBlur = (save = true) => {
     if (inputRef.current) {
-      const { name, value } = inputRef.current;
-      if (save && previousValue !== value) {
+      const { name: inputName, value: inputValue } = inputRef.current;
+      if (save && previousValue !== inputValue) {
         onSave({
-          name,
-          value,
+          name: inputName,
+          value: inputValue,
           previousValue: previousValue
         });
-        setSavedText(value);
-        setPreviousValue(value);
+        setSavedText(inputValue);
+        setPreviousValue(inputValue);
       } else if (!save) {
         onChange(previousValue);
       }
@@ -131,30 +131,23 @@ export default function EditText({
   };
 
   const renderEditMode = (controlled) => {
-    if (controlled) {
-      return (
-        <Input
-          inputRef={inputRef}
-          handleBlur={handleBlur}
-          handleKeydown={handleKeydown}
-          handleFocus={handleFocus}
-          props={{ id, inline, className, style, type, name }}
-          value={value}
-          onChange={(e) => {
-            onChange(e.target.value);
-          }}
-        />
-      );
-    }
-    return (
+    const sharedProps = {
+      inputRef: inputRef,
+      handleBlur: handleBlur,
+      handleKeydown: handleKeydown,
+      handleFocus: handleFocus,
+      props: { id, inline, className, style, type, name }
+    };
+    return controlled ? (
       <Input
-        inputRef={inputRef}
-        handleBlur={handleBlur}
-        handleKeydown={handleKeydown}
-        handleFocus={handleFocus}
-        props={{ id, inline, className, style, type, name }}
-        defaultValue={savedText}
+        {...sharedProps}
+        value={value}
+        onChange={(e) => {
+          onChange(e.target.value);
+        }}
       />
+    ) : (
+      <Input {...sharedProps} defaultValue={savedText} />
     );
   };
 

@@ -51,15 +51,15 @@ export default function EditTextarea({
 
   const handleBlur = (save = true) => {
     if (inputRef.current) {
-      const { name, value } = inputRef.current;
-      if (save && previousValue !== value) {
+      const { name: inputName, value: inputValue } = inputRef.current;
+      if (save && previousValue !== inputValue) {
         onSave({
-          name,
-          value,
+          name: inputName,
+          value: inputValue,
           previousValue: previousValue
         });
-        setSavedText(value);
-        setPreviousValue(value);
+        setSavedText(inputValue);
+        setPreviousValue(inputValue);
       } else if (!save) {
         onChange(previousValue);
       }
@@ -75,10 +75,6 @@ export default function EditTextarea({
   };
 
   const renderDisplayMode = () => {
-    const viewStyle = {
-      ...style,
-      height: `${rows * 24 + 16}px`
-    };
     const textLines = splitLines(formatDisplayText(savedText));
     return (
       <div
@@ -93,7 +89,10 @@ export default function EditTextarea({
           className
         )}
         onClick={handleClick}
-        style={viewStyle}
+        style={{
+          ...style,
+          height: `${rows * 24 + 16}px`
+        }}
       >
         {textLines.length > 0 ? (
           textLines.map((text, index) => (
@@ -110,28 +109,22 @@ export default function EditTextarea({
   };
 
   const renderEditMode = (controlled) => {
-    if (controlled) {
-      return (
-        <Textarea
-          inputRef={inputRef}
-          handleBlur={handleBlur}
-          handleKeydown={handleKeydown}
-          props={{ id, rows, className, style, name }}
-          value={value}
-          onChange={(e) => {
-            onChange(e.target.value);
-          }}
-        />
-      );
-    }
-    return (
+    const sharedProps = {
+      inputRef: inputRef,
+      handleBlur: handleBlur,
+      handleKeydown: handleKeydown,
+      props: { id, rows, className, style, name }
+    };
+    return controlled ? (
       <Textarea
-        inputRef={inputRef}
-        handleBlur={handleBlur}
-        handleKeydown={handleKeydown}
-        props={{ id, rows, className, style, name }}
-        defaultValue={savedText}
+        {...sharedProps}
+        value={value}
+        onChange={(e) => {
+          onChange(e.target.value);
+        }}
       />
+    ) : (
+      <Textarea {...sharedProps} defaultValue={savedText} />
     );
   };
 

@@ -168,7 +168,6 @@ describe('EditTextarea', () => {
     const component = mount(
       <EditTextarea
         name='mockName'
-        onChange={() => {}}
         value='mockValueBefore'
         onSave={handleSave}
       />

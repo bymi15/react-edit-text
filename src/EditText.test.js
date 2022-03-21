@@ -194,12 +194,7 @@ describe('EditText', () => {
       resPreviousValue = previousValue;
     };
     const component = mount(
-      <EditText
-        name='mockName'
-        onChange={() => {}}
-        value='mockValueBefore'
-        onSave={handleSave}
-      />
+      <EditText name='mockName' value='mockValueBefore' onSave={handleSave} />
     );
     component.find(divSelector).first().simulate('click');
     const input = component.find(inputSelector);
