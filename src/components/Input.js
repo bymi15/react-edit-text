@@ -8,18 +8,13 @@ const Input = ({
   handleBlur,
   handleKeydown,
   handleFocus,
+  inputClassName,
   ...rest
 }) => {
   return (
     <input
       id={id}
-      className={classnames(
-        styles.shared,
-        {
-          [styles.inline]: inline
-        },
-        className
-      )}
+      className={classnames(styles.shared, className, inputClassName)}
       style={style}
       ref={inputRef}
       type={type}

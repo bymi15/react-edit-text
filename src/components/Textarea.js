@@ -7,12 +7,13 @@ const Textarea = ({
   inputRef,
   handleBlur,
   handleKeydown,
+  inputClassName,
   ...rest
 }) => {
   return (
     <textarea
       id={id}
-      className={classnames(styles.shared, className)}
+      className={classnames(styles.shared, className, inputClassName)}
       style={style}
       ref={inputRef}
       rows={rows}

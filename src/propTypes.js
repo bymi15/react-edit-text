@@ -15,7 +15,8 @@ const sharedDefaultProps = {
   onEditMode: () => {},
   onBlur: () => {},
   style: {},
-  readonly: false
+  readonly: false,
+  inputClassName: undefined
 };
 
 const sharedPropTypes = {
@@ -31,7 +32,8 @@ const sharedPropTypes = {
   onEditMode: PropTypes.func,
   onBlur: PropTypes.func,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  readonly: PropTypes.bool
+  readonly: PropTypes.bool,
+  inputClassName: PropTypes.string
 };
 
 export const EditTextPropTypes = {
