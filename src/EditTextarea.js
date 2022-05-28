@@ -114,7 +114,7 @@ export default function EditTextarea({
       inputRef: inputRef,
       handleBlur: handleBlur,
       handleKeydown: handleKeydown,
-      props: { id, rows, className, style, name }
+      props: { id, rows, style, name }
     };
     return controlled ? (
       <Textarea

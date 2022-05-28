@@ -3,7 +3,7 @@ import React from 'react';
 import styles from '../styles.module.css';
 
 const Textarea = ({
-  props: { id, rows, className, style, name },
+  props: { id, rows, style, name },
   inputRef,
   handleBlur,
   handleKeydown,
@@ -13,7 +13,7 @@ const Textarea = ({
   return (
     <textarea
       id={id}
-      className={classnames(styles.shared, className, inputClassName)}
+      className={classnames(styles.shared, inputClassName)}
       style={style}
       ref={inputRef}
       rows={rows}

@@ -3,7 +3,7 @@ import React from 'react';
 import styles from '../styles.module.css';
 
 const Input = ({
-  props: { id, inline, className, style, type, name },
+  props: { id, inline, style, type, name },
   inputRef,
   handleBlur,
   handleKeydown,
@@ -14,7 +14,7 @@ const Input = ({
   return (
     <input
       id={id}
-      className={classnames(styles.shared, className, inputClassName)}
+      className={classnames(styles.shared, inputClassName)}
       style={style}
       ref={inputRef}
       type={type}

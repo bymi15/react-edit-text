@@ -137,7 +137,7 @@ export default function EditText({
       handleBlur: handleBlur,
       handleKeydown: handleKeydown,
       handleFocus: handleFocus,
-      props: { id, inline, className, style, type, name }
+      props: { id, inline, style, type, name }
     };
     return controlled ? (
       <Input
