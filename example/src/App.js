@@ -68,6 +68,7 @@ const App = () => {
                 <EditText
                   name='textbox1'
                   defaultValue='Click me to edit my text'
+                  inputClassName='bg-success form-control'
                 />
                 <EditText
                   name='textbox2'

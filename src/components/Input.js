@@ -3,23 +3,18 @@ import React from 'react';
 import styles from '../styles.module.css';
 
 const Input = ({
-  props: { id, inline, className, style, type, name },
+  props: { id, inline, style, type, name },
   inputRef,
   handleBlur,
   handleKeydown,
   handleFocus,
+  inputClassName,
   ...rest
 }) => {
   return (
     <input
       id={id}
-      className={classnames(
-        styles.shared,
-        {
-          [styles.inline]: inline
-        },
-        className
-      )}
+      className={classnames(styles.shared, inputClassName)}
       style={style}
       ref={inputRef}
       type={type}

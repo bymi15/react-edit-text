@@ -20,7 +20,8 @@ export default function EditTextarea({
   onEditMode,
   onChange,
   onSave,
-  onBlur
+  onBlur,
+  inputClassName
 }) {
   const inputRef = React.useRef(null);
   const [previousValue, setPreviousValue] = React.useState('');
@@ -113,7 +114,7 @@ export default function EditTextarea({
       inputRef: inputRef,
       handleBlur: handleBlur,
       handleKeydown: handleKeydown,
-      props: { id, rows, className, style, name }
+      props: { id, rows, style, name }
     };
     return controlled ? (
       <Textarea
@@ -122,9 +123,14 @@ export default function EditTextarea({
         onChange={(e) => {
           onChange(e.target.value);
         }}
+        inputClassName={inputClassName}
       />
     ) : (
-      <Textarea {...sharedProps} defaultValue={savedText} />
+      <Textarea
+        {...sharedProps}
+        defaultValue={savedText}
+        inputClassName={inputClassName}
+      />
     );
   };
 

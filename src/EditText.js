@@ -22,7 +22,8 @@ export default function EditText({
   onBlur,
   showEditButton,
   editButtonContent,
-  editButtonProps
+  editButtonProps,
+  inputClassName
 }) {
   const inputRef = React.useRef(null);
   const [previousValue, setPreviousValue] = React.useState('');
@@ -136,7 +137,7 @@ export default function EditText({
       handleBlur: handleBlur,
       handleKeydown: handleKeydown,
       handleFocus: handleFocus,
-      props: { id, inline, className, style, type, name }
+      props: { id, inline, style, type, name }
     };
     return controlled ? (
       <Input
@@ -145,9 +146,14 @@ export default function EditText({
         onChange={(e) => {
           onChange(e.target.value);
         }}
+        inputClassName={inputClassName}
       />
     ) : (
-      <Input {...sharedProps} defaultValue={savedText} />
+      <Input
+        {...sharedProps}
+        defaultValue={savedText}
+        inputClassName={inputClassName}
+      />
     );
   };
 
