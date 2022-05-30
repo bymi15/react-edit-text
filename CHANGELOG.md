@@ -1,3 +1,10 @@
+## [4.4.1](https://github.com/bymi15/react-edit-text/compare/v4.4.0...v4.4.1) (2022-05-30)
+
+
+### Bug Fixes
+
+* pass inline prop to Input component ([#31](https://github.com/bymi15/react-edit-text/issues/31)) ([f18a50b](https://github.com/bymi15/react-edit-text/commit/f18a50b29af2854aaec65b02c92b72bdcdcc95af))
+
 # [4.4.0](https://github.com/bymi15/react-edit-text/compare/v4.3.0...v4.4.0) (2022-03-21)
 
 
