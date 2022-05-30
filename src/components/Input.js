@@ -14,7 +14,9 @@ const Input = ({
   return (
     <input
       id={id}
-      className={classnames(styles.shared, inputClassName)}
+      className={classnames(styles.shared, inputClassName, {
+        [styles.inline]: inline
+      })}
       style={style}
       ref={inputRef}
       type={type}

@@ -67,7 +67,8 @@ export default function Example() {
 | ----------------- | -------- | -------- | -------- | --------------------------------------------------------------------- |
 | id                | string   | No       |          | HTML DOM id attribute                                                 |
 | name              | string   | No       |          | HTML input name attribute                                             |
-| className         | string   | No       |          | HTML class attribute                                                  |
+| className         | string   | No       |          | HTML class attribute for the display component                        |
+| inputClassName    | string   | No       |          | HTML class attribute for the input component                          |
 | value             | string   | No       |          | Value of the component                                                |
 | defaultValue      | string   | No       |          | Default value of the component                                        |
 | placeholder       | string   | No       | ''       | Placeholder value                                                     |
