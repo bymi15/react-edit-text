@@ -8,6 +8,7 @@ const App = () => {
             <EditText
               name="textbox1"
               defaultValue="Click me to edit my text"
+              inputClassName='bg-success'
             />
             <EditText
               name="textbox2"
@@ -108,6 +109,9 @@ const App = () => {
       'This is a controlled text area component'
     );
     const formatPrice = (val) => '$' + Math.round(parseFloat(val));
+    const handleChange = (e, setFn) => {
+      setFn(e.target.value);
+    };
     const handleSave = ({ name, value, previousValue }) => {
       alert(name + ' saved as: ' + value + ' (prev: ' + previousValue + ')');
     };
@@ -122,14 +126,14 @@ const App = () => {
               marginBottom: '10px'
             }}
             value={price}
-            onChange={setPrice}
+            onChange={(e) => handleChange(e, setPrice)}
             formatDisplayText={formatPrice}
           />
           <EditText
             name='textbox'
             style={{ fontSize: '16px', border: '1px solid #ccc' }}
             value={text}
-            onChange={setText}
+            onChange={(e) => handleChange(e, setText)}
             onSave={handleSave}
           />
           <p style={{ paddingLeft: '5px', marginBottom: '5px' }}>
@@ -142,7 +146,7 @@ const App = () => {
             name='textarea'
             style={{ fontSize: '16px', border: '1px solid #ccc' }}
             value={textarea}
-            onChange={setTextarea}
+            onChange={(e) => handleChange(e, setTextarea)}
             onSave={handleSave}
           />
           <p style={{ paddingLeft: '5px', marginBottom: '5px' }}>
