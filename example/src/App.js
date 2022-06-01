@@ -14,6 +14,9 @@ const App = () => {
     'This is a controlled text area component'
   );
   const formatPrice = (val) => '$' + Math.round(parseFloat(val));
+  const handleChange = (e, setFn) => {
+    setFn(e.target.value);
+  };
   const handleSave = ({ name, value, previousValue }) => {
     alert(name + ' saved as: ' + value + ' (prev: ' + previousValue + ')');
   };
@@ -68,7 +71,7 @@ const App = () => {
                 <EditText
                   name='textbox1'
                   defaultValue='Click me to edit my text'
-                  inputClassName='bg-success form-control'
+                  inputClassName='bg-success'
                 />
                 <EditText
                   name='textbox2'
@@ -101,6 +104,13 @@ const App = () => {
             and hides the input element
           </li>
           <li>
+            <b>className</b> sets the class attribute of the view component
+          </li>
+          <li>
+            <b>inputClassName</b> sets the class attribute of the input
+            component
+          </li>
+          <li>
             <b>style</b> sets the style of the DOM element
           </li>
           <li>
@@ -122,8 +132,8 @@ const App = () => {
             <em>except when the escape key is pressed</em>)
           </li>
           <li>
-            <b>onChange</b> callback function returns the new value of the input
-            when it changes
+            <b>onChange</b> callback function returns the DOM event when the
+            input value changes
           </li>
           <li>
             <b>onEditMode</b> callback function is triggered when the component
@@ -349,14 +359,14 @@ const App = () => {
                     marginBottom: '10px'
                   }}
                   value={price}
-                  onChange={setPrice}
+                  onChange={(e) => handleChange(e, setPrice)}
                   formatDisplayText={formatPrice}
                 />
                 <EditText
                   name='textbox'
                   style={{ fontSize: '16px', border: '1px solid #ccc' }}
                   value={text}
-                  onChange={setText}
+                  onChange={(e) => handleChange(e, setText)}
                   onSave={handleSave}
                 />
                 <p style={{ paddingLeft: '5px', marginBottom: '5px' }}>
@@ -369,7 +379,7 @@ const App = () => {
                   name='textarea'
                   style={{ fontSize: '16px', border: '1px solid #ccc' }}
                   value={textarea}
-                  onChange={setTextarea}
+                  onChange={(e) => handleChange(e, setTextarea)}
                   onSave={handleSave}
                 />
                 <p style={{ paddingLeft: '5px', marginBottom: '5px' }}>

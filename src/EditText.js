@@ -26,6 +26,7 @@ export default function EditText({
   inputClassName
 }) {
   const inputRef = React.useRef(null);
+  const [changeEvent, setChangeEvent] = React.useState({});
   const [previousValue, setPreviousValue] = React.useState('');
   const [savedText, setSavedText] = React.useState('');
   const [editMode, setEditMode] = React.useState(false);
@@ -69,7 +70,12 @@ export default function EditText({
         setSavedText(inputValue);
         setPreviousValue(inputValue);
       } else if (!save) {
-        onChange(previousValue);
+        onChange({
+          ...changeEvent,
+          target: changeEvent.target
+            ? { ...changeEvent.target, value: previousValue }
+            : { value: previousValue }
+        });
       }
       setEditMode(false);
       onBlur();
@@ -144,7 +150,8 @@ export default function EditText({
         {...sharedProps}
         value={value}
         onChange={(e) => {
-          onChange(e.target.value);
+          setChangeEvent(e);
+          onChange(e);
         }}
         inputClassName={inputClassName}
       />
@@ -158,7 +165,7 @@ export default function EditText({
   };
 
   return !readonly && editMode
-    ? renderEditMode(value !== undefined)
+    ? renderEditMode(value !== undefined && onChange !== undefined)
     : renderDisplayMode();
 }
 
