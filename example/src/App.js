@@ -132,8 +132,8 @@ const App = () => {
             <em>except when the escape key is pressed</em>)
           </li>
           <li>
-            <b>onChange</b> callback function returns the new value of the input
-            when it changes
+            <b>onChange</b> callback function returns the DOM event when the
+            input value changes
           </li>
           <li>
             <b>onEditMode</b> callback function is triggered when the component
