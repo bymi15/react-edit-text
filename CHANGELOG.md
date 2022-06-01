@@ -1,3 +1,13 @@
+# [5.0.0](https://github.com/bymi15/react-edit-text/compare/v4.4.1...v5.0.0) (2022-06-01)
+
+
+* fix!: onChange prop to return DOM event rather than just the new value (#32) ([e9e59b3](https://github.com/bymi15/react-edit-text/commit/e9e59b336cdce96fbe32d741ab1f8e5ab90843e5)), closes [#32](https://github.com/bymi15/react-edit-text/issues/32)
+
+
+### BREAKING CHANGES
+
+* onChange will now return the DOM event rather than just the new value
+
 ## [4.4.1](https://github.com/bymi15/react-edit-text/compare/v4.4.0...v4.4.1) (2022-05-30)
 
 
