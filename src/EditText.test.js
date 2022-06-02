@@ -1,289 +1,350 @@
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import { configure, mount, shallow } from 'enzyme';
+import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { EditText } from '.';
-configure({ adapter: new Adapter() });
+import '@testing-library/jest-dom/extend-expect';
 
-const divSelector = 'div.displayContainer > div';
-const shallowInputSelector = 'Input';
-const inputSelector = 'input';
+const displayComponentLabel = 'display component';
+const inputComponentLabel = 'input component';
 
-describe('EditText', () => {
-  it('clicking on the component should activate edit mode', () => {
-    const component = shallow(<EditText />);
-    const div = component.find(divSelector);
-    expect(div).toHaveLength(1);
-    expect(component.find(shallowInputSelector)).toEqual({});
-    div.first().simulate('click');
-    expect(div).toEqual({});
-    expect(component.find(shallowInputSelector)).toHaveLength(1);
+test('clicking on the component should activate edit mode', async () => {
+  render(<EditText />);
+  const div = await screen.findByLabelText(displayComponentLabel);
+  expect(div).toBeTruthy();
+  expect(screen.queryByLabelText(inputComponentLabel)).toBeNull();
+  await userEvent.click(div);
+  expect(screen.queryByLabelText(displayComponentLabel)).toBeNull();
+  expect(screen.queryByLabelText(inputComponentLabel)).toBeTruthy();
+});
+test('pressing enter key should disable edit mode and trigger onSave', async () => {
+  const handleSave = jest.fn();
+  render(<EditText name='mockName' onSave={handleSave} />);
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  const input = screen.getByLabelText(inputComponentLabel);
+  await userEvent.type(input, 'mockValue', {
+    skipClick: true
   });
-  it('pressing enter key should disable edit mode and trigger onSave', () => {
-    const handleSave = jest.fn();
-    const component = mount(<EditText name='mockName' onSave={handleSave} />);
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.instance().value = 'mockValue';
-    input.simulate('keydown', { keyCode: 13 });
-    const div = component.find(divSelector);
-    expect(div).toHaveLength(1);
-    expect(div.text()).toEqual('mockValue');
-    expect(handleSave).toHaveBeenCalled();
+  fireEvent.keyDown(input, {
+    key: 'Enter',
+    code: 'Enter',
+    keyCode: 13,
+    charCode: 13
   });
-  it('pressing enter key should not trigger onSave if value is not changed', () => {
-    const handleSave = jest.fn();
-    const component = mount(<EditText name='mockName' onSave={handleSave} />);
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.simulate('keydown', { keyCode: 13 });
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(handleSave).not.toHaveBeenCalled();
+  expect(screen.queryByLabelText(inputComponentLabel)).toBeNull();
+  div = await screen.findByLabelText(displayComponentLabel);
+  expect(div).toBeTruthy();
+  expect(div).toHaveTextContent('mockValue');
+  expect(handleSave).toHaveBeenCalledWith({
+    name: 'mockName',
+    value: 'mockValue',
+    previousValue: ''
   });
-  it('pressing ESC key should disable edit mode but should not trigger onSave', () => {
-    const handleSave = jest.fn();
-    const component = mount(<EditText name='mockName' onSave={handleSave} />);
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.instance().value = 'mockValue';
-    input.simulate('keydown', { keyCode: 27 });
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(handleSave).not.toHaveBeenCalled();
+});
+test('pressing enter key should not trigger onSave if value is not changed', async () => {
+  const handleSave = jest.fn();
+  render(<EditText name='mockName' onSave={handleSave} />);
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  const input = screen.getByLabelText(inputComponentLabel);
+  await userEvent.type(input, 'a', {
+    skipClick: true
   });
-  it('pressing ESC key should not trigger onSave if value is not changed', () => {
-    const handleSave = jest.fn();
-    const component = mount(<EditText name='mockName' onSave={handleSave} />);
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.simulate('keydown', { keyCode: 27 });
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(handleSave).not.toHaveBeenCalled();
+  await userEvent.type(input, '{backspace}', {
+    skipClick: true
   });
-  it('blur event should disable edit mode and trigger onSave', () => {
-    const handleSave = jest.fn();
-    const component = mount(<EditText name='mockName' onSave={handleSave} />);
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.instance().value = 'mockValue';
-    input.simulate('blur');
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(handleSave).toHaveBeenCalled();
+  fireEvent.keyDown(input, {
+    key: 'Enter',
+    code: 'Enter',
+    keyCode: 13,
+    charCode: 13
   });
-  it('blur event should not trigger onSave if value is not changed', () => {
-    const handleSave = jest.fn();
-    const component = mount(<EditText name='mockName' onSave={handleSave} />);
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.simulate('blur');
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(handleSave).not.toHaveBeenCalled();
+  expect(screen.queryByLabelText(inputComponentLabel)).toBeNull();
+  div = await screen.findByLabelText(displayComponentLabel);
+  expect(div).toBeTruthy();
+  expect(div).toHaveTextContent('');
+  expect(handleSave).not.toHaveBeenCalled();
+});
+test('pressing ESC key should disable edit mode but should not trigger onSave', async () => {
+  const handleSave = jest.fn();
+  render(<EditText name='mockName' onSave={handleSave} />);
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  const input = screen.getByLabelText(inputComponentLabel);
+  await userEvent.type(input, 'mockValue', {
+    skipClick: true
   });
-  it('onSave callback should be triggered', () => {
-    const handleSave = jest.fn();
-    const handleChange = jest.fn();
-    const component = mount(
-      <EditText
-        name='mockName'
-        value='mockValue'
-        onSave={handleSave}
-        onChange={handleChange}
-      />
-    );
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.instance().value = '';
-    input.simulate('blur');
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(handleSave).toHaveBeenCalled();
+  fireEvent.keyDown(input, {
+    key: 'Escape',
+    code: 'Escape',
+    keyCode: 27,
+    charCode: 27
   });
-  it('onChange callback should be triggered', () => {
-    const handleSave = jest.fn();
-    const handleChange = jest.fn();
-    const component = mount(
-      <EditText
-        name='mockName'
-        value='mockValue'
-        onSave={handleSave}
-        onChange={handleChange}
-      />
-    );
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.simulate('change', { target: { value: '' } });
-    input.simulate('blur');
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(handleChange).toHaveBeenCalled();
+  expect(screen.queryByLabelText(inputComponentLabel)).toBeNull();
+  div = await screen.findByLabelText(displayComponentLabel);
+  expect(div).toBeTruthy();
+  expect(div).toHaveTextContent('');
+  expect(handleSave).not.toHaveBeenCalled();
+});
+test('pressing ESC key should not trigger onSave if value is not changed', async () => {
+  const handleSave = jest.fn();
+  render(<EditText name='mockName' onSave={handleSave} />);
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  const input = screen.getByLabelText(inputComponentLabel);
+  await userEvent.type(input, 'a', {
+    skipClick: true
   });
-  it('onEditMode callback should be triggered', () => {
-    const handleEditMode = jest.fn();
-    const component = mount(
-      <EditText name='mockName' value='mockValue' onEditMode={handleEditMode} />
-    );
-    component.find(divSelector).first().simulate('click');
-    expect(handleEditMode).toHaveBeenCalledTimes(1);
+  await userEvent.type(input, '{backspace}', {
+    skipClick: true
   });
-  it('onEditMode callback should not be triggered if already in edit mode', () => {
-    const handleEditMode = jest.fn();
-    const component = mount(
-      <EditText name='mockName' value='mockValue' onEditMode={handleEditMode} />
-    );
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.first().simulate('click');
-    expect(handleEditMode).toHaveBeenCalledTimes(1);
+  fireEvent.keyDown(input, {
+    key: 'Escape',
+    code: 'Escape',
+    keyCode: 27,
+    charCode: 27
   });
-  it('onBlur callback should be triggered on enter key press (in edit mode)', () => {
-    const handleBlur = jest.fn();
-    const component = mount(
-      <EditText name='mockName' value='mockValue' onBlur={handleBlur} />
-    );
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.simulate('keydown', { keyCode: 13 });
-    expect(handleBlur).toHaveBeenCalledTimes(1);
+  expect(screen.queryByLabelText(inputComponentLabel)).toBeNull();
+  div = await screen.findByLabelText(displayComponentLabel);
+  expect(div).toBeTruthy();
+  expect(div).toHaveTextContent('');
+  expect(handleSave).not.toHaveBeenCalled();
+});
+test('blur event should disable edit mode and trigger onSave', async () => {
+  const handleSave = jest.fn();
+  render(<EditText name='mockName' onSave={handleSave} />);
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  const input = screen.getByLabelText(inputComponentLabel);
+  await userEvent.type(input, 'mockValue', {
+    skipClick: true
   });
-  it('onBlur callback should be triggered on escape key press (in edit mode)', () => {
-    const handleBlur = jest.fn();
-    const component = mount(
-      <EditText name='mockName' value='mockValue' onBlur={handleBlur} />
-    );
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.simulate('keydown', { keyCode: 27 });
-    expect(handleBlur).toHaveBeenCalledTimes(1);
+  fireEvent.blur(input);
+  expect(screen.queryByLabelText(inputComponentLabel)).toBeNull();
+  div = await screen.findByLabelText(displayComponentLabel);
+  expect(div).toBeTruthy();
+  expect(div).toHaveTextContent('mockValue');
+  expect(handleSave).toHaveBeenCalledWith({
+    name: 'mockName',
+    value: 'mockValue',
+    previousValue: ''
   });
-  it('onSave should return correct {name, value, previousValue} object with defaultValue prop set', () => {
-    let resName, resValue, resPreviousValue;
-    const handleSave = ({ name, value, previousValue }) => {
-      resName = name;
-      resValue = value;
-      resPreviousValue = previousValue;
-    };
-    const component = mount(
-      <EditText
-        name='mockName'
-        defaultValue='mockValueBefore'
-        onSave={handleSave}
-      />
-    );
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.instance().value = 'mockValue';
-    input.simulate('keydown', { keyCode: 13 });
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(resName).toEqual('mockName');
-    expect(resValue).toEqual('mockValue');
-    expect(resPreviousValue).toEqual('mockValueBefore');
+});
+test('blur event should not trigger onSave if value is not changed', async () => {
+  const handleSave = jest.fn();
+  render(<EditText name='mockName' onSave={handleSave} />);
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  const input = screen.getByLabelText(inputComponentLabel);
+  fireEvent.blur(input);
+  expect(screen.queryByLabelText(inputComponentLabel)).toBeNull();
+  div = await screen.findByLabelText(displayComponentLabel);
+  expect(div).toBeTruthy();
+  expect(div).toHaveTextContent('');
+  expect(handleSave).not.toHaveBeenCalled();
+});
+test('onSave callback should be triggered', async () => {
+  const handleSave = jest.fn();
+  render(
+    <EditText name='mockName' defaultValue='mockValue' onSave={handleSave} />
+  );
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  const input = screen.getByLabelText(inputComponentLabel);
+  expect(input).toBeTruthy();
+  await userEvent.clear(input);
+  fireEvent.blur(input);
+  div = await screen.findByLabelText(displayComponentLabel);
+  expect(div).toBeTruthy();
+  expect(div).toHaveTextContent('');
+  expect(handleSave).toHaveBeenCalledWith({
+    name: 'mockName',
+    value: '',
+    previousValue: 'mockValue'
   });
-  it('onSave should return correct {name, value, previousValue} object with value and onChange props set', () => {
-    let resName, resValue, resPreviousValue;
-    const handleSave = ({ name, value, previousValue }) => {
-      resName = name;
-      resValue = value;
-      resPreviousValue = previousValue;
-    };
-    const component = mount(
-      <EditText name='mockName' value='mockValueBefore' onSave={handleSave} />
-    );
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.instance().value = 'mockValue';
-    input.simulate('keydown', { keyCode: 13 });
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(resName).toEqual('mockName');
-    expect(resValue).toEqual('mockValue');
-    expect(resPreviousValue).toEqual('mockValueBefore');
+});
+test('onEditMode callback should be triggered', async () => {
+  const handleEditMode = jest.fn();
+  render(
+    <EditText name='mockName' value='mockValue' onEditMode={handleEditMode} />
+  );
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  expect(handleEditMode).toHaveBeenCalledTimes(1);
+});
+test('onEditMode callback should not be triggered if already in edit mode', async () => {
+  const handleEditMode = jest.fn();
+  render(
+    <EditText name='mockName' value='mockValue' onEditMode={handleEditMode} />
+  );
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  const input = screen.getByLabelText(inputComponentLabel);
+  expect(input).toBeTruthy();
+  await userEvent.click(input);
+  expect(handleEditMode).toHaveBeenCalledTimes(1);
+});
+test('onBlur callback should be triggered on enter key press (in edit mode)', async () => {
+  const handleBlur = jest.fn();
+  render(<EditText name='mockName' value='mockValue' onBlur={handleBlur} />);
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  const input = screen.getByLabelText(inputComponentLabel);
+  expect(input).toBeTruthy();
+  fireEvent.keyDown(input, {
+    key: 'Enter',
+    code: 'Enter',
+    keyCode: 13,
+    charCode: 13
   });
-  it('should display placeholder if value is empty string', () => {
-    const component = mount(
-      <EditText placeholder='mockPlaceholder' value='' />
-    );
-    expect(component.contains('mockPlaceholder')).toEqual(true);
+  expect(handleBlur).toHaveBeenCalledTimes(1);
+});
+test('onBlur callback should be triggered on escape key press (in edit mode)', async () => {
+  const handleBlur = jest.fn();
+  render(<EditText name='mockName' value='mockValue' onBlur={handleBlur} />);
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  const input = screen.getByLabelText(inputComponentLabel);
+  expect(input).toBeTruthy();
+  fireEvent.keyDown(input, {
+    key: 'Escape',
+    code: 'Escape',
+    keyCode: 27,
+    charCode: 27
   });
-  it('should display value instead of placeholder if value is not empty', () => {
-    const component = mount(
-      <EditText placeholder='mockPlaceholder' value='mockValue' />
-    );
-    expect(component.contains('mockValue')).toEqual(true);
+  expect(handleBlur).toHaveBeenCalledTimes(1);
+});
+test('onSave should return correct {name, value, previousValue} object with defaultValue prop set', async () => {
+  const handleSave = jest.fn();
+  render(
+    <EditText
+      name='mockName'
+      defaultValue='mockValueBefore'
+      onSave={handleSave}
+    />
+  );
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  const input = screen.getByLabelText(inputComponentLabel);
+  expect(input).toBeTruthy();
+  await userEvent.clear(input);
+  await userEvent.type(input, 'mockValue');
+  fireEvent.keyDown(input, {
+    key: 'Enter',
+    code: 'Enter',
+    keyCode: 13,
+    charCode: 13
   });
-  it('should display placeholder if value is changed to empty string', () => {
-    const component = mount(
-      <EditText placeholder='mockPlaceholder' defaultValue='mockValue' />
-    );
-    expect(component.contains('mockValue')).toEqual(true);
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.instance().value = '';
-    input.simulate('keydown', { keyCode: 13 });
-    expect(component.contains('mockPlaceholder')).toEqual(true);
+  div = await screen.findByLabelText(displayComponentLabel);
+  expect(div).toBeTruthy();
+  expect(handleSave).toHaveBeenCalledWith({
+    name: 'mockName',
+    value: 'mockValue',
+    previousValue: 'mockValueBefore'
   });
-  it('should display value instead of placeholder if value is changed to non-empty string', () => {
-    const component = mount(
-      <EditText placeholder='mockPlaceholder' defaultValue='' />
-    );
-    expect(component.contains('mockPlaceholder')).toEqual(true);
-    component.find(divSelector).first().simulate('click');
-    const input = component.find(inputSelector);
-    expect(input).toHaveLength(1);
-    input.instance().value = 'mockValue';
-    input.simulate('keydown', { keyCode: 13 });
-    expect(component.contains('mockValue')).toEqual(true);
+});
+test('should display placeholder if value is empty string', async () => {
+  render(<EditText placeholder='mockPlaceholder' value='' />);
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    'mockPlaceholder'
+  );
+});
+test('should display value instead of placeholder if value is not empty', async () => {
+  render(<EditText placeholder='mockPlaceholder' value='mockValue' />);
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    'mockValue'
+  );
+  expect(screen.getByLabelText(displayComponentLabel)).not.toHaveTextContent(
+    'mockPlaceholder'
+  );
+});
+test('should display placeholder if value is changed to empty string', async () => {
+  render(<EditText placeholder='mockPlaceholder' defaultValue='mockValue' />);
+  let div = await screen.findByLabelText(displayComponentLabel);
+  expect(div).toHaveTextContent('mockValue');
+  await userEvent.click(div);
+  const input = screen.getByLabelText(inputComponentLabel);
+  expect(input).toBeTruthy();
+  await userEvent.clear(input);
+  fireEvent.keyDown(input, {
+    key: 'Enter',
+    code: 'Enter',
+    keyCode: 13,
+    charCode: 13
   });
-  it('should not display input when readonly', () => {
-    const component = mount(<EditText readonly />);
-    component.find(divSelector).first().simulate('click');
-    expect(component.exists('input')).toEqual(false);
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    'mockPlaceholder'
+  );
+});
+test('should display value instead of placeholder if value is changed to non-empty string', async () => {
+  render(<EditText placeholder='mockPlaceholder' defaultValue='' />);
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    'mockPlaceholder'
+  );
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  const input = screen.getByLabelText(inputComponentLabel);
+  expect(input).toBeTruthy();
+  await userEvent.type(input, 'mockValue', {
+    skipClick: true
   });
-  it('should display input when not readonly', () => {
-    const component = mount(<EditText readonly={false} />);
-    component.find(divSelector).first().simulate('click');
-    expect(component.exists('input')).toEqual(true);
+  fireEvent.keyDown(input, {
+    key: 'Enter',
+    code: 'Enter',
+    keyCode: 13,
+    charCode: 13
   });
-  it('formatDisplayText should display value correctly based on passed in function', () => {
-    const formatDisplayText = jest.fn(
-      (value) => '$' + Math.round(parseFloat(value))
-    );
-    const component = mount(
-      <EditText
-        id='test'
-        name='mockName'
-        type='number'
-        value='1000.9'
-        formatDisplayText={formatDisplayText}
-      />
-    );
-    const displayText = component.find('#test');
-    expect(formatDisplayText).toHaveBeenCalled();
-    expect(displayText.first().text().trim().includes('$1001')).toEqual(true);
-  });
-  it('formatDisplayText should display defaultValue correctly based on passed in function', () => {
-    const formatDisplayText = jest.fn(
-      (value) => '$' + Math.round(parseFloat(value))
-    );
-    const component = mount(
-      <EditText
-        id='test'
-        name='mockName'
-        type='number'
-        defaultValue='1000.9'
-        formatDisplayText={formatDisplayText}
-      />
-    );
-    const displayText = component.find('#test');
-    expect(formatDisplayText).toHaveBeenCalled();
-    expect(displayText.first().text().trim().includes('$1001')).toEqual(true);
-  });
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    'mockValue'
+  );
+});
+test('should not display input when readonly', async () => {
+  render(<EditText readonly />);
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  expect(screen.queryByLabelText(inputComponentLabel)).toBeNull();
+  expect(screen.queryByLabelText(displayComponentLabel)).toBeTruthy();
+});
+test('should display input when not readonly', async () => {
+  render(<EditText readonly={false} />);
+  let div = await screen.findByLabelText(displayComponentLabel);
+  await userEvent.click(div);
+  expect(screen.queryByLabelText(inputComponentLabel)).toBeTruthy();
+  expect(screen.queryByLabelText(displayComponentLabel)).toBeNull();
+});
+test('formatDisplayText should display value correctly based on passed in function', async () => {
+  const formatDisplayText = jest.fn(
+    (value) => '$' + Math.round(parseFloat(value))
+  );
+  render(
+    <EditText
+      id='test'
+      name='mockName'
+      type='number'
+      value='1000.9'
+      formatDisplayText={formatDisplayText}
+    />
+  );
+  expect(formatDisplayText).toHaveBeenCalled();
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    '$1001'
+  );
+});
+test('formatDisplayText should display defaultValue correctly based on passed in function', async () => {
+  const formatDisplayText = jest.fn(
+    (value) => '$' + Math.round(parseFloat(value))
+  );
+  render(
+    <EditText
+      id='test'
+      name='mockName'
+      type='number'
+      defaultValue='1000.9'
+      formatDisplayText={formatDisplayText}
+    />
+  );
+  expect(formatDisplayText).toHaveBeenCalled();
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    '$1001'
+  );
 });
