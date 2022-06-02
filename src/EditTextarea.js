@@ -100,6 +100,7 @@ export default function EditTextarea({
           ...style,
           height: `${rows * 24 + 16}px`
         }}
+        aria-label='display component'
       >
         {textLines.length > 0 ? (
           textLines.map((text, index) => (
@@ -120,7 +121,8 @@ export default function EditTextarea({
       inputRef: inputRef,
       handleBlur: handleBlur,
       handleKeydown: handleKeydown,
-      props: { id, rows, style, name }
+      props: { id, rows, style, name },
+      ['aria-label']: 'textarea component'
     };
     return controlled ? (
       <Textarea

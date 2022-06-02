@@ -120,6 +120,7 @@ export default function EditText({
           )}
           onClick={handleClickDisplay}
           style={style}
+          aria-label='display component'
         >
           {formatDisplayText(savedText) || placeholder}
         </div>
@@ -143,7 +144,8 @@ export default function EditText({
       handleBlur: handleBlur,
       handleKeydown: handleKeydown,
       handleFocus: handleFocus,
-      props: { id, inline, style, type, name }
+      props: { id, inline, style, type, name },
+      ['aria-label']: 'input component'
     };
     return controlled ? (
       <Input

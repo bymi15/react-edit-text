@@ -1,261 +1,224 @@
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import { configure, mount, shallow } from 'enzyme';
+import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { EditTextarea } from '.';
-configure({ adapter: new Adapter() });
+import '@testing-library/jest-dom/extend-expect';
 
-const divSelector = 'div';
-const shallowTextareaSelector = 'Textarea';
-const textareaSelector = 'textarea';
+const displayComponentLabel = 'display component';
+const textareaComponentLabel = 'textarea component';
 
-describe('EditTextarea', () => {
-  it('clicking on the component should activate edit mode', () => {
-    const component = shallow(<EditTextarea />);
-    const div = component.find(divSelector);
-    expect(div).toHaveLength(1);
-    expect(component.find(shallowTextareaSelector)).toEqual({});
-    div.first().simulate('click');
-    expect(div).toEqual({});
-    expect(component.find(shallowTextareaSelector)).toHaveLength(1);
+test('clicking on the component should activate edit mode', async () => {
+  render(<EditTextarea />);
+  const div = await screen.findByLabelText(displayComponentLabel);
+  expect(div).toBeTruthy();
+  expect(screen.queryByLabelText(textareaComponentLabel)).toBeNull();
+  await userEvent.click(div);
+  expect(screen.queryByLabelText(displayComponentLabel)).toBeNull();
+  expect(screen.queryByLabelText(textareaComponentLabel)).toBeTruthy();
+});
+test('pressing ESC key should disable edit mode but should not trigger onSave', async () => {
+  const handleSave = jest.fn();
+  render(<EditTextarea name='mockName' onSave={handleSave} />);
+  await userEvent.click(screen.getByLabelText(displayComponentLabel));
+  const textarea = screen.getByLabelText(textareaComponentLabel);
+  await userEvent.type(textarea, 'mockValue', {
+    skipClick: true
   });
-  it('pressing ESC key should disable edit mode but should not trigger onSave', () => {
-    const handleSave = jest.fn();
-    const component = mount(
-      <EditTextarea name='mockName' onSave={handleSave} />
-    );
-    component.find(divSelector).first().simulate('click');
-    const textarea = component.find(textareaSelector);
-    expect(textarea).toHaveLength(1);
-    textarea.instance().value = 'mockValue';
-    textarea.simulate('keydown', { keyCode: 27 });
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(handleSave).not.toHaveBeenCalled();
+  fireEvent.keyDown(textarea, {
+    key: 'Escape',
+    code: 'Escape',
+    keyCode: 27,
+    charCode: 27
   });
-  it('blur event should disable edit mode and trigger onSave', () => {
-    const handleSave = jest.fn();
-    const component = mount(
-      <EditTextarea name='mockName' onSave={handleSave} />
-    );
-    component.find(divSelector).first().simulate('click');
-    const textarea = component.find(textareaSelector);
-    expect(textarea).toHaveLength(1);
-    textarea.instance().value = 'mockValue';
-    textarea.simulate('blur');
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(handleSave).toHaveBeenCalled();
+  expect(screen.queryByLabelText(textareaComponentLabel)).toBeNull();
+  expect(handleSave).not.toHaveBeenCalled();
+});
+test('blur event should disable edit mode and trigger onSave', async () => {
+  const handleSave = jest.fn();
+  render(<EditTextarea name='mockName' onSave={handleSave} />);
+  await userEvent.click(screen.getByLabelText(displayComponentLabel));
+  const textarea = screen.getByLabelText(textareaComponentLabel);
+  await userEvent.type(textarea, 'mockValue', {
+    skipClick: true
   });
-  it('blur event should not trigger onSave if value is not changed', () => {
-    const handleSave = jest.fn();
-    const component = mount(
-      <EditTextarea name='mockName' defaultValue='' onSave={handleSave} />
-    );
-    component.find(divSelector).first().simulate('click');
-    const textarea = component.find(textareaSelector);
-    expect(textarea).toHaveLength(1);
-    textarea.simulate('blur');
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(handleSave).not.toHaveBeenCalled();
+  fireEvent.blur(textarea);
+  expect(screen.queryByLabelText(textareaComponentLabel)).toBeNull();
+  expect(handleSave).toHaveBeenCalled();
+});
+test('blur event should not trigger onSave if value is not changed', async () => {
+  const handleSave = jest.fn();
+  render(<EditTextarea name='mockName' defaultValue='' onSave={handleSave} />);
+  await userEvent.click(screen.getByLabelText(displayComponentLabel));
+  const textarea = screen.getByLabelText(textareaComponentLabel);
+  fireEvent.blur(textarea);
+  expect(screen.queryByLabelText(textareaComponentLabel)).toBeNull();
+  expect(handleSave).not.toHaveBeenCalled();
+});
+test('onSave callback should be triggered', async () => {
+  const handleSave = jest.fn();
+  render(
+    <EditTextarea
+      name='mockName'
+      defaultValue='mockValue'
+      onSave={handleSave}
+    />
+  );
+  await userEvent.click(screen.getByLabelText(displayComponentLabel));
+  const textarea = screen.getByLabelText(textareaComponentLabel);
+  await userEvent.clear(textarea);
+  fireEvent.blur(textarea);
+  expect(screen.queryByLabelText(textareaComponentLabel)).toBeNull();
+  expect(handleSave).toHaveBeenCalled();
+});
+test('onEditMode callback should be triggered', async () => {
+  const handleEditMode = jest.fn();
+  render(
+    <EditTextarea
+      name='mockName'
+      value='mockValue'
+      onEditMode={handleEditMode}
+    />
+  );
+  await userEvent.click(screen.getByLabelText(displayComponentLabel));
+  const textarea = screen.queryByLabelText(textareaComponentLabel);
+  expect(textarea).toBeTruthy();
+  expect(handleEditMode).toHaveBeenCalledTimes(1);
+});
+test('onEditMode callback should not be triggered if already in edit mode', async () => {
+  const handleEditMode = jest.fn();
+  render(
+    <EditTextarea
+      name='mockName'
+      value='mockValue'
+      onEditMode={handleEditMode}
+    />
+  );
+  await userEvent.click(screen.getByLabelText(displayComponentLabel));
+  const textarea = screen.queryByLabelText(textareaComponentLabel);
+  expect(textarea).toBeTruthy();
+  await userEvent.click(textarea);
+  expect(handleEditMode).toHaveBeenCalledTimes(1);
+});
+test('onBlur callback should be triggered on escape key press (in edit mode)', async () => {
+  const handleBlur = jest.fn();
+  render(
+    <EditTextarea name='mockName' value='mockValue' onBlur={handleBlur} />
+  );
+  await userEvent.click(screen.getByLabelText(displayComponentLabel));
+  const textarea = screen.queryByLabelText(textareaComponentLabel);
+  expect(textarea).toBeTruthy();
+  fireEvent.keyDown(textarea, {
+    key: 'Escape',
+    code: 'Escape',
+    keyCode: 27,
+    charCode: 27
   });
-  it('onSave callback should be triggered', () => {
-    const handleSave = jest.fn();
-    const handleChange = jest.fn();
-    const component = mount(
-      <EditTextarea
-        name='mockName'
-        value='mockValue'
-        onSave={handleSave}
-        onChange={handleChange}
-      />
-    );
-    component.find(divSelector).first().simulate('click');
-    const textarea = component.find(textareaSelector);
-    expect(textarea).toHaveLength(1);
-    textarea.instance().value = '';
-    textarea.simulate('blur');
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(handleSave).toHaveBeenCalled();
+  expect(handleBlur).toHaveBeenCalledTimes(1);
+});
+test('onSave should return correct {name, value, previousValue} object with defaultValue prop set', async () => {
+  const handleSave = jest.fn();
+  render(
+    <EditTextarea
+      name='mockName'
+      defaultValue='mockValueBefore'
+      onSave={handleSave}
+    />
+  );
+  await userEvent.click(screen.getByLabelText(displayComponentLabel));
+  const textarea = screen.getByLabelText(textareaComponentLabel);
+  await userEvent.clear(textarea);
+  await userEvent.type(textarea, 'mockValue', {
+    skipClick: true
   });
-  it('onChange callback should be triggered', () => {
-    const handleSave = jest.fn();
-    const handleChange = jest.fn();
-    const component = mount(
-      <EditTextarea
-        name='mockName'
-        value='mockValue'
-        onSave={handleSave}
-        onChange={handleChange}
-      />
-    );
-    component.find(divSelector).first().simulate('click');
-    const textarea = component.find(textareaSelector);
-    expect(textarea).toHaveLength(1);
-    textarea.simulate('change', { target: { value: '' } });
-    textarea.simulate('blur');
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(handleChange).toHaveBeenCalled();
+  fireEvent.blur(textarea);
+  expect(screen.queryByLabelText(textareaComponentLabel)).toBeNull();
+  expect(handleSave).toHaveBeenCalledWith({
+    name: 'mockName',
+    value: 'mockValue',
+    previousValue: 'mockValueBefore'
   });
-  it('onEditMode callback should be triggered', () => {
-    const handleEditMode = jest.fn();
-    const component = mount(
-      <EditTextarea
-        name='mockName'
-        value='mockValue'
-        onEditMode={handleEditMode}
-      />
-    );
-    component.find(divSelector).first().simulate('click');
-    const textarea = component.find(textareaSelector);
-    expect(textarea).toHaveLength(1);
-    expect(handleEditMode).toHaveBeenCalledTimes(1);
+});
+test('should display placeholder if value is empty string', async () => {
+  render(<EditTextarea placeholder='mockPlaceholder' value='' />);
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    'mockPlaceholder'
+  );
+});
+test('should display value instead of placeholder if value is not empty', async () => {
+  render(<EditTextarea placeholder='mockPlaceholder' value='mockValue' />);
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    'mockValue'
+  );
+});
+test('should display placeholder if value is changed to empty string', async () => {
+  render(
+    <EditTextarea placeholder='mockPlaceholder' defaultValue='mockValue' />
+  );
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    'mockValue'
+  );
+  await userEvent.click(screen.getByLabelText(displayComponentLabel));
+  const textarea = screen.getByLabelText(textareaComponentLabel);
+  await userEvent.clear(textarea);
+  fireEvent.blur(textarea);
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    'mockPlaceholder'
+  );
+});
+test('should display value instead of placeholder if value is changed to non-empty string', async () => {
+  render(<EditTextarea placeholder='mockPlaceholder' defaultValue='' />);
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    'mockPlaceholder'
+  );
+  await userEvent.click(screen.getByLabelText(displayComponentLabel));
+  const textarea = screen.getByLabelText(textareaComponentLabel);
+  await userEvent.type(textarea, 'mockValue', {
+    skipClick: true
   });
-  it('onEditMode callback should not be triggered if already in edit mode', () => {
-    const handleEditMode = jest.fn();
-    const component = mount(
-      <EditTextarea
-        name='mockName'
-        value='mockValue'
-        onEditMode={handleEditMode}
-      />
-    );
-    component.find(divSelector).first().simulate('click');
-    const textarea = component.find(textareaSelector);
-    expect(textarea).toHaveLength(1);
-    component.simulate('click');
-    expect(handleEditMode).toHaveBeenCalledTimes(1);
-  });
-  it('onBlur callback should be triggered on escape key press (in edit mode)', () => {
-    const handleBlur = jest.fn();
-    const component = mount(
-      <EditTextarea name='mockName' value='mockValue' onBlur={handleBlur} />
-    );
-    component.find(divSelector).first().simulate('click');
-    const textarea = component.find(textareaSelector);
-    expect(textarea).toHaveLength(1);
-    textarea.simulate('keydown', { keyCode: 27 }); // Escape key
-    expect(handleBlur).toHaveBeenCalledTimes(1);
-  });
-  it('onSave should return correct {name, value, previousValue} object with defaultValue prop set', () => {
-    let resName, resValue, resPreviousValue;
-    const handleSave = ({ name, value, previousValue }) => {
-      resName = name;
-      resValue = value;
-      resPreviousValue = previousValue;
-    };
-    const component = mount(
-      <EditTextarea
-        name='mockName'
-        defaultValue='mockValueBefore'
-        onSave={handleSave}
-      />
-    );
-    component.find(divSelector).first().simulate('click');
-    const textarea = component.find(textareaSelector);
-    expect(textarea).toHaveLength(1);
-    textarea.instance().value = 'mockValue';
-    textarea.simulate('blur');
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(resName).toEqual('mockName');
-    expect(resValue).toEqual('mockValue');
-    expect(resPreviousValue).toEqual('mockValueBefore');
-  });
-  it('onSave should return correct {name, value, previousValue} object with value and onChange props set', () => {
-    let resName, resValue, resPreviousValue;
-    const handleSave = ({ name, value, previousValue }) => {
-      resName = name;
-      resValue = value;
-      resPreviousValue = previousValue;
-    };
-    const component = mount(
-      <EditTextarea
-        name='mockName'
-        value='mockValueBefore'
-        onSave={handleSave}
-      />
-    );
-    component.find(divSelector).first().simulate('click');
-    const textarea = component.find(textareaSelector);
-    expect(textarea).toHaveLength(1);
-    textarea.instance().value = 'mockValue';
-    textarea.simulate('blur');
-    expect(component.find(divSelector)).toHaveLength(1);
-    expect(resName).toEqual('mockName');
-    expect(resValue).toEqual('mockValue');
-    expect(resPreviousValue).toEqual('mockValueBefore');
-  });
-  it('should display placeholder if value is empty string', () => {
-    const component = mount(
-      <EditTextarea placeholder='mockPlaceholder' value='' />
-    );
-    expect(component.contains('mockPlaceholder')).toEqual(true);
-  });
-  it('should display value instead of placeholder if value is not empty', () => {
-    const component = mount(
-      <EditTextarea placeholder='mockPlaceholder' value='mockValue' />
-    );
-    expect(component.contains('mockValue')).toEqual(true);
-  });
-  it('should display placeholder if value is changed to empty string', () => {
-    const component = mount(
-      <EditTextarea placeholder='mockPlaceholder' defaultValue='mockValue' />
-    );
-    expect(component.contains('mockValue')).toEqual(true);
-    component.simulate('click');
-    const textarea = component.find('textarea');
-    textarea.instance().value = '';
-    textarea.simulate('blur');
-    expect(component.contains('mockPlaceholder')).toEqual(true);
-  });
-  it('should display value instead of placeholder if value is changed to non-empty string', () => {
-    const component = mount(
-      <EditTextarea placeholder='mockPlaceholder' defaultValue='' />
-    );
-    expect(component.contains('mockPlaceholder')).toEqual(true);
-    component.simulate('click');
-    const textarea = component.find('textarea');
-    textarea.instance().value = 'mockValue';
-    textarea.simulate('blur');
-    expect(component.contains('mockValue')).toEqual(true);
-  });
-  it('should not display textarea when readonly', () => {
-    const component = mount(<EditTextarea readonly />);
-    component.simulate('click');
-    expect(component.exists('textarea')).toEqual(false);
-  });
-  it('should display textarea when not readonly', () => {
-    const component = mount(<EditTextarea readonly={false} />);
-    component.simulate('click');
-    expect(component.exists('textarea')).toEqual(true);
-  });
-  it('formatDisplayText should display value correctly based on passed in function', () => {
-    const formatDisplayText = jest.fn(() => 'formatTest\nformatTest');
-    const component = mount(
-      <EditTextarea
-        id='test'
-        name='mockName'
-        value={'test\ntest\ntest'}
-        formatDisplayText={formatDisplayText}
-      />
-    );
-    const displayText = component.find('#test');
-    expect(formatDisplayText).toHaveBeenCalled();
-    expect(displayText.first().text().trim().includes('formatTest')).toEqual(
-      true
-    );
-  });
-  it('formatDisplayText should display defaultValue correctly based on passed in function', () => {
-    const formatDisplayText = jest.fn(() => 'formatTest\nformatTest');
-    const component = mount(
-      <EditTextarea
-        id='test'
-        name='mockName'
-        defaultValue={'test\ntest\ntest'}
-        formatDisplayText={formatDisplayText}
-      />
-    );
-    const displayText = component.find('#test');
-    expect(formatDisplayText).toHaveBeenCalled();
-    expect(displayText.first().text().trim().includes('formatTest')).toEqual(
-      true
-    );
-  });
+  fireEvent.blur(textarea);
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    'mockValue'
+  );
+});
+test('should not display textarea when readonly', async () => {
+  render(<EditTextarea readonly />);
+  await userEvent.click(screen.getByLabelText(displayComponentLabel));
+  expect(screen.queryByLabelText(textareaComponentLabel)).toBeNull();
+  expect(screen.queryByLabelText(displayComponentLabel)).toBeTruthy();
+});
+test('should display textarea when not readonly', async () => {
+  render(<EditTextarea readonly={false} />);
+  await userEvent.click(screen.getByLabelText(displayComponentLabel));
+  expect(screen.queryByLabelText(textareaComponentLabel)).toBeTruthy();
+  expect(screen.queryByLabelText(displayComponentLabel)).toBeNull();
+});
+test('formatDisplayText should display value correctly based on passed in function', async () => {
+  const formatDisplayText = jest.fn(() => 'formatTest\nformatTest');
+  render(
+    <EditTextarea
+      id='test'
+      name='mockName'
+      value={'test\ntest\ntest'}
+      formatDisplayText={formatDisplayText}
+    />
+  );
+  expect(formatDisplayText).toHaveBeenCalled();
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    'formatTest'
+  );
+});
+test('formatDisplayText should display defaultValue correctly based on passed in function', async () => {
+  const formatDisplayText = jest.fn(() => 'formatTest\nformatTest');
+  render(
+    <EditTextarea
+      id='test'
+      name='mockName'
+      defaultValue={'test\ntest\ntest'}
+      formatDisplayText={formatDisplayText}
+    />
+  );
+  expect(formatDisplayText).toHaveBeenCalled();
+  expect(screen.getByLabelText(displayComponentLabel)).toHaveTextContent(
+    'formatTest'
+  );
 });
