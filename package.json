@@ -13,7 +13,7 @@
   },
   "source": "./src/index.js",
   "engines": {
-    "node": ">=12"
+    "node": ">=16 || ^14.17"
   },
   "scripts": {
     "build": "microbundle --no-compress",
