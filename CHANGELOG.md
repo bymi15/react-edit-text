@@ -1,3 +1,10 @@
+## [5.0.1](https://github.com/bymi15/react-edit-text/compare/v5.0.0...v5.0.1) (2022-06-02)
+
+
+### Bug Fixes
+
+* remove enzyme, update tests and remove/update dependencies with vulnerabilities ([#35](https://github.com/bymi15/react-edit-text/issues/35)) ([4b1d37a](https://github.com/bymi15/react-edit-text/commit/4b1d37a1fdf50dc17edc7d9c5e3f34565a5d4b46))
+
 # [5.0.0](https://github.com/bymi15/react-edit-text/compare/v4.4.1...v5.0.0) (2022-06-01)
 
 
