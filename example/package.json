@@ -14,13 +14,7 @@
     "react-dom": "file:../node_modules/react-dom",
     "react-edit-text": "file:..",
     "react-scripts": "file:../node_modules/react-scripts",
-    "react-syntax-highlighter": "^15.4.4"
-  },
-  "devDependencies": {
-    "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "react-syntax-highlighter": "^15.5.0"
   },
   "babel": {
     "presets": [
