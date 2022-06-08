@@ -1,3 +1,10 @@
+## [5.0.2](https://github.com/bymi15/react-edit-text/compare/v5.0.1...v5.0.2) (2022-06-08)
+
+
+### Bug Fixes
+
+* bug fix microbundle for jsx ([#37](https://github.com/bymi15/react-edit-text/issues/37)) ([c4c3d53](https://github.com/bymi15/react-edit-text/commit/c4c3d53c55de171e4941c8ab9e52c522deb1a17d))
+
 ## [5.0.1](https://github.com/bymi15/react-edit-text/compare/v5.0.0...v5.0.1) (2022-06-02)
 
 
