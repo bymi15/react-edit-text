@@ -3,9 +3,9 @@
   "extends": [
     "plugin:prettier/recommended",
     "prettier/standard",
-    "prettier/react"
+    "prettier/react",
+    "react-app"
   ],
-  "plugins": ["react"],
   "env": {
     "browser": true,
     "node": true
