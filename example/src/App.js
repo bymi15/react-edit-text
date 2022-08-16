@@ -80,7 +80,7 @@ const App = () => {
                 <EditText
                   name='textbox3'
                   defaultValue='I am an editable text with an edit button'
-                  editButtonProps={{ style: { marginLeft: '5px' } }}
+                  editButtonProps={{ style: { marginLeft: '5px', width: 16 } }}
                   showEditButton
                 />
                 <EditTextarea placeholder='I am an editable textarea' />
