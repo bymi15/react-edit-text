@@ -56,7 +56,10 @@ export const EditTextDefaultProps = {
 
 export const EditTextareaPropTypes = {
   ...sharedPropTypes,
-  rows: PropTypes.number
+  rows: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.oneOfType(['auto'])
+  ])
 };
 
 export const EditTextareaDefaultProps = {

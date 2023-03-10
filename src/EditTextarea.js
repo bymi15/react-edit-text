@@ -98,7 +98,7 @@ export default function EditTextarea({
         onClick={handleClick}
         style={{
           ...style,
-          height: `${rows * 24 + 16}px`
+          height: rows === 'auto' ? 'auto' : `${rows * 24 + 16}px`
         }}
         aria-label='display component'
       >

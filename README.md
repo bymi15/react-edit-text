@@ -94,7 +94,7 @@ export default function Example() {
 
 | Prop | Type   | Required | Default | Description            |
 | ---- | ------ | -------- | ------- | ---------------------- |
-| rows | number | No       | 3       | Number of visible rows |
+| rows | number\|'auto' | No       | 3       | Number of visible rows |
 
 ## Contributing
 
