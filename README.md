@@ -92,9 +92,9 @@ export default function Example() {
 
 ### EditTextarea props
 
-| Prop | Type   | Required | Default | Description            |
-| ---- | ------ | -------- | ------- | ---------------------- |
-| rows | number\|'auto' | No       | 3       | Number of visible rows |
+| Prop | Type             | Required | Default | Description            |
+| ---- | ---------------- | -------- | ------- | ---------------------- |
+| rows | number \| 'auto' | No       | 3       | Number of visible rows |
 
 ## Contributing
 
