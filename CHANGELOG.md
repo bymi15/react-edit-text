@@ -1,3 +1,15 @@
+# [5.1.0](https://github.com/bymi15/react-edit-text/compare/v5.0.2...v5.1.0) (2023-03-14)
+
+
+### Bug Fixes
+
+* proptype for row ([fbb00eb](https://github.com/bymi15/react-edit-text/commit/fbb00eb1bd6b38298995456e1c077fd66afadc03))
+
+
+### Features
+
+* support 'auto' for rows ([#56](https://github.com/bymi15/react-edit-text/issues/56)) ([6b2dfe9](https://github.com/bymi15/react-edit-text/commit/6b2dfe99afab8d112d90ebeece9bce10961ca869))
+
 ## [5.0.2](https://github.com/bymi15/react-edit-text/compare/v5.0.1...v5.0.2) (2022-06-08)
 
 
