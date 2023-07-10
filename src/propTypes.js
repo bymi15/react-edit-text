@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import EditIcon from './components/EditIcon';
 
 const sharedPropTypes = {
   id: PropTypes.string,

@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import React from 'react';
+import EditIcon from './components/EditIcon';
 import Input from './components/Input';
 import { EditTextPropTypes } from './propTypes';
 import styles from './styles.module.css';
