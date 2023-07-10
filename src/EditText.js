@@ -1,28 +1,28 @@
 import classnames from 'classnames';
 import React from 'react';
 import Input from './components/Input';
-import { EditTextDefaultProps, EditTextPropTypes } from './propTypes';
+import { EditTextPropTypes } from './propTypes';
 import styles from './styles.module.css';
 
 export default function EditText({
   id,
   name,
   className,
-  placeholder,
-  inline,
-  style,
-  readonly,
-  type,
+  placeholder = '',
+  inline = false,
+  style = {},
+  readonly = false,
+  type = 'text',
   value,
   defaultValue,
-  formatDisplayText,
-  onEditMode,
-  onChange,
-  onSave,
-  onBlur,
-  showEditButton,
-  editButtonContent,
-  editButtonProps,
+  formatDisplayText = (x) => x,
+  onEditMode = () => {},
+  onChange = () => {},
+  onSave = () => {},
+  onBlur = () => {},
+  showEditButton = false,
+  editButtonContent = <EditIcon />,
+  editButtonProps = {},
   inputClassName
 }) {
   const inputRef = React.useRef(null);
@@ -171,5 +171,4 @@ export default function EditText({
     : renderDisplayMode();
 }
 
-EditText.defaultProps = EditTextDefaultProps;
 EditText.propTypes = EditTextPropTypes;

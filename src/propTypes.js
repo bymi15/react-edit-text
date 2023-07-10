@@ -2,23 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import EditIcon from './components/EditIcon';
 
-const sharedDefaultProps = {
-  id: undefined,
-  name: undefined,
-  className: undefined,
-  value: undefined,
-  formatDisplayText: (x) => x,
-  defaultValue: undefined,
-  placeholder: '',
-  onSave: () => {},
-  onChange: () => {},
-  onEditMode: () => {},
-  onBlur: () => {},
-  style: {},
-  readonly: false,
-  inputClassName: undefined
-};
-
 const sharedPropTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
@@ -45,21 +28,7 @@ export const EditTextPropTypes = {
   editButtonProps: PropTypes.object
 };
 
-export const EditTextDefaultProps = {
-  ...sharedDefaultProps,
-  type: 'text',
-  inline: false,
-  showEditButton: false,
-  editButtonContent: <EditIcon />,
-  editButtonProps: {}
-};
-
 export const EditTextareaPropTypes = {
   ...sharedPropTypes,
   rows: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto'])])
-};
-
-export const EditTextareaDefaultProps = {
-  ...sharedDefaultProps,
-  rows: 3
 };
