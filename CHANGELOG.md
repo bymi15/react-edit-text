@@ -1,3 +1,10 @@
+## [5.1.1](https://github.com/bymi15/react-edit-text/compare/v5.1.0...v5.1.1) (2023-07-12)
+
+
+### Bug Fixes
+
+* trigger release ([84847fe](https://github.com/bymi15/react-edit-text/commit/84847fe3bce4b17b6661df4a1008dee4e413d416))
+
 # [5.1.0](https://github.com/bymi15/react-edit-text/compare/v5.0.2...v5.1.0) (2023-03-14)
 
 
