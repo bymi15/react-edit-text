@@ -1,26 +1,26 @@
 import classnames from 'classnames';
 import React from 'react';
 import Textarea from './components/Textarea';
-import { EditTextareaDefaultProps, EditTextareaPropTypes } from './propTypes';
+import { EditTextareaPropTypes } from './propTypes';
 import styles from './styles.module.css';
 
 const splitLines = (val) => (val ? val.split(/\r?\n/) : []);
 
 export default function EditTextarea({
   id,
-  rows,
+  rows = 3,
   name,
   className,
-  placeholder,
-  style,
-  readonly,
+  placeholder = '',
+  style = {},
+  readonly = false,
   value,
   defaultValue,
-  formatDisplayText,
-  onEditMode,
-  onChange,
-  onSave,
-  onBlur,
+  formatDisplayText = (x) => x,
+  onEditMode = () => {},
+  onChange = () => {},
+  onSave = () => {},
+  onBlur = () => {},
   inputClassName
 }) {
   const inputRef = React.useRef(null);
@@ -148,5 +148,4 @@ export default function EditTextarea({
     : renderDisplayMode();
 }
 
-EditTextarea.defaultProps = EditTextareaDefaultProps;
 EditTextarea.propTypes = EditTextareaPropTypes;
