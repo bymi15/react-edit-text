@@ -49,9 +49,6 @@
     "type": "git",
     "url": "git+https://github.com/bymi15/react-edit-text.git"
   },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/"
-  },
   "keywords": [
     "react",
     "edit",
