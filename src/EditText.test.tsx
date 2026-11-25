@@ -2,7 +2,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import { describe, expect, test, vi } from 'vitest';
-import { EditText, type EditTextProps } from '.';
+import { EditText, EditTextarea, type EditTextProps } from '.';
 
 const getDisplay = () => screen.getByRole('button');
 const getInput = () => screen.getByRole('textbox');
@@ -417,5 +417,53 @@ describe('inputProps and ref', () => {
     render(<EditText ref={ref} />);
     const input = await enterEditMode();
     expect(ref).toHaveBeenLastCalledWith(input);
+  });
+});
+
+describe('editOnDoubleClick', () => {
+  test('single click does not edit; double click does', async () => {
+    const user = userEvent.setup();
+    const handleEditMode = vi.fn();
+    render(
+      <EditText
+        defaultValue='text'
+        editOnDoubleClick
+        onEditMode={handleEditMode}
+      />
+    );
+    await user.click(getDisplay());
+    expect(queryInput()).toBeNull();
+    await user.dblClick(getDisplay());
+    expect(getInput()).toHaveFocus();
+    expect(handleEditMode).toHaveBeenCalledTimes(1);
+  });
+
+  test('screen reader activation (click with detail 0) still edits', () => {
+    render(<EditText defaultValue='text' editOnDoubleClick />);
+    fireEvent.click(getDisplay(), { detail: 0 });
+    expect(getInput()).toBeInTheDocument();
+  });
+
+  test('keyboard activation still edits', async () => {
+    const user = userEvent.setup();
+    render(<EditText defaultValue='text' editOnDoubleClick />);
+    await user.tab();
+    await user.keyboard('{Enter}');
+    expect(getInput()).toHaveFocus();
+  });
+
+  test('works for EditTextarea and is ignored when read-only', async () => {
+    const user = userEvent.setup();
+    const { unmount } = render(
+      <EditText defaultValue='x' editOnDoubleClick readOnly />
+    );
+    await user.dblClick(screen.getByText('x'));
+    expect(queryInput()).toBeNull();
+    unmount();
+    render(<EditTextarea defaultValue='y' editOnDoubleClick />);
+    await user.click(getDisplay());
+    expect(queryInput()).toBeNull();
+    await user.dblClick(getDisplay());
+    expect(getInput()).toBeInTheDocument();
   });
 });

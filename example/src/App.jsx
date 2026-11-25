@@ -85,6 +85,11 @@ const App = () => {
                   editButtonProps={{ style: { marginLeft: '5px', width: 16 } }}
                   showEditButton
                 />
+                <EditText
+                  name='textbox4'
+                  defaultValue='Double click me to edit my text'
+                  editOnDoubleClick
+                />
                 <EditTextarea placeholder='I am an editable textarea' />
               </div>
             </div>
@@ -181,6 +186,11 @@ const App = () => {
             <b>editButtonProps</b> <sup className='new-badge'>NEW</sup>{' '}
             (default: false) are props that are passed to the edit button
             element. This can include any valid DOM attribute.
+          </li>
+          <li>
+            <b>editOnDoubleClick</b> <sup className='new-badge'>NEW</sup>{' '}
+            (default: false) enables editing on double click instead of single
+            click (keyboard and screen reader activation still work).
           </li>
         </ul>
         <p className='lead mb-0'>EditTextarea props</p>

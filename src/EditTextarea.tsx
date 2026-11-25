@@ -25,7 +25,8 @@ const EditTextarea = React.forwardRef<HTMLTextAreaElement, EditTextareaProps>(
       onChange,
       onSave,
       onBlur,
-      inputProps
+      inputProps,
+      editOnDoubleClick = false
     },
     ref
   ) {
@@ -77,7 +78,8 @@ const EditTextarea = React.forwardRef<HTMLTextAreaElement, EditTextareaProps>(
         role={isClickable ? 'button' : undefined}
         tabIndex={isClickable ? 0 : undefined}
         aria-label={fallbackLabel}
-        onClick={isClickable ? editable.startEditing : undefined}
+        {...(isClickable &&
+          editable.getDisplayClickHandlers(editOnDoubleClick))}
         onKeyDown={isClickable ? editable.handleDisplayKeyDown : undefined}
         className={cx(
           styles.shared,

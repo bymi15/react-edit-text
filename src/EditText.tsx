@@ -30,7 +30,8 @@ const EditText = React.forwardRef<HTMLInputElement, EditTextProps>(
       showEditButton = false,
       editButtonContent = <EditIcon />,
       editButtonProps,
-      inputProps
+      inputProps,
+      editOnDoubleClick = false
     },
     ref
   ) {
@@ -84,7 +85,8 @@ const EditText = React.forwardRef<HTMLInputElement, EditTextProps>(
           role={isClickable ? 'button' : undefined}
           tabIndex={isClickable ? 0 : undefined}
           aria-label={fallbackLabel}
-          onClick={isClickable ? editable.startEditing : undefined}
+          {...(isClickable &&
+            editable.getDisplayClickHandlers(editOnDoubleClick))}
           onKeyDown={isClickable ? editable.handleDisplayKeyDown : undefined}
           className={cx(
             styles.label,

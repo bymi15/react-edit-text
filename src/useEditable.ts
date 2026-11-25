@@ -166,6 +166,19 @@ export function useEditable<E extends EditableElement>({
     }
   });
 
+  /** Click/double-click handlers for the display element. */
+  const getDisplayClickHandlers = (editOnDoubleClick: boolean) =>
+    editOnDoubleClick
+      ? {
+          // Assistive technology and keyboard-synthesised clicks report
+          // detail 0; let those through so the control stays operable.
+          onClick: (e: React.MouseEvent) => {
+            if (e.detail === 0) startEditing();
+          },
+          onDoubleClick: startEditing
+        }
+      : { onClick: startEditing };
+
   const handleDisplayKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -180,6 +193,7 @@ export function useEditable<E extends EditableElement>({
     setInputRef,
     setFocusReturnRef,
     startEditing,
+    getDisplayClickHandlers,
     getInputHandlers,
     handleDisplayKeyDown
   };
