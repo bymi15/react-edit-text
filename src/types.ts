@@ -84,6 +84,13 @@ export interface SharedProps<
   readOnly?: boolean;
   /** @deprecated Use `readOnly` instead. */
   readonly?: boolean;
+  /**
+   * Enter edit mode on double click instead of single click. Keyboard
+   * (Enter/Space) and screen reader activation still work. Double-tap is
+   * unreliable on touch devices, so consider `showEditButton` there.
+   * @default false
+   */
+  editOnDoubleClick?: boolean;
 }
 
 export interface EditTextProps extends SharedProps<HTMLInputElement> {

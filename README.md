@@ -84,24 +84,25 @@ restored automatically.
 
 ### Shared props
 
-| Prop              | Type     | Default  | Description                                                                                        |
-| ----------------- | -------- | -------- | -------------------------------------------------------------------------------------------------- |
-| id                | string   |          | HTML id attribute, set on both the display and the input element                                   |
-| name              | string   |          | HTML name attribute of the input element                                                           |
-| className         | string   |          | HTML class attribute of the display element                                                        |
-| inputClassName    | string   |          | HTML class attribute of the input element                                                          |
-| value             | string   |          | Value of a controlled component                                                                    |
-| defaultValue      | string   |          | Initial value of an uncontrolled component                                                         |
-| placeholder       | string   | `''`     | Shown when the value is empty, in both the display and the input                                   |
-| formatDisplayText | function | (x) => x | Formats the value shown in the display element. May return a string or any React node              |
-| onSave            | function |          | Called with `{ name, value, previousValue }` when the input is saved and the value changed         |
-| onChange          | function |          | Called with the input's change event whenever its value changes (including when Escape reverts it) |
-| onEditMode        | function |          | Called when the component enters edit mode                                                         |
-| onBlur            | function |          | Called when the component leaves edit mode (saved or cancelled)                                    |
-| style             | object   |          | CSS style of both the display and the input element                                                |
-| readOnly          | bool     | false    | Only show the display element; edit mode can't be entered                                          |
-| inputProps        | object   |          | Extra attributes for the input element, e.g. `maxLength`, `autoComplete`, `required`, `aria-*`     |
-| ref               | ref      |          | Forwarded to the input element (`null` while not in edit mode)                                     |
+| Prop              | Type     | Default  | Description                                                                                                                                          |
+| ----------------- | -------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id                | string   |          | HTML id attribute, set on both the display and the input element                                                                                     |
+| name              | string   |          | HTML name attribute of the input element                                                                                                             |
+| className         | string   |          | HTML class attribute of the display element                                                                                                          |
+| inputClassName    | string   |          | HTML class attribute of the input element                                                                                                            |
+| value             | string   |          | Value of a controlled component                                                                                                                      |
+| defaultValue      | string   |          | Initial value of an uncontrolled component                                                                                                           |
+| placeholder       | string   | `''`     | Shown when the value is empty, in both the display and the input                                                                                     |
+| formatDisplayText | function | (x) => x | Formats the value shown in the display element. May return a string or any React node                                                                |
+| onSave            | function |          | Called with `{ name, value, previousValue }` when the input is saved and the value changed                                                           |
+| onChange          | function |          | Called with the input's change event whenever its value changes (including when Escape reverts it)                                                   |
+| onEditMode        | function |          | Called when the component enters edit mode                                                                                                           |
+| onBlur            | function |          | Called when the component leaves edit mode (saved or cancelled)                                                                                      |
+| style             | object   |          | CSS style of both the display and the input element                                                                                                  |
+| readOnly          | bool     | false    | Only show the display element; edit mode can't be entered                                                                                            |
+| editOnDoubleClick | bool     | false    | Enter edit mode on double click instead of single click. Keyboard and screen reader activation still work; double-tap is unreliable on touch devices |
+| inputProps        | object   |          | Extra attributes for the input element, e.g. `maxLength`, `autoComplete`, `required`, `aria-*`                                                       |
+| ref               | ref      |          | Forwarded to the input element (`null` while not in edit mode)                                                                                       |
 
 ### EditText props
 

@@ -190,7 +190,7 @@ const App = () => {
           <li>
             <b>editOnDoubleClick</b> <sup className='new-badge'>NEW</sup>{' '}
             (default: false) enables editing on double click instead of single
-            click.
+            click (keyboard and screen reader activation still work).
           </li>
         </ul>
         <p className='lead mb-0'>EditTextarea props</p>
