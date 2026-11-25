@@ -12,26 +12,13 @@
 ### BREAKING CHANGES
 
 * Types are now built in (remove @types/react-edit-text).
-The display element is role="button" and the "display component" /
-"input component" aria-labels were removed. onChange now fires for
-uncontrolled components and on Escape only when the value changed.
-prop-types and the UMD build were dropped; the package ships ESM and CJS
-with an exports map. readonly is deprecated in favour of readOnly.
-
-Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
-
-* ci: test React 18 and 19 on pull requests and modernise workflows
-
-Replace Travis and the jest coverage workflow with a GitHub Actions CI
-workflow that runs the full test suite on React 18 and 19 and reports
-Vitest coverage. Run on Node 24 with current action versions, and give
-the stale bot real messages.
-
-Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
-
-* docs: document v6 props, accessibility and migration from v5
-
-Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+* The display element is `role="button"` and the "display component" /
+"input component" aria-labels were removed.
+* `onChange` now fires for uncontrolled components, and on Escape only when
+the value changed.
+* prop-types and the UMD build were dropped; the package ships ESM and CJS
+with an exports map.
+* `readonly` is deprecated in favour of `readOnly`.
 
 ## [5.1.1](https://github.com/bymi15/react-edit-text/compare/v5.1.0...v5.1.1) (2023-07-12)
 
