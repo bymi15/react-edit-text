@@ -1,0 +1,9 @@
+dist
+coverage
+example/build
+example/src/bootstrap.min.css
+package-lock.json
+CHANGELOG.md
+.github/ISSUE_TEMPLATE
+CODE_OF_CONDUCT.md
+.releaserc

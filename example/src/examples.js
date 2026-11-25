@@ -72,22 +72,23 @@ const App = () => {
     return (
         <React.Fragment>
           <div style={{whiteSpace: 'nowrap'}}>
-            <strong><label className="mr-2">Full Name <small>(read-only)</small>: </label></strong>
-            <EditText id="fullName" name="fullName" defaultValue="Full Name" inline readonly/>
+            <strong><span className="mr-2">Full Name <small>(read-only)</small>: </span></strong>
+            <EditText id="fullName" name="fullName" defaultValue="Full Name" inline readOnly/>
           </div>
           <div style={{whiteSpace: 'nowrap'}}>
-            <strong><label className="mr-2">Email Address: </label></strong>
-            <EditText name="email" type="email" style={{width: '200px'}} defaultValue="email@domain.com" inline/>
+            <strong><label className="mr-2" htmlFor="email">Email Address: </label></strong>
+            <EditText id="email" name="email" type="email" style={{width: '200px'}} defaultValue="email@domain.com" inline/>
           </div>
           <div style={{whiteSpace: 'nowrap'}}>
-            <strong><label className="mr-2">Score: </label></strong>
-            <EditText name="age" type="number" style={{width: '200px'}} defaultValue="34" inline/>
+            <strong><label className="mr-2" htmlFor="age">Age: </label></strong>
+            <EditText id="age" name="age" type="number" style={{width: '200px'}} defaultValue="34" inline/>
           </div>
           <div style={{ display: 'flex' }}>
             <strong>
-              <label className='mr-2' style={{ paddingTop: '2px' }}>Description: </label>
+              <label className='mr-2' style={{ paddingTop: '2px' }} htmlFor='description'>Description: </label>
             </strong>
             <EditTextarea
+              id='description'
               name='description'
               rows={4}
               style={{ paddingTop: 0 }}

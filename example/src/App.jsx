@@ -1,11 +1,13 @@
 import React from 'react';
 import { EditText, EditTextarea } from 'react-edit-text';
-import 'react-edit-text/dist/index.css';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
 import { okaidia } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import Jumbotron from './components/Jumbotron';
 import Navbar from './components/Navbar';
 import { examples } from './examples';
+
+SyntaxHighlighter.registerLanguage('javascript', jsx);
 
 const App = () => {
   const [text, setText] = React.useState('This is a controlled component');
@@ -105,7 +107,7 @@ const App = () => {
             <b>name</b> sets the name of the input element
           </li>
           <li>
-            <b>readonly</b> (default: false) displays only the view component
+            <b>readOnly</b> (default: false) displays only the view component
             and hides the input element
           </li>
           <li>
@@ -128,7 +130,7 @@ const App = () => {
             <b>value</b> sets the value of the component
           </li>
           <li>
-            <b>formatDisplayValue</b> callback function gets called on the input
+            <b>formatDisplayText</b> callback function gets called on the input
             value and displays the output
           </li>
           <li>
@@ -148,6 +150,15 @@ const App = () => {
             <b>onBlur</b> callback function is triggered when the input field is
             blurred. This occurs either when an input value is saved or when the
             escape key is pressed.
+          </li>
+          <li>
+            <b>inputProps</b> <sup className='new-badge'>NEW</sup> passes extra
+            attributes (e.g. maxLength, autoComplete, aria-*) to the input
+            element
+          </li>
+          <li>
+            <b>ref</b> <sup className='new-badge'>NEW</sup> is forwarded to the
+            input element while in edit mode
           </li>
         </ul>
         <p className='lead mb-0'>EditText props</p>
@@ -206,24 +217,27 @@ const App = () => {
               <div className='card-body'>
                 <div style={{ whiteSpace: 'nowrap' }}>
                   <strong>
-                    <label className='mr-2'>
+                    <span className='mr-2'>
                       Full Name{' '}
                       <small className='text-muted'>(read-only)</small>:{' '}
-                    </label>
+                    </span>
                   </strong>
                   <EditText
                     id='fullName'
                     name='fullName'
                     defaultValue='Full Name'
                     inline
-                    readonly
+                    readOnly
                   />
                 </div>
                 <div style={{ whiteSpace: 'nowrap' }}>
                   <strong>
-                    <label className='mr-2'>Email Address: </label>
+                    <label className='mr-2' htmlFor='email'>
+                      Email Address:{' '}
+                    </label>
                   </strong>
                   <EditText
+                    id='email'
                     name='email'
                     type='email'
                     style={{ width: '200px' }}
@@ -233,9 +247,12 @@ const App = () => {
                 </div>
                 <div style={{ whiteSpace: 'nowrap' }}>
                   <strong>
-                    <label className='mr-2'>Age: </label>
+                    <label className='mr-2' htmlFor='age'>
+                      Age:{' '}
+                    </label>
                   </strong>
                   <EditText
+                    id='age'
                     name='age'
                     type='number'
                     style={{ width: '200px' }}
@@ -245,11 +262,16 @@ const App = () => {
                 </div>
                 <div style={{ display: 'flex' }}>
                   <strong>
-                    <label className='mr-2' style={{ paddingTop: '2px' }}>
+                    <label
+                      className='mr-2'
+                      style={{ paddingTop: '2px' }}
+                      htmlFor='description'
+                    >
                       Description:{' '}
                     </label>
                   </strong>
                   <EditTextarea
+                    id='description'
                     name='description'
                     rows={4}
                     style={{ paddingTop: 0 }}
@@ -324,7 +346,7 @@ const App = () => {
         <hr />
         <h3>Callback Usage</h3>
         <div>
-          <b>formatDisplayValue</b> callback function takes in a value and
+          <b>formatDisplayText</b> callback function takes in a value and
           outputs a value. This can be used to format the displayed value.
         </div>
         <div>
