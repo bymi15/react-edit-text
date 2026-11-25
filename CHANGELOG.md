@@ -1,3 +1,38 @@
+# [6.0.0](https://github.com/bymi15/react-edit-text/compare/v5.1.1...v6.0.0) (2026-11-25)
+
+
+* feat!: v6 - TypeScript, accessibility, bug fixes and modern tooling ([#65](https://github.com/bymi15/react-edit-text/issues/65)) ([e3ec18e](https://github.com/bymi15/react-edit-text/commit/e3ec18ea04f024a99ed6b871847a9b09ff413fe9))
+
+
+### Features
+
+* add editOnDoubleClick option ([#64](https://github.com/bymi15/react-edit-text/issues/64)) ([8d3997e](https://github.com/bymi15/react-edit-text/commit/8d3997e04e51f822e4428d43684033580bf84f60))
+
+
+### BREAKING CHANGES
+
+* Types are now built in (remove @types/react-edit-text).
+The display element is role="button" and the "display component" /
+"input component" aria-labels were removed. onChange now fires for
+uncontrolled components and on Escape only when the value changed.
+prop-types and the UMD build were dropped; the package ships ESM and CJS
+with an exports map. readonly is deprecated in favour of readOnly.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+* ci: test React 18 and 19 on pull requests and modernise workflows
+
+Replace Travis and the jest coverage workflow with a GitHub Actions CI
+workflow that runs the full test suite on React 18 and 19 and reports
+Vitest coverage. Run on Node 24 with current action versions, and give
+the stale bot real messages.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+* docs: document v6 props, accessibility and migration from v5
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
 ## [5.1.1](https://github.com/bymi15/react-edit-text/compare/v5.1.0...v5.1.1) (2023-07-12)
 
 
