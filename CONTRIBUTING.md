@@ -12,3 +12,14 @@ Also, please ensure you follow the [conventional commits](https://www.convention
 1. Feel free to create a pull request for a bug fix, new feature or code refactoring.
 2. Please ensure that all tests pass locally before creating the PR.
 3. Update the README.md with details of changes to the interface.
+
+## Development
+
+Use the Node version in `.nvmrc` (e.g. `nvm use`), then:
+
+```bash
+npm install
+npm run dev          # demo site with live reload, built from src/
+npm run test:watch   # unit tests in watch mode
+npm test             # everything CI runs: lint, typecheck, tests, build, package checks
+```

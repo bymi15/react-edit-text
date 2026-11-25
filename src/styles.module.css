@@ -1,3 +1,28 @@
+.shared {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px;
+  display: block;
+  margin: 3px 0;
+  scrollbar-width: thin;
+}
+
+.shared::-webkit-scrollbar {
+  width: 8px;
+}
+.shared::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.shared::-webkit-scrollbar-thumb {
+  background: #ccc;
+}
+.shared::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+.shared::-webkit-scrollbar-thumb:active {
+  background: #666;
+}
+
 .label {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -6,85 +31,38 @@
   min-height: 28px;
 }
 
-.label:hover {
-  cursor: pointer;
-  background: rgba(220, 220, 220, 0.4);
-}
-
 .textareaView {
   overflow-y: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   transition: background 0.2s ease;
 }
 
-/* Width */
-.textareaView::-webkit-scrollbar {
-  width: 8px;
-}
-/* Track */
-.textareaView::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-/* Handle */
-.textareaView::-webkit-scrollbar-thumb {
-  background: #ccc;
-}
-/* Handle on hover */
-.textareaView::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
-}
-/* Handle on drag */
-.textareaView::-webkit-scrollbar-thumb:active {
-  background: #666;
-}
-
+.label:hover,
 .textareaView:hover {
   cursor: pointer;
   background: rgba(220, 220, 220, 0.4);
 }
 
-.shared {
-  width: 100%;
-  padding: 5px;
-  display: block;
-  margin: 3px 0;
-  scrollbar-width: thin;
-}
-
-/* Width */
-.shared::-webkit-scrollbar {
-  width: 8px;
-}
-/* Track */
-.shared::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-/* Handle */
-.shared::-webkit-scrollbar-thumb {
-  background: #ccc;
-}
-/* Handle on hover */
-.shared::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
-}
-/* Handle on drag */
-.shared::-webkit-scrollbar-thumb:active {
-  background: #666;
+.label:focus-visible,
+.textareaView:focus-visible,
+.editButton:focus-visible {
+  outline: 2px solid Highlight;
+  outline: 2px solid -webkit-focus-ring-color;
+  outline-offset: 1px;
 }
 
 .placeholder {
-  color: #999;
+  color: #767676;
 }
 
 .inline {
-  display: inline !important;
+  display: inline;
 }
 
-.readonly {
-  cursor: auto !important;
-}
-
+.readonly,
 .readonly:hover {
-  cursor: auto !important;
+  cursor: auto;
 }
 
 .displayContainer {
@@ -92,14 +70,14 @@
 }
 
 .editButton {
-  background-color: #fff;
-  color: black;
+  background: transparent;
+  color: inherit;
   border: 0;
-  outline: none;
   min-width: 28px;
+  cursor: pointer;
 }
 
-.editButton:focus {
-  border: 0;
-  outline: none;
+.editButton svg {
+  width: 1em;
+  height: 1em;
 }

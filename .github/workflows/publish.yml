@@ -1,33 +1,24 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code, run tests, and run semantic release.
-
-name: Node.js CI
+# Runs the full test suite on every push to main, then lets semantic-release
+# publish a new version based on the conventional commit messages.
+name: Release
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main]
 
 jobs:
-  build:
-
+  release:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build
-    - run: npm run test
-    - name: Semantic Release
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: npm run semantic-release
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Semantic Release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm run semantic-release
